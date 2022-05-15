@@ -37,6 +37,32 @@ export default function FooterScript({ }) {
                 })     
 
                 
+                $(".jq_login").click(function(){
+                    $("#loginSidebar").addClass("active");
+                    $('body').addClass('overflow-active');
+                    $('.sidebar-overlay-bg').addClass('active');
+                });
+                $(".sidebar-overlay-bg").click(function(){
+                    $("#loginSidebar").removeClass("active");
+                    $('body').removeClass('overflow-active');
+                    $(".sidebar-overlay-bg").removeClass('active');
+                });
+
+                $(".jq_verify").click(function(){
+                    $("#loginSidebar").removeClass("active");
+                    $("#mobileVerfication").addClass("active");
+                    $('body').addClass('overflow-active');
+                    $('.sidebar-overlay-bg').addClass('active');
+                });
+                $(".sidebar-overlay-bg").click(function(){
+                    $("#loginSidebar").removeClass("active");
+                    $("#mobileVerfication").removeClass("active");
+                    $('body').removeClass('overflow-active');
+                    $(".sidebar-overlay-bg").removeClass('active');
+                    $("#wishlistSidebar").removeClass("active");
+                });
+
+                
                 $(document).ready(function(){
                     $(".btn-minus").on("click",function(){
                         var now = $(".countItem input").val();

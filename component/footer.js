@@ -25,7 +25,7 @@ export default function Footer(props) {
             <div className="footer-top">
                 <div className="container">
                     <div className="footer-logo">
-                        <a href="index.html"> <img src="img/footer-logo.png" /> </a>
+                        <a href="index.html"> <img src="/img/footer-logo.png" /> </a>
                     </div>
                     <div className="row">
                         <div className="col-md-5">
@@ -59,8 +59,8 @@ export default function Footer(props) {
                         <div className="col-md-2">
                             <div className="f-title">For Consumers</div>
                             <ul className="f-menu">
-                                <li><Link href="/privacy-policy"><a >Privacy</a></Link></li>
-                                <li><Link href="/terms-and-conditions"><a >Terms</a></Link></li>
+                                <li><Link passHref href="/privacy-policy"><a >Privacy</a></Link></li>
+                                <li><Link passHref href="/terms-and-conditions"><a >Terms</a></Link></li>
                                 <li><a >FAQs</a></li>
                                 <li><a >Security</a></li>
                                 <li><a >Mobile</a></li>
@@ -70,14 +70,14 @@ export default function Footer(props) {
                         <div className="col-md-3">
                             <div className="f-title">Social Links</div>
                             <div className="social-links">
-                                <a ><img src="img/fb.png" /></a>
-                                <a ><img src="img/in.png" /></a>
-                                <a ><img src="img/insta.png" /></a>
-                                <a ><img src="img/tw.png" /></a>
+                                <a ><img src="/img/fb.png" /></a>
+                                <a ><img src="/img/in.png" /></a>
+                                <a ><img src="/img/insta.png" /></a>
+                                <a ><img src="/img/tw.png" /></a>
                             </div>
                             <div className="app-link mt-30">
-                                <a ><img src="img/app-store.png" /></a>
-                                <a className="ml-20"><img src="img/play-store.png" /></a>
+                                <a ><img src="/img/app-store.png" /></a>
+                                <a className="ml-20"><img src="/img/play-store.png" /></a>
                             </div>
                         </div>
                     </div>

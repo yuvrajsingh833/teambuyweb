@@ -5,6 +5,8 @@ import { ProductCardBusiness } from "../component/productCard";
 import * as MasterService from "../services/master";
 import { Config } from '../config/appConfig';
 import * as Enums from '../lib/enums'
+import Link from 'next/link'
+import * as Utils from "../lib/utils"
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -63,7 +65,7 @@ export default function Home(props) {
   const renderFeaturedCategoryProducts = (data) => {
     if (data)
       return data.map(item => {
-        return <div key={`product_item_${item.id}`}
+        return <div key={`product_item_${item._id}`}
           className="item">
           <ProductCardBusiness item={item} />
         </div>
@@ -93,7 +95,15 @@ export default function Home(props) {
                 <div className="d-flex align-items-center heading-flex">
                   <div className="sm-heading">{featuredCategory.heading}</div>
                   <div className="ml-auto">
-                    <a href="#" className="green-link">View All</a>
+                    <Link
+                      passHref
+                      href={{
+                        pathname: '/category/[id]/[name]',
+                        query: { id: featuredCategory.categoryID, name: Utils.convertToSlug(featuredCategory.heading) },
+                      }}
+                    >
+                      <a className="green-link">View All</a>
+                    </Link>
                   </div>
                 </div>
                 <OwlCarousel
@@ -101,7 +111,7 @@ export default function Home(props) {
                   loop={false}
                   margin={12}
                   nav={true}
-                  dost={false}
+                  dots={false}
                   responsiveClass={true}
                   responsive={Enums.OwlCarouselSlider.fourItemSlider}
                 >

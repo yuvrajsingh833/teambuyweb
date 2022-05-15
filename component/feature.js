@@ -4,7 +4,7 @@ export default function Feature({ }) {
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="img/offers.png" />
+                        <img src="/img/offers.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Big savings with seasonal discounts</div>
@@ -15,7 +15,7 @@ export default function Feature({ }) {
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="img/order-out-for-delivery.png" />
+                        <img src="/img/order-out-for-delivery.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Same day delivery guaranteed!</div>
@@ -26,7 +26,7 @@ export default function Feature({ }) {
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="img/wide-range.png" />
+                        <img src="/img/wide-range.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Wide range of products</div>
@@ -37,7 +37,7 @@ export default function Feature({ }) {
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="img/best-price.png" />
+                        <img src="/img/best-price.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Best prices & offers</div>

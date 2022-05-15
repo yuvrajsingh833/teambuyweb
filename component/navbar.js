@@ -6,11 +6,11 @@ export default function Navbar({ }) {
             <div className="container">
                 <div className="d-flex align-items-center justify-content-between">
                     <div className="main-logo">
-                        <Link href="/"><a><img src="img/logo.svg" /></a></Link>
+                        <Link passHref href="/"><a><img src="/img/logo.svg" /></a></Link>
                     </div>
                     {/* <div className="header-address d-flex align-items-center">
                         <div className="had-icon">
-                            <img src="img/location.svg" />
+                            <img src="/img/location.svg" />
                         </div>
                         <div className="had-location">
                             <div className="had-area-name">Malviya Nagar</div>
@@ -23,23 +23,23 @@ export default function Navbar({ }) {
                     </div>
                     <div className="main-menu">
                         <ul>
-                            <li><Link href="/category"><a href="#">Category</a></Link></li>
-                            <li><a href="#">Login</a></li>
+                            <li><Link passHref href="/category"><a href="#">Category</a></Link></li>
+                            <li><a className="jq_login">Login</a></li>
                         </ul>
                     </div>
 
                     <div className="search-for-mobile">
-                        <a href="#" className="mobile-search"><img src="img/search.svg" /></a>
+                        <a href="#" className="mobile-search"><img src="/img/search.svg" /></a>
                     </div>
                     <div className="login-for-mobile">
-                        <a href="#">Login</a>
+                        <a className="jq_login">Login</a>
                     </div>
                     <div className="wish-block">
                         <a href="#" className="wishlist-icon"></a>
                     </div>
                     <div className="cart-block">
                         <a href="#" className="cart-box">
-                            <img src="img/cart-icon.svg" /> 0 Items
+                            <img src="/img/cart-icon.svg" /> 0 Items
                         </a>
                     </div>
                 </div>
