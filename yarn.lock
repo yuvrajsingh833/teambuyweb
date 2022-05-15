@@ -1616,6 +1616,11 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
+next-share@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/next-share/-/next-share-0.13.0.tgz#7b117d9237fac33064a06f34bfde04a454440d1b"
+  integrity sha512-CR9YsZp6MTdoEgKqMqn2DFUWN8Komzhm1eRUNqWAjAzf1KJxJefwjPFpKXFedskWX17WNgWOgdcDYLU/HdWq5A==
+
 next@12.1.6:
   version "12.1.6"
   resolved "https://registry.yarnpkg.com/next/-/next-12.1.6.tgz#eb205e64af1998651f96f9df44556d47d8bbc533"

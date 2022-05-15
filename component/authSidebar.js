@@ -38,7 +38,7 @@ export default function AuthSideBar(props) {
 
 
             <section className="sidebar-block" id="mobileVerfication">
-                <a href="javascript:void(0);" className="back-arrow"><img src="/img/back-arrow.png" /></a>
+                <a href="" className="back-arrow"><img src="/img/back-arrow.png" /></a>
                 <div className="login-img text-right">
                     <img src="/img/login-img.png" />
                 </div>
