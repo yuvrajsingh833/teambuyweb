@@ -1,6 +1,25 @@
 import Image from 'next/image'
+import dynamic from "next/dynamic";
+import React, { useEffect, useState } from "react";
+import * as CategoryService from "../services/category";
+import Link from 'next/link'
 
-export default function Footer({ }) {
+
+export default function Footer(props) {
+    const [categories, setCategories] = useState([])
+
+    const getAllCategories = () => {
+        CategoryService.allCategory().then(response => {
+            setCategories(response.data)
+        }).catch(e => {
+            console.log(`getAllCategories error : ${e}`)
+        })
+    }
+
+    useEffect(() => {
+        getAllCategories()
+    }, [props]);
+
     return (
         <footer className="footer-wrap">
             <div className="footer-top">
@@ -13,62 +32,52 @@ export default function Footer({ }) {
                             <div className="f-title">Categories</div>
                             <div className="d-flex flex-wrap">
                                 <ul className="f-menu w-50">
-                                    <li><a href="#">grocery & staples</a></li>
-                                    <li><a href="#">vegetables & fruits</a></li>
-                                    <li><a href="#">household items</a></li>
-                                    <li><a href="#">noodles, sauces & instant food</a></li>
-                                    <li><a href="#">bakery & biscuits</a></li>
-                                    <li><a href="#">personal care</a></li>
-                                    <li><a href="#">cold drinks & juices</a></li>
-                                    <li><a href="#">tea, coffee & health drinks</a></li>
-                                    <li><a href="#">sweet tooth</a></li>
+                                    {categories.slice(0, (categories.length / 2)).map(mapItems => {
+                                        return <li key={`footer_category_${mapItems.id}`}><a >{mapItems.name}</a></li>
+                                    })}
+
                                 </ul>
+
                                 <ul className="f-menu w-50">
-                                    <li><a href="#">munchies</a></li>
-                                    <li><a href="#">pharma & baby care</a></li>
-                                    <li><a href="#">breakfast & dairy</a></li>
-                                    <li><a href="#">eggs, meat & fish</a></li>
-                                    <li><a href="#">frozen food</a></li>
-                                    <li><a href="#">battery, bulb & accessorie</a></li>
-                                    <li><a href="#">cleaning & bathroom essentials</a></li>
-                                    <li><a href="#">home furnishing</a></li>
-                                    <li><a href="#">kitchen & dining needs</a></li>
-                                    <li><a href="#">home appliances</a></li>
+                                    {categories.slice((categories.length / 2), categories.length - 1).map(mapItems => {
+                                        return <li key={`footer_category_${mapItems.id}`}><a >{mapItems.name}</a></li>
+                                    })}
+
                                 </ul>
                             </div>
                         </div>
                         <div className="col-md-2">
                             <div className="f-title">Company</div>
                             <ul className="f-menu">
-                                <li><a href="#">Who We Are</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Report Fraud</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><a >Who We Are</a></li>
+                                <li><a >Blog</a></li>
+                                <li><a >Careers</a></li>
+                                <li><a >Report Fraud</a></li>
+                                <li><a >Contact</a></li>
                             </ul>
                         </div>
                         <div className="col-md-2">
                             <div className="f-title">For Consumers</div>
                             <ul className="f-menu">
-                                <li><a href="#">Privacy</a></li>
-                                <li><a href="#">Terms</a></li>
-                                <li><a href="#">FAQs</a></li>
-                                <li><a href="#">Security</a></li>
-                                <li><a href="#">Mobile</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><Link href="/privacy-policy"><a >Privacy</a></Link></li>
+                                <li><Link href="/terms-and-conditions"><a >Terms</a></Link></li>
+                                <li><a >FAQs</a></li>
+                                <li><a >Security</a></li>
+                                <li><a >Mobile</a></li>
+                                <li><a >Contact</a></li>
                             </ul>
                         </div>
                         <div className="col-md-3">
                             <div className="f-title">Social Links</div>
                             <div className="social-links">
-                                <a href="#"><img src="img/fb.png" /></a>
-                                <a href="#"><img src="img/in.png" /></a>
-                                <a href="#"><img src="img/insta.png" /></a>
-                                <a href="#"><img src="img/tw.png" /></a>
+                                <a ><img src="img/fb.png" /></a>
+                                <a ><img src="img/in.png" /></a>
+                                <a ><img src="img/insta.png" /></a>
+                                <a ><img src="img/tw.png" /></a>
                             </div>
                             <div className="app-link mt-30">
-                                <a href="#"><img src="img/app-store.png" /></a>
-                                <a href="#" className="ml-20"><img src="img/play-store.png" /></a>
+                                <a ><img src="img/app-store.png" /></a>
+                                <a className="ml-20"><img src="img/play-store.png" /></a>
                             </div>
                         </div>
                     </div>

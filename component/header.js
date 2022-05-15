@@ -27,12 +27,6 @@ export default function header({ }) {
             <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
             <meta name="theme-color" content="#ffffff" />
 
-
-            <link rel="stylesheet" type="text/css" href="css/owl.carousel.css?v=32" />
-            <link rel="stylesheet" type="text/css" href="css/owl.theme.default.css?v=32" />
-            <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css?v=32" />
-            <link rel="stylesheet" type="text/css" href="css/style.css?v=32" />
-            <link rel="stylesheet" type="text/css" href="css/responsive.css?v=32" />
         </Head>
     )
 }
