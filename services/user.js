@@ -115,6 +115,17 @@ const updateUserCart = async ({ productID, quantity, cartType }) => {
     })
 }
 
+const clearUserCart = async () => {
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.clearUserCart.endPoint, API.clearUserCart.url, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
 const addProductReview = async ({ productID, rating, comment }) => {
     let postParams = { productID, rating, comment }
 
@@ -153,4 +164,4 @@ const getOrderDetail = async ({ orderID }) => {
     })
 }
 
-export { getUserDetail, updateUserAvatar, updateUserProfileInfo, getUserAddresses, addUserAddress, updateUserAddress, getUserWishlist, updateUserWishlist, updateUserCart, addProductReview, getAllOrders, getOrderDetail }
+export { getUserDetail, updateUserAvatar, updateUserProfileInfo, getUserAddresses, addUserAddress, updateUserAddress, getUserWishlist, updateUserWishlist, updateUserCart, clearUserCart, addProductReview, getAllOrders, getOrderDetail }

@@ -25,9 +25,6 @@ export default function AuthSideBar(props) {
                         </div>
                     </form>
                     <div className="d-flex align-items-center mt-40">
-                        <div>
-                            <a href="#" className="black-link text-uppercase">Continue as Business</a>
-                        </div>
                         <div className="ml-auto">
                             <a href="#" className="black-link text-uppercase">SKIP LOGIN</a>
                         </div>

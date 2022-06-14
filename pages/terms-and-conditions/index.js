@@ -90,7 +90,7 @@ export default function TermsAndConditions() {
                                 associated with any
                                 products offered on the Marketplace.&nbsp;&nbsp;&nbsp; <br /> <br /> Services on the
                                 Marketplace are available to
-                                only select geographies in India, and are subject to restrictions based on business hours
+                                only select geographies in India, and are subject to restrictions based on customer hours
                                 and days of third-party
                                 sellers. Transactions through the Marketplace may be subject to a delivery charge where the
                                 minimum order value is
@@ -117,7 +117,7 @@ export default function TermsAndConditions() {
                                 platform for
                                 end-consumers desirous of purchasing product(s) for domestic self-consumption. If you are a
                                 retailer, institution,
-                                wholesaler or any other business user, you are not eligible to use the Marketplace to
+                                wholesaler or any other customer user, you are not eligible to use the Marketplace to
                                 purchase products from
                                 third-party sellers, who have been granted access to the Marketplace to display and offer
                                 their products for sale
@@ -424,7 +424,7 @@ export default function TermsAndConditions() {
                                     under any circumstances, whether in contract or in tort, for any indirect, special,
                                     consequential or incidental
                                     losses or damages, including on grounds of loss of profit, loss of reputation or loss of
-                                    business opportunities.
+                                    customer opportunities.
                                 </li>
                             </ul>
                             <p>&nbsp;</p>

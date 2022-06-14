@@ -10,7 +10,7 @@ import * as ProductService from "../../../services/product";
 import Image from 'next/image';
 import Link from 'next/link';
 import Loader from '../../../component/loader';
-import { ProductCardBusiness } from "../../../component/productCard";
+import { ProductCard } from "../../../component/productCard";
 import Feature from '../../../component/feature';
 
 var $ = require("jquery");
@@ -206,8 +206,8 @@ export default function SubCategory(props) {
                                                 <div className="product-list d-flex flex-wrap">
                                                     {allProducts.map(item => {
                                                         return <div key={`product_item_${item._id}`}
-                                                            className="item business-product-card" >
-                                                            <ProductCardBusiness item={item} />
+                                                            className="item" >
+                                                            <ProductCard item={item} />
                                                         </div>
                                                     })}
                                                 </div>

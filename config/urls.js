@@ -8,7 +8,7 @@ const API = {
    * key: { url: '', endPoint: '' },
    */
   //Auth urls
-  uploadBusinessImage: { url: 'upload-business-image', endPoint: 'auth' },
+  uploadBusinessImage: { url: 'upload-customer-image', endPoint: 'auth' },
   register: { url: 'register', endPoint: 'auth' },
   sendOTP: { url: 'send-otp', endPoint: 'auth' },
   verifyOTP: { url: 'verify-otp', endPoint: 'auth' },

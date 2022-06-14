@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import CategoryCard from "../component/categoryCard";
-import { ProductCardBusiness } from "../component/productCard";
+import { ProductCard } from "../component/productCard";
 import * as MasterService from "../services/master";
 import { Config } from '../config/appConfig';
 import * as Enums from '../lib/enums'
@@ -20,7 +20,7 @@ export default function Home(props) {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [userType, setUserType] = useState('business')
+  const [userType, setUserType] = useState('customer')
 
   const [shortAddress, setShortAddress] = useState(null)
   const [fullAddress, setFullAddress] = useState(null)
@@ -67,7 +67,7 @@ export default function Home(props) {
       return data.map(item => {
         return <div key={`product_item_${item._id}`}
           className="item">
-          <ProductCardBusiness item={item} />
+          <ProductCard item={item} />
         </div>
       })
   }
@@ -113,7 +113,7 @@ export default function Home(props) {
                   nav={true}
                   dots={false}
                   responsiveClass={true}
-                  responsive={Enums.OwlCarouselSlider.fourItemSlider}
+                  responsive={Enums.OwlCarouselSlider.sevenItemSlider}
                 >
                   {renderFeaturedCategoryProducts(featuredCategory.products)}
                 </OwlCarousel>

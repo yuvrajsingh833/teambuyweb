@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
 import Feature from '../../component/feature';
 import Loader from '../../component/loader';
-import { ProductCardBusiness } from "../../component/productCard";
+import { ProductCard } from "../../component/productCard";
 import { Config } from '../../config/appConfig';
 import * as Dates from '../../lib/dateFormatService';
 import * as Enums from '../../lib/enums';
@@ -42,7 +42,7 @@ export default function ProductDetail(props) {
 
     const getProductDetail = (query) => {
 
-        ProductService.productDetail({ productID: query[1], userType: 'business' }).then(response => {
+        ProductService.productDetail({ productID: query[1], userType: 'customer' }).then(response => {
             setProductDetail(response.data)
             setIsLiked(response?.data?.is_liked || 0)
             setCartQuantity(response?.data?.cart_quantity || 0)
@@ -90,7 +90,7 @@ export default function ProductDetail(props) {
             return data.map(item => {
                 return <div key={`product_similar_item_${item._id}`}
                     className="item">
-                    <ProductCardBusiness item={item} />
+                    <ProductCard item={item} />
                 </div>
             })
     }
@@ -247,7 +247,7 @@ export default function ProductDetail(props) {
                         nav={true}
                         dots={false}
                         responsiveClass={true}
-                        responsive={Enums.OwlCarouselSlider.fourItemSlider}
+                        responsive={Enums.OwlCarouselSlider.sevenItemSlider}
                     >
                         {renderSimilarProducts(productDetail?.suggested_products)}
                     </OwlCarousel>

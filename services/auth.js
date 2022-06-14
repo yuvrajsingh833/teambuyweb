@@ -56,7 +56,7 @@ const logout = async ({ userID, deviceID }) => {
     let postParams = { userID, deviceID }
 
     return new Promise(function (resolve, reject) {
-        HTTPRequest.Post(API.logout.endPoint, API.logout.url, postParams)
+        HTTPRequest.Post(API.logout.endPoint, API.logout.url, postParams, {}, false, true, null, false)
             .then(result => {
                 resolve(result)
             }).catch(e => {

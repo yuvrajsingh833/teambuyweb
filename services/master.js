@@ -2,6 +2,30 @@ import * as Utils from "../lib/utils";
 import { API } from "../config/urls";
 import * as HTTPRequest from "../lib/httpRequest";
 
+const settings = async () => {
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.settings.endPoint, null, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+const deliveryPinCode = async () => {
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.deliveryPinCode.endPoint, null, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
 const dashboard = async ({ userType }) => {
     let queryString = { userType };
 
@@ -54,4 +78,4 @@ const calculateDistance = async ({ origins, destinations }) => {
     })
 }
 
-export { dashboard, search, reverseGeoLocation, calculateDistance }
+export { settings, deliveryPinCode, dashboard, search, reverseGeoLocation, calculateDistance }
