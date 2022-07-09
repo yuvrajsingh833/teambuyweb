@@ -1,12 +1,18 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-import CategoryCard from "../component/categoryCard";
-import { ProductCard } from "../component/productCard";
-import * as MasterService from "../services/master";
-import { Config } from '../config/appConfig';
-import * as Enums from '../lib/enums'
 import Link from 'next/link'
+
+
+import ProductCard from "../component/productCard";
+import CategoryCard from "../component/categoryCard";
+import Loader from '../component/loader'
+
+import * as MasterService from "../services/master";
+
+import * as Enums from '../lib/enums'
 import * as Utils from "../lib/utils"
+
+import { Config } from '../config/appConfig';
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -19,8 +25,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 export default function Home(props) {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [userType, setUserType] = useState('customer')
+
 
   const [shortAddress, setShortAddress] = useState(null)
   const [fullAddress, setFullAddress] = useState(null)
@@ -29,24 +34,21 @@ export default function Home(props) {
   const [featuredCategories, setFeaturedCategories] = useState([])
 
   const getDashboard = () => {
-    MasterService.dashboard({ userType: (userType || 'customer') }).then(response => {
+    MasterService.dashboard({ userType: 'customer' }).then(response => {
       let allFeatureCategory = JSON.parse(JSON.stringify(response.data.featuredCategories))
       allFeatureCategory.sort((a, b) => b.categoryID - a.categoryID);
 
       setFeaturedCategories(allFeatureCategory)
       setDashboardData(response.data)
-      setIsRefreshing(false)
       setIsLoading(false)
     }).catch(e => {
       console.log(`getDashboard error : ${e}`)
-      setIsRefreshing(false)
       setIsLoading(false)
     })
   }
 
   useEffect(() => {
     setIsLoading(true)
-    setIsRefreshing(true)
     getDashboard()
 
   }, [props]);
@@ -71,6 +73,9 @@ export default function Home(props) {
         </div>
       })
   }
+
+  if (isLoading) return <Loader />
+
 
   return (
     <>

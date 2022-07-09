@@ -10,7 +10,7 @@ import * as ProductService from "../../../services/product";
 import Image from 'next/image';
 import Link from 'next/link';
 import Loader from '../../../component/loader';
-import { ProductCard } from "../../../component/productCard";
+import ProductCard from "../../../component/productCard";
 import Feature from '../../../component/feature';
 
 var $ = require("jquery");

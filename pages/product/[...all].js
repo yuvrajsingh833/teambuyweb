@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
 import Feature from '../../component/feature';
 import Loader from '../../component/loader';
-import { ProductCard } from "../../component/productCard";
+import ProductCard from "../../component/productCard";
 import { Config } from '../../config/appConfig';
 import * as Dates from '../../lib/dateFormatService';
 import * as Enums from '../../lib/enums';

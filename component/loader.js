@@ -1,12 +1,17 @@
 import React from "react"
+import Image from "next/image"
 
 const Loader = () => {
   return (
     <div className="loader-container">
       <div className="loader-ball">
-        <div className="ball one"></div>
-        <div className="ball two"></div>
-        <div className="ball three"></div>
+        <Image
+          layout="raw"
+          alt="loader"
+          width={100}
+          height={100}
+          src="/loading.gif"
+        />
       </div>
     </div>
   );
