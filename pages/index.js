@@ -2,10 +2,10 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import Link from 'next/link'
 
-
 import ProductCard from "../component/productCard";
 import CategoryCard from "../component/categoryCard";
 import Loader from '../component/loader'
+import Feature from '../component/feature';
 
 import * as MasterService from "../services/master";
 
@@ -25,10 +25,6 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 export default function Home(props) {
 
   const [isLoading, setIsLoading] = useState(true);
-
-
-  const [shortAddress, setShortAddress] = useState(null)
-  const [fullAddress, setFullAddress] = useState(null)
 
   const [dashboardData, setDashboardData] = useState([])
   const [featuredCategories, setFeaturedCategories] = useState([])
@@ -75,7 +71,6 @@ export default function Home(props) {
   }
 
   if (isLoading) return <Loader />
-
 
   return (
     <>
@@ -126,6 +121,60 @@ export default function Home(props) {
             </section>)
         }
       })}
+
+      <section className="teambuy-app-wrap">
+        <div className="container">
+          <div className="teambuy-app-block">
+            <div className="ta-block1-flex row align-items-center">
+              <div className="col-md-5">
+                <div className="ta-heading">TeamBuy</div>
+                <div className="ta-subheading">Buy in a group and avail never seen before discounts on groceries and home essentials</div>
+                <div className="ta-subheading2">Teambuy is a Hyperlocal on demand social commerce platform for Grocery and home essentials delivery.Teambuy is making E-commerce more social, pocket friendly, fun, interactive and quick, one  customer at a time</div>
+              </div>
+              <div className="col-md-7 text-right">
+                <img src="/img/ta-block-img1.png" />
+              </div>
+            </div>
+            <div className="ta-block2-flex row align-items-center">
+              <div className="col-md-5">
+                <img src="/img/app-screens-img.png" />
+              </div>
+              <div className="col-md-7">
+                <div className="tab1-heading">Get the app now</div>
+                <div className="tab1-subheading mt-10">we will send you a link, open it on your phone to download the app</div>
+                <div className="mt-10">
+                  <div className="custom-radio d-inline-block">
+                    <input type="radio" id="emailApp" name="radio-group" />
+                    <label htmlFor="emailApp">Email</label>
+                  </div>
+                  <div className="custom-radio d-inline-block ml-20">
+                    <input type="radio" id="phoneApp" name="radio-group" />
+                    <label htmlFor="phoneApp">Phone</label>
+                  </div>
+                </div>
+                <form className="app-link-form mt-10">
+                  <div className="row">
+                    <div className="col-md-7">
+                      <input type="text" className="form-control" placeholder="Enter your email address" />
+                    </div>
+                    <div className="col-md-5">
+                      <button className="green-btn">Send Now</button>
+                    </div>
+                  </div>
+                </form>
+                <div className="tab1-subheading mt-20">Or download the app from</div>
+                <div className="app-link mt-20">
+                  <Link passHref href="https://apps.apple.com/us/app/teambuy/id1616147376"><a target={"_blank"} ><img src="/img/app-store.png" /></a></Link>
+                  <Link passHref href="https://play.google.com/store/apps/details?id=com.teambuy.android"><a target={"_blank"} className="ml-20"><img src="/img/play-store.png" /></a></Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <Feature />
     </>
   )
 }

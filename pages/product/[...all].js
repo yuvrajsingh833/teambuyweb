@@ -26,7 +26,6 @@ export default function ProductDetail(props) {
     const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.productBanner}`
 
     const [isLoading, setIsLoading] = useState(true);
-    const [isRefreshing, setIsRefreshing] = useState(false);
     const [productID, setProductID] = useState();
     const [productDetail, setProductDetail] = useState({});
     const [showProductDescription, setShowProductDescription] = useState(false);
@@ -47,17 +46,14 @@ export default function ProductDetail(props) {
             setIsLiked(response?.data?.is_liked || 0)
             setCartQuantity(response?.data?.cart_quantity || 0)
             setIsLoading(false)
-            setIsRefreshing(false)
         }).catch(e => {
             console.log(`getProductDetail error : ${e}`)
             setIsLoading(false)
-            setIsRefreshing(false)
         })
     }
 
     useEffect(() => {
         setIsLoading(true)
-        setIsRefreshing(false)
         all != undefined && getProductDetail(all)
     }, [props])
 
@@ -95,8 +91,10 @@ export default function ProductDetail(props) {
             })
     }
 
+    if (isLoading) return <Loader />
+
     return (
-        isLoading ? <Loader /> : <>
+        <>
             <Head>
                 <title>{productDetail?.name} {productDetail?.size} | Teambuy</title>
             </Head>
@@ -119,7 +117,8 @@ export default function ProductDetail(props) {
                                                 <Image
                                                     src={BASE_URL + imageItem.file_name}
                                                     alt={imageItem.file_name}
-                                                    height={600}
+                                                    height={450}
+                                                    style={{ objectFit: 'contain' }}
                                                     width={600}
                                                     layout="raw"
                                                 />

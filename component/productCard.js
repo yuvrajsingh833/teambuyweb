@@ -1,14 +1,35 @@
+import React, { useEffect, useState } from "react";
 import Link from 'next/link'
 import Image from 'next/image'
 import * as Utils from '../lib/utils'
+import * as UserService from "../services/user";
 
 export default function ProductCard({ item }) {
-    return (
+    const [cartQuantity, setCartQuantity] = useState(item.cart_quantity);
+    const [isLiked, setIsLiked] = useState(item.is_liked);
 
+    const setProductLike = (productId) => {
+        if (userData?.token?.length > 0) {
+            setIsLiked(!isLiked)
+
+            UserService.updateUserWishlist({ productID: productId }).then((response) => { console.log(response) }).catch(e => {
+                console.log(`${productId} updateUserWishlist error : ${e}`)
+            })
+        } else {
+            console.log("Please login fiorst")
+        }
+    }
+
+    useEffect(() => {
+        setCartQuantity(item.cart_quantity)
+        setIsLiked(item.is_liked)
+    }, [item])
+
+    return (
         <div className="white-box">
-            <a href="#" className="product-wishlist selected"></a>
-            <Link
-                key={`selected_category_item_${item.id}`}
+            <a onClick={() => setProductLike(item._id)} style={{ cursor: 'pointer', position: 'absolute', zIndex: 300 }} className={`product-wishlist ${isLiked ? 'selected' : ''}`}></a>
+            <Link Link
+                key={`product_item_${item._id}`}
                 passHref
                 href={{
                     pathname: '/product/[name]/[id]',
@@ -20,7 +41,11 @@ export default function ProductCard({ item }) {
                         <Image
                             src={Utils.generateProductImage(item)}
                             alt={item?.name}
-                            layout="fill" className={'common-product-image'}
+                            layout="raw"
+                            height={200}
+                            width={200}
+                            className={'common-product-image'}
+                            style={{ objectFit: 'contain' }}
                         />
                     </div>
 

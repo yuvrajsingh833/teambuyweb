@@ -1,17 +1,21 @@
 import dynamic from "next/dynamic";
 import Head from 'next/head';
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/router'
-import { Config } from '../../../config/appConfig';
-import * as Utils from '../../../lib/utils';
-import * as Enums from '../../../lib/enums';
-import * as CategoryService from "../../../services/category";
-import * as ProductService from "../../../services/product";
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router'
+
+import { Config } from '../../../config/appConfig';
+
 import Loader from '../../../component/loader';
 import ProductCard from "../../../component/productCard";
 import Feature from '../../../component/feature';
+
+import * as Utils from '../../../lib/utils';
+import * as Enums from '../../../lib/enums';
+
+import * as CategoryService from "../../../services/category";
+import * as ProductService from "../../../services/product";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -26,7 +30,6 @@ export default function SubCategory(props) {
     const { id, name } = router.query;
 
     const [isLoading, setIsLoading] = useState(true);
-    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const [categoryID, setCategoryID] = useState();
     const [categoryName, setCategoryName] = useState('');
@@ -42,6 +45,7 @@ export default function SubCategory(props) {
     const [currentPageNo, setCurrentPageNo] = useState(1)
 
     const getAllProducts = (subCategoryID, page = currentPageNo) => {
+        setIsLoading(true)
         ProductService.allProductByCategory({ categoryID: subCategoryID }).then(response => {
             if (page == 1) setCurrentPageNo(1);
 
@@ -49,15 +53,14 @@ export default function SubCategory(props) {
             setProductInfo(response.data.paginator)
 
             setIsLoading(false)
-            setIsRefreshing(false)
         }).catch(e => {
             console.log(`getAllProductByCategory error : ${e}`)
             setIsLoading(false)
-            setIsRefreshing(false)
         })
     }
 
     const getAllSubCategories = (newCategoryID = categoryID) => {
+        setIsLoading(true)
         CategoryService.subCategory({ categoryID: newCategoryID }).then(subCategoryResponse => {
             setAllSubCategories(subCategoryResponse.data.sub_categories)
 
@@ -69,12 +72,10 @@ export default function SubCategory(props) {
                 getAllProducts(subCategoryResponse.data.sub_categories[0]?.id)
             } else {
                 setIsLoading(false)
-                setIsRefreshing(false)
             }
         }).catch(e => {
             console.log(`subCategory error : ${e}`)
             setIsLoading(false)
-            setIsRefreshing(false)
         })
     }
 
@@ -90,13 +91,11 @@ export default function SubCategory(props) {
         }).catch(e => {
             console.log(`getAllCategory error : ${e}`)
             setIsLoading(false)
-            setIsRefreshing(false)
         })
     }
 
     useEffect(() => {
         setIsLoading(true)
-        setIsRefreshing(false)
         id != undefined && getAllCategory(id)
     }, [props])
 
@@ -136,8 +135,10 @@ export default function SubCategory(props) {
             })
     }
 
+    if (isLoading) return <Loader />
+
     return (
-        isLoading ? <Loader /> : <>
+        <>
             <Head>
                 <title>Buy {categoryName} - {subCategoryName} | Teambuy</title>
             </Head>

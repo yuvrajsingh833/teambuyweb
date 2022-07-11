@@ -19,7 +19,11 @@ export default function CategoryCard({ item }) {
                         <Image
                             src={BASE_URL + item.icon}
                             alt={item.name}
-                            layout="fill" className={'common-category-image'}
+                            height={200}
+                            width={200}
+                            style={{ objectFit: 'contain' }}
+                            layout="raw"
+                            className={'common-category-image'}
                         />
                     </div>
                     <div className="product-content">

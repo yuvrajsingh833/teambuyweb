@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import * as CategoryService from "../services/category";
 import Link from 'next/link'
 
+import * as Utils from "../lib/utils"
 
 export default function Footer(props) {
     const [categories, setCategories] = useState([])
@@ -25,22 +26,41 @@ export default function Footer(props) {
             <div className="footer-top">
                 <div className="container">
                     <div className="footer-logo">
-                        <a href="index.html"> <img src="/img/footer-logo.png" /> </a>
+                        <Link passHref href="/"><a><img src="/img/footer-logo.png" /> </a></Link>
                     </div>
                     <div className="row">
                         <div className="col-md-5">
                             <div className="f-title">Categories</div>
                             <div className="d-flex flex-wrap">
                                 <ul className="f-menu w-50">
-                                    {categories.slice(0, (categories.length / 2)).map(mapItems => {
-                                        return <li key={`footer_category_${mapItems.id}`}><a >{mapItems.name}</a></li>
+                                    {categories.slice(0, (categories.length / 2)).map(mapItem => {
+                                        return <li key={`footer_category_${mapItem.id}`}>
+                                            <Link
+                                                passHref
+                                                href={{
+                                                    pathname: '/category/[id]/[name]',
+                                                    query: { id: mapItem.id, name: Utils.convertToSlug(mapItem.name) },
+                                                }}
+                                            >
+                                                <a >{mapItem.name}</a>
+                                            </Link>
+                                        </li>
                                     })}
-
                                 </ul>
 
                                 <ul className="f-menu w-50">
-                                    {categories.slice((categories.length / 2), categories.length - 1).map(mapItems => {
-                                        return <li key={`footer_category_${mapItems.id}`}><a >{mapItems.name}</a></li>
+                                    {categories.slice((categories.length / 2), categories.length - 1).map(mapItem => {
+                                        return <li key={`footer_category_${mapItem.id}`}>
+                                            <Link
+                                                passHref
+                                                href={{
+                                                    pathname: '/category/[id]/[name]',
+                                                    query: { id: mapItem.id, name: Utils.convertToSlug(mapItem.name) },
+                                                }}
+                                            >
+                                                <a >{mapItem.name}</a>
+                                            </Link>
+                                        </li>
                                     })}
 
                                 </ul>
@@ -59,8 +79,8 @@ export default function Footer(props) {
                         <div className="col-md-2">
                             <div className="f-title">For Consumers</div>
                             <ul className="f-menu">
-                                <li><Link passHref href="/privacy-policy"><a >Privacy</a></Link></li>
-                                <li><Link passHref href="/terms-and-conditions"><a >Terms</a></Link></li>
+                                <li><Link passHref href="/pages/privacy-policy"><a >Privacy</a></Link></li>
+                                <li><Link passHref href="/pages/terms-and-conditions"><a >Terms</a></Link></li>
                                 <li><a >FAQs</a></li>
                                 <li><a >Security</a></li>
                                 <li><a >Mobile</a></li>
@@ -76,8 +96,8 @@ export default function Footer(props) {
                                 <a ><img src="/img/tw.png" /></a>
                             </div>
                             <div className="app-link mt-30">
-                                <a ><img src="/img/app-store.png" /></a>
-                                <a className="ml-20"><img src="/img/play-store.png" /></a>
+                                <Link passHref href="https://apps.apple.com/us/app/teambuy/id1616147376"><a target={"_blank"} ><img src="/img/app-store.png" /></a></Link>
+                                <Link passHref href="https://play.google.com/store/apps/details?id=com.teambuy.android"><a target={"_blank"} className="ml-20"><img src="/img/play-store.png" /></a></Link>
                             </div>
                         </div>
                     </div>

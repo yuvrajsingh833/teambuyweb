@@ -3,7 +3,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
+
+import Loader from '../../component/loader'
+
 import { Config } from '../../config/appConfig';
+
 import * as Utils from '../../lib/utils';
 import * as CategoryService from "../../services/category";
 
@@ -18,25 +22,21 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 export default function Category(props) {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const [allCategories, setAllCategories] = useState([])
 
     const getAllCategory = () => {
         CategoryService.allCategory().then(response => {
             setAllCategories(response.data)
-            setIsRefreshing(false)
             setIsLoading(false)
         }).catch(e => {
             console.log(`getAllCategory error : ${e}`)
-            setIsRefreshing(false)
             setIsLoading(false)
         })
     }
 
     useEffect(() => {
         setIsLoading(true)
-        setIsRefreshing(false)
         getAllCategory()
     }, [props])
 
@@ -67,6 +67,8 @@ export default function Category(props) {
                                         alt={item.name}
                                         height={200}
                                         width={200}
+
+                                        style={{ objectFit: 'contain' }}
                                         layout="raw" className={'category-image'}
                                     />
                                 </div>
