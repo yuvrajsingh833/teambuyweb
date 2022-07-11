@@ -71,9 +71,21 @@ export default function Footer(props) {
                             <ul className="f-menu">
                                 <li><a >Who We Are</a></li>
                                 <li><a >Blog</a></li>
-                                <li><a >Careers</a></li>
-                                <li><a >Report Fraud</a></li>
-                                <li><a >Contact</a></li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/career" }}>
+                                        <a className="black-text font-poppins">Careers</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/contact-us" }}>
+                                        <a className="black-text font-poppins">Report Fraud</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/contact-us" }}>
+                                        <a className="black-text font-poppins">Contact</a>
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                         <div className="col-md-2">
@@ -81,10 +93,17 @@ export default function Footer(props) {
                             <ul className="f-menu">
                                 <li><Link passHref href="/pages/privacy-policy"><a >Privacy</a></Link></li>
                                 <li><Link passHref href="/pages/terms-and-conditions"><a >Terms</a></Link></li>
-                                <li><a >FAQs</a></li>
-                                <li><a >Security</a></li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/faqs" }}>
+                                        <a className="black-text font-poppins">FAQs</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/security" }}>
+                                        <a className="black-text font-poppins">Security</a>
+                                    </Link>
+                                </li>
                                 <li><a >Mobile</a></li>
-                                <li><a >Contact</a></li>
                             </ul>
                         </div>
                         <div className="col-md-3">

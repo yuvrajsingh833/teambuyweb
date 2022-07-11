@@ -29,7 +29,6 @@ export default function PromotionalOffers(props) {
         const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.promotionalBanner}`
 
         return data.map(item => {
-            console.log(data)
             return <div key={`top_banners_${item.id}`}
                 className="item">
                 <div className="top-banner-box" style={{
@@ -42,7 +41,6 @@ export default function PromotionalOffers(props) {
                         <div className="md-heading" style={{ color: item.heading_color }}>{item.heading}</div>
                         <div className="sm-subheading mt-10" style={{ color: item.sub_heading_color }}>{item.sub_heading}</div>
                         {item.button_text ? <div className="mt-20">
-
                             {(item.category_id && item.category_id != 0) ? <Link
                                 passHref
                                 href={{
@@ -58,8 +56,8 @@ export default function PromotionalOffers(props) {
                                 alt={item.heading}
                                 layout="fixed"
                                 objectFit="contain"
-                                width={150}
-                                height={150}
+                                width={200}
+                                height={200}
                                 src={BASE_URL + item.icon}
                             />
                         </div>

@@ -34,7 +34,7 @@ export const Config = {
 		userAvatar: 'user_avatar/',
 	},
 
-	PageSize: 10,
+	PageSize: 5,
 	DateFormat: 'DD MMM, YYYY ',
 
 	AndroidAPIKey: 'AIzaSyDoCKdscp-j7pEv5HR8oUsfqUFAcgLqMUA',

@@ -1,7 +1,7 @@
 import { ActionTypes } from "../types";
 
 const initialState = {
-    appData: {
+    userData: {
         defaultLanguage: 'english',
         userData: {},
     }

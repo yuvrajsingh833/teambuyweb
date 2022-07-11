@@ -7,14 +7,14 @@ import { useSelector } from 'react-redux'
 
 export default function ProductCard({ item }) {
 
-    const appData = useSelector(state => state.appData)
-    const userData = appData?.userData
+    const userData = useSelector(state => state.userData)
+    const user = userData?.userData
 
     const [cartQuantity, setCartQuantity] = useState(item.cart_quantity);
     const [isLiked, setIsLiked] = useState(item.is_liked);
 
     const setProductLike = (productId) => {
-        if (userData?.token?.length > 0) {
+        if (user?.token?.length > 0) {
             setIsLiked(!isLiked)
 
             UserService.updateUserWishlist({ productID: productId }).then((response) => { console.log(response) }).catch(e => {
@@ -32,7 +32,7 @@ export default function ProductCard({ item }) {
 
     return (
         <div className="white-box">
-            <a onClick={() => setProductLike(item._id)} style={{ cursor: 'pointer', position: 'absolute', zIndex: 300 }} className={`product-wishlist ${isLiked ? 'selected' : ''}`}></a>
+            <a onClick={() => setProductLike(item._id)} style={{ cursor: 'pointer', position: 'absolute', zIndex: 1 }} className={`product-wishlist ${isLiked ? 'selected' : ''}`}></a>
             <Link Link
                 key={`product_item_${item._id}`}
                 passHref

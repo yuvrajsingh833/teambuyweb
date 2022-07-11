@@ -1,19 +1,17 @@
 import dynamic from "next/dynamic";
+import Link from 'next/link';
 import React, { useEffect, useState } from "react";
-import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
 
-import ProductCard from "../component/productCard";
 import CategoryCard from "../component/categoryCard";
-import Loader from '../component/loader'
 import Feature from '../component/feature';
+import Loader from '../component/loader';
+import ProductCard from "../component/productCard";
 
 import * as MasterService from "../services/master";
 
-import * as Enums from '../lib/enums'
-import * as Utils from "../lib/utils"
+import * as Enums from '../lib/enums';
+import * as Utils from "../lib/utils";
 
-import { Config } from '../config/appConfig';
 import PromotionalOffers from "../component/promotionalOffers";
 
 var $ = require("jquery");
@@ -24,9 +22,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
   ssr: false,
 });
 
-const Home = (props) => {
-  const dispatch = useDispatch()
-  const appData = useSelector(state => state.appData)
+export default function Home(props) {
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -184,5 +180,3 @@ const Home = (props) => {
     </>
   )
 }
-
-export default Home

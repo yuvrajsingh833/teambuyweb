@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Config } from '../../../config/appConfig';
 
@@ -26,6 +27,8 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 
 export default function SubCategory(props) {
+    let lastScrollTop = 0;
+
     const router = useRouter();
     const { id, name } = router.query;
 
@@ -44,12 +47,19 @@ export default function SubCategory(props) {
 
     const [currentPageNo, setCurrentPageNo] = useState(1)
 
-    const getAllProducts = (subCategoryID, page = currentPageNo) => {
-        setIsLoading(true)
-        ProductService.allProductByCategory({ categoryID: subCategoryID }).then(response => {
-            if (page == 1) setCurrentPageNo(1);
+    const getAllProducts = (subCategoryID, page = currentPageNo, loading = true) => {
+        setIsLoading(loading)
+        ProductService.allProductByCategory({ categoryID: subCategoryID, limit: Config.PageSize, page: page }).then(response => {
+            let dataItems = response.data.items
 
-            setAllProducts(response.data.items)
+            if (page == 1) {
+                setCurrentPageNo(1);
+                setAllProducts(dataItems)
+            } else {
+                let newDataList = [...allProducts, ...dataItems]
+                setAllProducts(newDataList)
+            }
+
             setProductInfo(response.data.paginator)
 
             setIsLoading(false)
@@ -58,6 +68,17 @@ export default function SubCategory(props) {
             setIsLoading(false)
         })
     }
+
+    const getMoreProducts = () => {
+        console.log("productInfo.hasNextPage", productInfo.hasNextPage)
+
+        if (productInfo.hasNextPage) {
+            let newPageNo = currentPageNo + 1;
+            setCurrentPageNo(newPageNo)
+            getAllProducts(subCategoryID, newPageNo, false)
+        }
+    }
+
 
     const getAllSubCategories = (newCategoryID = categoryID) => {
         setIsLoading(true)
@@ -100,9 +121,27 @@ export default function SubCategory(props) {
         })
     }
 
+    const handleScroll = event => {
+
+        var scroll = window.scrollY
+        if (scroll > lastScrollTop) {
+            getMoreProducts()
+        }
+
+        lastScrollTop = scroll <= 0 ? 0 : scroll;
+    };
+
     useEffect(() => {
         setIsLoading(true)
+
         id != undefined && getAllCategory(id)
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+
     }, [props])
 
     const renderCategory = (data) => {
@@ -168,7 +207,7 @@ export default function SubCategory(props) {
                         <div>
                             <div className="d-flex align-items-center scp-header-flex">
                                 <div className="d-flex align-items-center">
-                                    <nav className="custom-breadcrumb" aria-label="breadcrumb">
+                                    <nav className="custom-breadcrumb global-breadcrumb" aria-label="breadcrumb">
                                         <ol className="breadcrumb">
                                             <li className="breadcrumb-item"><Link href="/"><a>Home</a></Link></li>
                                             <li className="breadcrumb-item active" aria-current="page">{categoryName}</li>
@@ -192,7 +231,7 @@ export default function SubCategory(props) {
                                 {/* Sub category side bar */}
                                 <div className="common-left">
                                     <div className="sm-heading">{categoryName}</div>
-                                    <div className="nav flex-column nav-pills mt-20" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <div className="nav flex-column nav-pills mt-20">
                                         {allSubCategories.map(subCategoryItem => {
                                             let activeClass = `nav-link ${subCategoryItem.id == subCategoryID ? 'active' : ''}`;
 
@@ -200,7 +239,7 @@ export default function SubCategory(props) {
                                                 setSubCategoryID(subCategoryItem.id)
                                                 setSubCategoryName(subCategoryItem.name)
                                                 getAllProducts(subCategoryItem.id, 1)
-                                            }} key={`list_${categoryName}_${subCategoryItem.name}`} className={activeClass} id="v-pills-fruits-tab" data-bs-toggle="pill" data-bs-target="#v-pills-fruits" type="button" role="tab" aria-controls={"v-pills-fruits"} aria-selected="true">{subCategoryItem.name} <span className="arrow-right"></span></button>
+                                            }} key={`list_${categoryName}_${subCategoryItem.name}`} className={activeClass}>{subCategoryItem.name} <span className="arrow-right"></span></button>
                                         })}
                                     </div>
                                 </div>
@@ -208,11 +247,11 @@ export default function SubCategory(props) {
                                 {/* Selected sub category product list */}
                                 <div className="common-right">
                                     {allProducts.length > 0 ?
-                                        <div className="tab-content" id="v-pills-tabContent">
-                                            <div className="tab-pane fade show active" id={"v-pills-fruits"} role="tabpanel" aria-labelledby="v-pills-fruits-tab">
+                                        <div className="tab-content" >
+                                            <div className="tab-pane fade show active">
                                                 <div className="product-list d-flex flex-wrap">
-                                                    {allProducts.map(item => {
-                                                        return <div key={`product_item_${item._id}`}
+                                                    {allProducts.map((item, index) => {
+                                                        return <div key={`product_item_${item._id}_${index}`}
                                                             className="item" >
                                                             <ProductCard item={item} />
                                                         </div>

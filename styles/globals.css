@@ -97,3 +97,7 @@ a {
 .customer-product-card {
   width: 25% !important;
 }
+
+.global-breadcrumb {
+  --bs-breadcrumb-divider: ">";
+}

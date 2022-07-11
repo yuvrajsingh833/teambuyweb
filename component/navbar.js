@@ -7,9 +7,9 @@ import * as Utils from "../lib/utils"
 import * as MasterService from "../services/master";
 
 export default function Navbar(props) {
-    const appData = useSelector(state => state.appData)
-    const userData = appData?.userData
-    global.userData = appData?.userData
+    const userData = useSelector(state => state.userData)
+    const user = userData?.userData
+    global.user = userData?.userData
 
     const [isLoading, setIsLoading] = useState(true)
     const [shortAddress, setShortAddress] = useState(null)
@@ -35,7 +35,7 @@ export default function Navbar(props) {
 
     useEffect(() => {
         getLocation()
-        setTimeout(() => { setIsLoading(false) }, 2000)
+        setTimeout(() => { setIsLoading(false) }, 200)
     }, [props])
 
     if (isLoading) return <header />
@@ -65,7 +65,7 @@ export default function Navbar(props) {
                     <div className="main-menu">
                         <ul>
                             <li><Link passHref href="/category"><a href="#">Category</a></Link></li>
-                            {userData?.token?.length > 0 ? null : <li><a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a></li>}
+                            {user?.token?.length > 0 ? <li><Link passHref href="/account"><a style={{ cursor: 'pointer' }}  >My Account</a></Link></li> : <li><a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a></li>}
                         </ul>
                     </div>
 
@@ -74,14 +74,14 @@ export default function Navbar(props) {
                     </div>
 
                     <div className="login-for-mobile">
-                        {userData?.token?.length > 0 ? null : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a>}
+                        {user?.token?.length > 0 ? <Link passHref href="/account"><a style={{ cursor: 'pointer' }}  >My Account</a></Link> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a>}
                     </div>
 
                     <div className="wish-block">
-                        {userData?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className='wishlist-icon'></a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className={'wishlist-icon jq_login'}></a>}
+                        {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className='wishlist-icon'></a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className={'wishlist-icon jq_login'}></a>}
                     </div>
                     <div className="cart-block">
-                        {userData?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className="cart-box"> <img src="/img/cart-icon.svg" /> 0 Items</a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box jq_login"> <img src="/img/cart-icon.svg" /> 0 Items</a>}
+                        {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className="cart-box"> <img src="/img/cart-icon.svg" /> 0 Items</a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box jq_login"> <img src="/img/cart-icon.svg" /> 0 Items</a>}
                     </div>
                 </div>
             </div>
