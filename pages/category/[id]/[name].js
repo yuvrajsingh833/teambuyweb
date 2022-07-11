@@ -62,17 +62,23 @@ export default function SubCategory(props) {
     const getAllSubCategories = (newCategoryID = categoryID) => {
         setIsLoading(true)
         CategoryService.subCategory({ categoryID: newCategoryID }).then(subCategoryResponse => {
-            setAllSubCategories(subCategoryResponse.data.sub_categories)
 
-            if (categoryID != newCategoryID) { setCategoryID(newCategoryID) }
+            if (subCategoryResponse.data.sub_categories) {
+                setAllSubCategories(subCategoryResponse.data.sub_categories)
 
-            if (subCategoryResponse.data.sub_categories.length > 0) {
-                setSubCategoryID(subCategoryResponse.data.sub_categories[0]?.id)
-                setSubCategoryName(subCategoryResponse.data.sub_categories[0]?.name)
-                getAllProducts(subCategoryResponse.data.sub_categories[0]?.id)
+                if (categoryID != newCategoryID) { setCategoryID(newCategoryID) }
+
+                if (subCategoryResponse.data.sub_categories.length > 0) {
+                    setSubCategoryID(subCategoryResponse.data.sub_categories[0]?.id)
+                    setSubCategoryName(subCategoryResponse.data.sub_categories[0]?.name)
+                    getAllProducts(subCategoryResponse.data.sub_categories[0]?.id)
+                } else {
+                    setIsLoading(false)
+                }
             } else {
-                setIsLoading(false)
+                window.location.replace(`../../${router.asPath.split('/')[1]}`)
             }
+
         }).catch(e => {
             console.log(`subCategory error : ${e}`)
             setIsLoading(false)

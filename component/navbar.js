@@ -1,13 +1,17 @@
-import Image from 'next/image'
-import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 import * as Utils from "../lib/utils"
 
 import * as MasterService from "../services/master";
 
 export default function Navbar(props) {
+    const appData = useSelector(state => state.appData)
+    const userData = appData?.userData
+    global.userData = appData?.userData
+
+    const [isLoading, setIsLoading] = useState(true)
     const [shortAddress, setShortAddress] = useState(null)
     const [fullAddress, setFullAddress] = useState(null)
     const [locationError, setLocationError] = useState(null)
@@ -29,11 +33,12 @@ export default function Navbar(props) {
         }
     }
 
-
     useEffect(() => {
         getLocation()
+        setTimeout(() => { setIsLoading(false) }, 2000)
     }, [props])
 
+    if (isLoading) return <header />
     return (
         <header className="header-wrap">
             <div className="container">
@@ -48,7 +53,7 @@ export default function Navbar(props) {
                             </div>
                             <div className="had-location">
                                 <div className="had-area-name">{shortAddress}</div>
-                                <div className="had-area-desc">{Utils.truncateString(fullAddress, 80)}</div>
+                                <div className="had-area-desc">{Utils.truncateString(fullAddress, 50)}</div>
                             </div>
                         </>}
 
@@ -60,23 +65,23 @@ export default function Navbar(props) {
                     <div className="main-menu">
                         <ul>
                             <li><Link passHref href="/category"><a href="#">Category</a></Link></li>
-                            <li><a className="jq_login">Login</a></li>
+                            {userData?.token?.length > 0 ? null : <li><a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a></li>}
                         </ul>
                     </div>
 
                     <div className="search-for-mobile">
                         <a href="#" className="mobile-search"><img src="/img/search.svg" /></a>
                     </div>
+
                     <div className="login-for-mobile">
-                        <a className="jq_login">Login</a>
+                        {userData?.token?.length > 0 ? null : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a>}
                     </div>
+
                     <div className="wish-block">
-                        <a href="#" className="wishlist-icon"></a>
+                        {userData?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className='wishlist-icon'></a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className={'wishlist-icon jq_login'}></a>}
                     </div>
                     <div className="cart-block">
-                        <a href="#" className="cart-box">
-                            <img src="/img/cart-icon.svg" /> 0 Items
-                        </a>
+                        {userData?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className="cart-box"> <img src="/img/cart-icon.svg" /> 0 Items</a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box jq_login"> <img src="/img/cart-icon.svg" /> 0 Items</a>}
                     </div>
                 </div>
             </div>

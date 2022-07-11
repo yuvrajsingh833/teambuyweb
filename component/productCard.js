@@ -3,8 +3,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import * as Utils from '../lib/utils'
 import * as UserService from "../services/user";
+import { useSelector } from 'react-redux'
 
 export default function ProductCard({ item }) {
+
+    const appData = useSelector(state => state.appData)
+    const userData = appData?.userData
+
     const [cartQuantity, setCartQuantity] = useState(item.cart_quantity);
     const [isLiked, setIsLiked] = useState(item.is_liked);
 
@@ -16,7 +21,7 @@ export default function ProductCard({ item }) {
                 console.log(`${productId} updateUserWishlist error : ${e}`)
             })
         } else {
-            console.log("Please login fiorst")
+            window.openLoginSideBar();
         }
     }
 

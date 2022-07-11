@@ -1,4 +1,4 @@
-import { ActionTypes } from "../actions/index";
+import { ActionTypes } from "../types";
 
 const initialState = {
     appData: {
@@ -33,7 +33,7 @@ const defaultLanguage = (state = 'english', action) => {
     }
 };
 
-export const AppReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action) => {
 
     let newState = {
         userData: userData(state.userData, action),
@@ -45,3 +45,6 @@ export const AppReducer = (state = initialState, action) => {
     }
     return newState;
 };
+
+
+export default rootReducer;

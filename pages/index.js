@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
 
 import ProductCard from "../component/productCard";
 import CategoryCard from "../component/categoryCard";
@@ -13,6 +14,7 @@ import * as Enums from '../lib/enums'
 import * as Utils from "../lib/utils"
 
 import { Config } from '../config/appConfig';
+import PromotionalOffers from "../component/promotionalOffers";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -22,7 +24,9 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
   ssr: false,
 });
 
-export default function Home(props) {
+const Home = (props) => {
+  const dispatch = useDispatch()
+  const appData = useSelector(state => state.appData)
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -74,6 +78,8 @@ export default function Home(props) {
 
   return (
     <>
+      {dashboardData?.promotionalOffers?.length > 0 && <PromotionalOffers bannerData={dashboardData?.promotionalOffers} />}
+
       <section className="category-wrap ptb-30">
         <div className="container">
           <div className="heading-flex">
@@ -178,3 +184,5 @@ export default function Home(props) {
     </>
   )
 }
+
+export default Home

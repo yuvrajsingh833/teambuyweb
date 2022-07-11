@@ -10,6 +10,7 @@ const Loader = () => {
           alt="loader"
           width={100}
           height={100}
+          priority
           src="/loading.gif"
         />
       </div>

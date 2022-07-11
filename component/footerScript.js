@@ -36,12 +36,19 @@ export default function FooterScript({ }) {
                     $(".search-box").toggleClass("open");
                 })     
 
-                
                 $(".jq_login").click(function(){
                     $("#loginSidebar").addClass("active");
                     $('body').addClass('overflow-active');
                     $('.sidebar-overlay-bg').addClass('active');
                 });
+
+                $(".back-arrow").click(function(){
+                    $("#mobileVerfication").removeClass("active");
+                    $("#loginSidebar").addClass("active");
+                    $('body').addClass('overflow-active');
+                    $('.sidebar-overlay-bg').addClass('active');
+                });
+
                 $(".sidebar-overlay-bg").click(function(){
                     $("#loginSidebar").removeClass("active");
                     $('body').removeClass('overflow-active');
@@ -62,6 +69,19 @@ export default function FooterScript({ }) {
                     $("#wishlistSidebar").removeClass("active");
                 });
 
+
+                function openLoginSideBar(){
+                    $("#loginSidebar").addClass("active");
+                    $('body').addClass('overflow-active');
+                    $('.sidebar-overlay-bg').addClass('active');
+                }
+
+                function openOTPSideBar(){
+                   $("#loginSidebar").removeClass("active");
+                    $("#mobileVerfication").addClass("active");
+                    $('body').addClass('overflow-active');
+                    $('.sidebar-overlay-bg').addClass('active');
+                }
                 
                 $(document).ready(function(){
                     $(".btn-minus").on("click",function(){
@@ -79,6 +99,7 @@ export default function FooterScript({ }) {
                         }
                     })                   
                 })
+
                 `}
             </Script>
         </>
