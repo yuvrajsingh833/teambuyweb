@@ -15,8 +15,8 @@ export default function AccountSideBar(props) {
         <>
             <ul className="left-menu">
                 <li className="lm-back-arrow">
-                    <a style={{ cursor: 'pointer' }} className=" pl-0">
-                        <img src="img/back-arrow.png" />
+                    <a onClick={() => window.closeUserSideBar()} style={{ cursor: 'pointer' }} className="pl-0">
+                        <img src="/img/back-arrow.png" />
                     </a>
                 </li>
                 <li className={router.asPath == "/account" ? "active" : ""}>
@@ -24,9 +24,6 @@ export default function AccountSideBar(props) {
                 </li>
                 <li className={router.asPath == "/account/addresses" ? "active" : ""}>
                     <Link passHref href={{ pathname: "/account/addresses" }}><a ><span className="lm-icon lm-addresses-icon"></span> My addresses <span className="lm-arrow"></span></a></Link>
-                </li>
-                <li className={router.asPath == "/account/wishlist" ? "active" : ""}>
-                    <Link passHref href={{ pathname: "/account/wishlist" }}><a ><span className="lm-icon lm-wishlist-icon"></span> My wishlist <span className="lm-arrow"></span></a></Link>
                 </li>
                 <li className={router.asPath == "/account/notifications" ? "active" : ""}>
                     <Link passHref href={{ pathname: "/account/notifications" }}><a ><span className="lm-icon lm-notification-icon"></span> Notifications <span className="lm-arrow"></span></a></Link>
@@ -42,9 +39,10 @@ export default function AccountSideBar(props) {
                     <Link passHref href={{ pathname: "/account/transactions" }}><a ><span className="lm-icon lm-transaction-icon"></span> My transactions <span className="lm-arrow"></span></a></Link>
                 </li>
                 <hr className="custom-hr2" />
-                <li className={router.asPath == "/account/addresses" ? "active" : ""}>
+                <li>
                     <Link passHref href={{ pathname: "/account/wallet" }}><a ><span className="lm-icon lm-signout-icon"></span> Sign out <span className="lm-arrow"></span></a></Link>
                 </li>
+                <div className="mt-10 green-text xs-heading fw-500 text-center">Version 0.0.2</div>
             </ul>
         </>
     )

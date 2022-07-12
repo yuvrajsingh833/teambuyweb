@@ -28,6 +28,8 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 
 export default function SubCategory(props) {
     let lastScrollTop = 0;
+    const BASE_URL_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.categoryIcon}`
+    const BASE_URL_SUB_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.subCategoryIcon}`
 
     const router = useRouter();
     const { id, name } = router.query;
@@ -70,15 +72,12 @@ export default function SubCategory(props) {
     }
 
     const getMoreProducts = () => {
-        console.log("productInfo.hasNextPage", productInfo.hasNextPage)
-
         if (productInfo.hasNextPage) {
             let newPageNo = currentPageNo + 1;
             setCurrentPageNo(newPageNo)
             getAllProducts(subCategoryID, newPageNo, false)
         }
     }
-
 
     const getAllSubCategories = (newCategoryID = categoryID) => {
         setIsLoading(true)
@@ -145,7 +144,6 @@ export default function SubCategory(props) {
     }, [props])
 
     const renderCategory = (data) => {
-        const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.categoryIcon}`
         if (data)
             return data.map(item => {
                 return <Link
@@ -163,12 +161,12 @@ export default function SubCategory(props) {
                         }} className="deal-box purple-box dtd-box" style={{ backgroundColor: item.bg_color_light }}>
                             <div className="scp-img text-center mt-0">
                                 <Image
-                                    src={BASE_URL + item.icon}
+                                    src={BASE_URL_CATEGORY + item?.icon}
                                     alt={item.name}
-                                    height={100}
-                                    width={100}
+                                    height={150}
+                                    width={150}
+                                    style={{ objectFit: 'contain', maxHeight: 60 }}
                                     layout="raw"
-                                    style={{ maxHeight: 60 }}
                                 />
                             </div>
                             <div className="dtd-content">
@@ -193,7 +191,7 @@ export default function SubCategory(props) {
                     <OwlCarousel
                         className="scp-slider owl-carousel common-navs mt-20"
                         loop={false}
-                        margin={12}
+                        margin={4}
                         nav={true}
                         dots={false}
                         responsiveClass={true}
@@ -227,19 +225,32 @@ export default function SubCategory(props) {
                                 </div>
                             </div>
 
-                            <div className="d-flex common-flex mt-30">
+                            <div className="d-flex common-flex mt-30 scp-flex">
+                                <div className="sm-heading for-mobile w-100 mb-2">{categoryName}</div>
                                 {/* Sub category side bar */}
                                 <div className="common-left">
-                                    <div className="sm-heading">{categoryName}</div>
+                                    <div className="sm-heading for-desktop">{categoryName}</div>
                                     <div className="nav flex-column nav-pills mt-20">
                                         {allSubCategories.map(subCategoryItem => {
                                             let activeClass = `nav-link ${subCategoryItem.id == subCategoryID ? 'active' : ''}`;
-
                                             return <button onClick={() => {
                                                 setSubCategoryID(subCategoryItem.id)
                                                 setSubCategoryName(subCategoryItem.name)
                                                 getAllProducts(subCategoryItem.id, 1)
-                                            }} key={`list_${categoryName}_${subCategoryItem.name}`} className={activeClass}>{subCategoryItem.name} <span className="arrow-right"></span></button>
+                                            }} key={`list_${categoryName}_${subCategoryItem.name}`} className={activeClass}>
+                                                <div className="product-img for-mobile">
+                                                    <Image
+                                                        src={BASE_URL_SUB_CATEGORY + subCategoryItem.icon}
+                                                        alt={subCategoryItem.name}
+                                                        height={150}
+                                                        width={150}
+                                                        style={{ objectFit: 'contain', maxHeight: 60 }}
+                                                        layout="raw"
+                                                    />
+                                                </div>
+                                                <div>{subCategoryItem.name}</div>
+                                                <span className="arrow-right"></span>
+                                            </button>
                                         })}
                                     </div>
                                 </div>
@@ -288,7 +299,6 @@ export default function SubCategory(props) {
                                     </div>
                                     <div className="sm-heading text-center mt-30">Oops! Category empty</div>
                                     <div className="xs-heading text-center font-12">Please choose another category.</div>
-
                                 </div>
                             </section>
                     }

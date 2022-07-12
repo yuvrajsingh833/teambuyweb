@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Script from 'next/script'
 
 export default function FooterScript({ }) {
@@ -23,18 +22,7 @@ export default function FooterScript({ }) {
                         $('.overlay-bg').removeClass('active');
                         $(".dash-left").removeClass("active");
                     });
-
-                    $(".mob-profile-menu").click(function(){
-                        $(".left-menu-box").addClass("active");
-                        $(".lm-overflow-bg").addClass("active");
-                        $("body").addClass("body-overflow");
-                    })   
                     
-                    $(".lm-back-arrow, .lm-overflow-bg").click(function(){
-                        $(".left-menu-box").removeClass("active");
-                        $(".lm-overflow-bg").removeClass("active");
-                        $("body").removeClass("body-overflow");
-                    })   
                     $(".jq_dropdown_menu").click(function(){
                         $(this).parent().toggleClass("open");
                     });
@@ -60,18 +48,13 @@ export default function FooterScript({ }) {
                         $('.sidebar-overlay-bg').addClass('active');
                     });
 
-                    $(".sidebar-overlay-bg").click(function(){
-                        $("#loginSidebar").removeClass("active");
-                        $('body').removeClass('overflow-active');
-                        $(".sidebar-overlay-bg").removeClass('active');
-                    });
-
                     $(".jq_verify").click(function(){
                         $("#loginSidebar").removeClass("active");
                         $("#mobileVerfication").addClass("active");
                         $('body').addClass('overflow-active');
                         $('.sidebar-overlay-bg').addClass('active');
                     });
+
                     $(".sidebar-overlay-bg").click(function(){
                         $("#loginSidebar").removeClass("active");
                         $("#mobileVerfication").removeClass("active");
@@ -80,6 +63,13 @@ export default function FooterScript({ }) {
                         $("#wishlistSidebar").removeClass("active");
                     });
 
+                    function closeSidebar(){
+                        $("#loginSidebar").removeClass("active");
+                        $("#mobileVerfication").removeClass("active");
+                        $('body').removeClass('overflow-active');
+                        $(".sidebar-overlay-bg").removeClass('active');
+                        $("#wishlistSidebar").removeClass("active");
+                    }
 
                     function openLoginSideBar(){
                         $("#loginSidebar").addClass("active");
@@ -94,7 +84,23 @@ export default function FooterScript({ }) {
                         $('.sidebar-overlay-bg').addClass('active');
                     }
                     
+                    function openUserSideBar(){
+                        $(".left-menu-box").addClass("active");
+                        $(".lm-overflow-bg").addClass("active");
+                        $("body").addClass("body-overflow");   
+                    }
 
+                    function closeUserSideBar(){
+                        $(".left-menu-box").removeClass("active");
+                        $(".lm-overflow-bg").removeClass("active");
+                        $("body").removeClass("body-overflow");
+                    }
+
+                   function openWishlistSideBar(){
+                        $("#wishlistSidebar").addClass("active");
+                        $('body').addClass('overflow-active');
+                        $('.sidebar-overlay-bg').addClass('active');
+                    };
                 `}
             </Script>
         </>

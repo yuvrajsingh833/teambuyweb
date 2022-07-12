@@ -3,6 +3,7 @@ import Navbar from './navbar'
 import AuthSideBar from './authSidebar'
 import Footer from './footer'
 import FooterScript from './footerScript'
+import WishlistSidebar from './wishlistSidebar'
 
 export default function Layout({ children }) {
     return (
@@ -10,6 +11,7 @@ export default function Layout({ children }) {
             <Header />
             <Navbar />
             <AuthSideBar />
+            <WishlistSidebar />
 
             {children}
 

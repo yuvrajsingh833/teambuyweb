@@ -10,13 +10,16 @@ import RouteGuard from '../middleware/routeGaurd'
 
 import { wrapper, store } from "../store/store";
 import { Provider } from "react-redux";
+import SnackbarProvider from 'react-simple-snackbar'
 
 function MyApp({ Component, pageProps }) {
 	return <Provider store={store}>
 		<RouteGuard>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
+			<SnackbarProvider>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</SnackbarProvider>
 		</RouteGuard>
 	</Provider>
 }

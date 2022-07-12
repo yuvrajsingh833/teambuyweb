@@ -40,51 +40,54 @@ export default function Navbar(props) {
 
     if (isLoading) return <header />
     return (
-        <header className="header-wrap">
-            <div className="container">
-                <div className="d-flex align-items-center justify-content-between">
-                    <div className="main-logo">
-                        <Link passHref href="/"><a><img src="/img/logo.svg" /></a></Link>
-                    </div>
-                    <div className="header-address d-flex align-items-center">
-                        {locationError ? <div className="had-area-desc">{locationError}</div> : <>
-                            <div className="had-icon">
-                                <img src="/img/location.svg" />
-                            </div>
-                            <div className="had-location">
-                                <div className="had-area-name">{shortAddress}</div>
-                                <div className="had-area-desc">{Utils.truncateString(fullAddress, 50)}</div>
-                            </div>
-                        </>}
+        <section className="header-wrap-block">
+            <header className="header-wrap">
+                <div className="container">
+                    <div className="d-flex align-items-center justify-content-between">
+                        <div className="main-logo">
+                            <Link passHref href="/"><a><img src="/img/logo.svg" /></a></Link>
+                        </div>
+                        <div className="header-address d-flex align-items-center">
+                            {locationError ? <div className="had-area-desc">{locationError}</div> : <>
+                                <div className="had-icon">
+                                    <img src="/img/location.svg" />
+                                </div>
+                                <div className="had-location">
+                                    <div className="had-area-name">{shortAddress}</div>
+                                    <div className="had-area-desc">{Utils.truncateString(fullAddress, 50)}</div>
+                                </div>
+                            </>}
 
-                    </div>
-                    <div className="search-box">
-                        <input type="text" className="search-input" placeholder="Search Store" />
-                        <span className="search-icon"></span>
-                    </div>
-                    <div className="main-menu">
-                        <ul>
-                            <li><Link passHref href="/category"><a href="#">Category</a></Link></li>
-                            {user?.token?.length > 0 ? <li><Link passHref href="/account"><a style={{ cursor: 'pointer' }}  >My Account</a></Link></li> : <li><a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a></li>}
-                        </ul>
-                    </div>
+                        </div>
+                        <div className="search-box">
+                            <input type="text" className="search-input" placeholder="Search Store" />
+                            <span className="search-icon"></span>
+                        </div>
+                        <div className="main-menu">
+                            <ul>
+                                <li><Link passHref href="/category"><a href="#">Category</a></Link></li>
+                                {user?.token?.length > 0 ? <li><Link passHref href="/account"><a style={{ cursor: 'pointer' }}  >My Account</a></Link></li> : <li><a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a></li>}
+                            </ul>
+                        </div>
 
-                    <div className="search-for-mobile">
-                        <a href="#" className="mobile-search"><img src="/img/search.svg" /></a>
-                    </div>
+                        <div className="search-for-mobile">
+                            <a href="#" className="mobile-search"><img src="/img/search.svg" /></a>
+                        </div>
 
-                    <div className="login-for-mobile">
-                        {user?.token?.length > 0 ? <Link passHref href="/account"><a style={{ cursor: 'pointer' }}  >My Account</a></Link> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a>}
-                    </div>
+                        <div className="login-for-mobile">
+                            {user?.token?.length > 0 ? <Link passHref href="/account"><a style={{ cursor: 'pointer' }}  >My Account</a></Link> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="jq_login">Login</a>}
+                        </div>
 
-                    <div className="wish-block">
-                        {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className='wishlist-icon'></a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className={'wishlist-icon jq_login'}></a>}
-                    </div>
-                    <div className="cart-block">
-                        {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className="cart-box"> <img src="/img/cart-icon.svg" /> 0 Items</a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box jq_login"> <img src="/img/cart-icon.svg" /> 0 Items</a>}
+                        <div className="wish-block">
+                            {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} onClick={() => window.openWishlistSideBar()} className='wishlist-icon jq_wishlist'></a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className={'wishlist-icon jq_login'}></a>}
+                        </div>
+
+                        <div className="cart-block">
+                            {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className="cart-box"> <img src="/img/cart-icon.svg" /> 0 Items</a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box jq_login"> <img src="/img/cart-icon.svg" /> 0 Items</a>}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>
+        </section>
     )
 }

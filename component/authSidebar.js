@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
 import { ActionCreators } from "../store/actions/index";
 
 import Loader from './loader'
@@ -10,7 +9,6 @@ import * as Utils from "../lib/utils"
 import * as AuthService from "../services/auth";
 
 export default function AuthSideBar(props) {
-    const dispatch = useDispatch()
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -139,7 +137,7 @@ export default function AuthSideBar(props) {
 
     return (
         <>
-            <div className="sidebar-overlay-bg"></div>
+            <div className="sidebar-overlay-bg" onClick={() => window.closeSidebar()}></div>
 
             <section className="sidebar-block" id="loginSidebar">
                 <div className="login-img text-right">
@@ -180,7 +178,7 @@ export default function AuthSideBar(props) {
                             <span style={{ fontSize: '12px', color: '#D83734' }}>{OTPError}</span>
 
                             <div className="text-center mt-4">
-                                <button onClick={() => handleOTPVerification()} className="green-btn">Verify OTP</button>
+                                <button onClick={() => handleOTPVerification()} type="button" className="green-btn">Verify OTP</button>
                             </div>
                         </form>
                         <div className="black-link text-center mt-20">
