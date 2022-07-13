@@ -33,25 +33,24 @@ export default function MyAccount(props) {
 
     const [userInformation, setUserInformation] = useState({});
 
-    const getUserInfo = (updateUserInfo = false) => {
+    const getUserInfo = () => {
         setIsLoading(true)
         UserService.getUserDetail().then(response => {
             if (response.statusCode != 200) {
                 setIsLoading(false)
             } else {
-                if (updateUserInfo) {
-                    let oldUserData = JSON.parse(JSON.stringify(global.user));
-                    let newUserData = JSON.parse(JSON.stringify(response.data));
+                let oldUserData = JSON.parse(JSON.stringify(global.user));
+                let newUserData = JSON.parse(JSON.stringify(response.data));
 
-                    oldUserData['name'] = newUserData.name
-                    oldUserData['email'] = newUserData.email
-                    oldUserData['mobileNumber'] = newUserData.mobile_number
-                    oldUserData['avatar'] = newUserData.avatar
+                oldUserData['name'] = newUserData.name
+                oldUserData['email'] = newUserData.email
+                oldUserData['mobileNumber'] = newUserData.mobile_number
+                oldUserData['avatar'] = newUserData.avatar
 
-                    global.user = oldUserData;
-                    Utils.saveStateAsyncStorage({ userData: oldUserData });
-                    ActionCreators.setLoggedInUserData(oldUserData)
-                }
+                global.user = oldUserData;
+                Utils.saveStateAsyncStorage({ userData: oldUserData });
+                ActionCreators.setLoggedInUserData(oldUserData)
+
 
                 setUserInformation(response.data)
                 setName(response.data.name)
@@ -83,7 +82,7 @@ export default function MyAccount(props) {
                 openSnackbar(response.message)
             } else {
                 openSnackbar("Profile updated successfully", 1000)
-                getUserInfo(true)
+                getUserInfo()
             }
         }).catch(e => {
             setIsLoading(false)
@@ -129,7 +128,7 @@ export default function MyAccount(props) {
                     openSnackbar(response.message)
                 } else {
                     openSnackbar("Profile image updated successfully", 1000)
-                    getUserInfo(true)
+                    getUserInfo()
                 }
             }).catch(e => {
                 setIsLoading(false)
