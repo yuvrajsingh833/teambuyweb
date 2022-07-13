@@ -55,7 +55,7 @@ export default function ProductDetail(props) {
     useEffect(() => {
         setIsLoading(true)
         all != undefined && getProductDetail(all)
-    }, [props])
+    }, [all, props])
 
     const renderAverageRatingStars = (data) => {
         const arrayData = [1, 2, 3, 4, 5];

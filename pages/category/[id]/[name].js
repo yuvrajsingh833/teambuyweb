@@ -27,7 +27,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
     ssr: false,
 });
 
-export default function SubCategory() {
+export default function SubCategory(props) {
     const BASE_URL_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.categoryIcon}`
     const BASE_URL_SUB_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.subCategoryIcon}`
 
@@ -137,7 +137,7 @@ export default function SubCategory() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
 
-    }, [])
+    }, [props])
 
 
     useEffect(() => {

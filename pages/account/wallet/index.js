@@ -14,7 +14,7 @@ import AccountSideBar from "../../../component/accountSidebar";
 import LoaderInline from '../../../component/loaderInline';
 import { Config } from '../../../config/appConfig';
 
-export default function MyWallet() {
+export default function MyWallet(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -69,7 +69,7 @@ export default function MyWallet() {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [])
+    }, [props])
 
     useEffect(() => {
         if (!isLoadingMore) return;

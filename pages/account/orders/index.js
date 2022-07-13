@@ -97,7 +97,7 @@ const OrderInformation = ({ orderInfo }) => {
     </div>
 }
 
-export default function MyOrders() {
+export default function MyOrders(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -150,7 +150,7 @@ export default function MyOrders() {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [])
+    }, [props])
 
     useEffect(() => {
         if (!isLoadingMore) return;
