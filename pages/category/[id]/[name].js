@@ -17,6 +17,7 @@ import * as Enums from '../../../lib/enums';
 
 import * as CategoryService from "../../../services/category";
 import * as ProductService from "../../../services/product";
+import LoaderInline from "../../../component/loaderInline";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -26,8 +27,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
     ssr: false,
 });
 
-export default function SubCategory(props) {
-    let lastScrollTop = 0;
+export default function SubCategory() {
     const BASE_URL_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.categoryIcon}`
     const BASE_URL_SUB_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.subCategoryIcon}`
 
@@ -35,6 +35,7 @@ export default function SubCategory(props) {
     const { id, name } = router.query;
 
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const [categoryID, setCategoryID] = useState();
     const [categoryName, setCategoryName] = useState('');
@@ -58,16 +59,16 @@ export default function SubCategory(props) {
                 setCurrentPageNo(1);
                 setAllProducts(dataItems)
             } else {
-                let newDataList = [...allProducts, ...dataItems]
-                setAllProducts(newDataList)
+                setAllProducts(newDataList => ([...newDataList, ...dataItems]))
             }
 
             setProductInfo(response.data.paginator)
-
             setIsLoading(false)
+            setIsLoadingMore(false)
         }).catch(e => {
-            console.log(`getAllProductByCategory error : ${e}`)
+            console.log(`allProductByCategory error : ${e}`)
             setIsLoading(false)
+            setIsLoadingMore(false)
         })
     }
 
@@ -76,6 +77,9 @@ export default function SubCategory(props) {
             let newPageNo = currentPageNo + 1;
             setCurrentPageNo(newPageNo)
             getAllProducts(subCategoryID, newPageNo, false)
+            setIsLoadingMore(true)
+        } else {
+            setIsLoadingMore(false)
         }
     }
 
@@ -120,14 +124,9 @@ export default function SubCategory(props) {
         })
     }
 
-    const handleScroll = event => {
-
-        var scroll = window.scrollY
-        if (scroll > lastScrollTop) {
-            getMoreProducts()
-        }
-
-        lastScrollTop = scroll <= 0 ? 0 : scroll;
+    const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoadingMore) return;
+        setIsLoadingMore(true)
     };
 
     useEffect(() => {
@@ -136,12 +135,16 @@ export default function SubCategory(props) {
         id != undefined && getAllCategory(id)
 
         window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
+    }, [])
 
-    }, [props])
+
+    useEffect(() => {
+        if (!isLoadingMore) return;
+        getMoreProducts();
+    }, [isLoadingMore]);
+
 
     const renderCategory = (data) => {
         if (data)
@@ -268,6 +271,7 @@ export default function SubCategory(props) {
                                                         </div>
                                                     })}
                                                 </div>
+                                                {isLoadingMore && <LoaderInline />}
                                             </div>
                                         </div> : <section className="cart-wrap">
                                             <div className="empty-cart">

@@ -27,7 +27,7 @@ export default function MyAddresses(props) {
             setIsLoading(false)
         }).catch(e => {
             setIsLoading(false)
-            console.log(`getUserDetail error : ${e}`)
+            console.log(`getUserAddresses error : ${e}`)
         })
     }
 

@@ -34,7 +34,7 @@ export const Config = {
 		userAvatar: 'user_avatar/',
 	},
 
-	PageSize: 5,
+	PageSize: 30,
 	DateFormat: 'DD MMM, YYYY ',
 
 	AndroidAPIKey: 'AIzaSyDoCKdscp-j7pEv5HR8oUsfqUFAcgLqMUA',
@@ -42,7 +42,6 @@ export const Config = {
 	GoogleConfig: {
 		scopes: ['email', 'profile', 'openid'],
 		webClientId: '833638739060-b5ddi6vb3r1hbted44c2afsd4bvp5apl.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-		offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-		// iosClientId: '833638739060-73gl5a0574qr3hvrc6892c3g8gm6k0i7.apps.googleusercontent.com'
+		offlineAccess: true,
 	},
 };
