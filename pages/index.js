@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 
 import CategoryCard from "../component/categoryCard";
@@ -134,12 +135,12 @@ export default function Home(props) {
                 <div className="ta-subheading2">Teambuy is a Hyperlocal on demand social commerce platform for Grocery and home essentials delivery.Teambuy is making E-commerce more social, pocket friendly, fun, interactive and quick, one  customer at a time</div>
               </div>
               <div className="col-md-7 text-right">
-                <img src="/img/ta-block-img1.png" />
+                <img src="/img/ta-block-img1.png" alt="delivery-icon" />
               </div>
             </div>
             <div className="ta-block2-flex row align-items-center">
               <div className="col-md-5">
-                <img src="/img/app-screens-img.png" />
+                <img src="/img/app-screens-img.png" alt="feature screen" />
               </div>
               <div className="col-md-7">
                 <div className="tab1-heading">Get the app now</div>
@@ -166,8 +167,8 @@ export default function Home(props) {
                 </form>
                 <div className="tab1-subheading mt-20">Or download the app from</div>
                 <div className="app-link mt-20">
-                  <Link passHref href="https://apps.apple.com/us/app/teambuy/id1616147376"><a target={"_blank"} ><img src="/img/app-store.png" /></a></Link>
-                  <Link passHref href="https://play.google.com/store/apps/details?id=com.teambuy.android"><a target={"_blank"} className="ml-20"><img src="/img/play-store.png" /></a></Link>
+                  <Link passHref href="https://apps.apple.com/us/app/teambuy/id1616147376"><a target={"_blank"} ><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={137} alt="app-store-icon" src="/img/app-store.png" /></a></Link>
+                  <Link passHref href="https://play.google.com/store/apps/details?id=com.teambuy.android"><a target={"_blank"} className="ml-20"><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={137} alt="app-store-icon" src="/img/play-store.png" /></a></Link>
                 </div>
               </div>
             </div>

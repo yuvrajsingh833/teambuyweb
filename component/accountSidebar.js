@@ -16,7 +16,7 @@ export default function AccountSideBar(props) {
             <ul className="left-menu">
                 <li className="lm-back-arrow">
                     <a onClick={() => window.closeUserSideBar()} style={{ cursor: 'pointer' }} className="pl-0">
-                        <img src="/img/back-arrow.png" />
+                        <Image layout='raw' style={{ objectFit: 'contain' }} height={12} width={12} src="/img/back-arrow.png" alt='back-arrow.png' />
                     </a>
                 </li>
                 <li className={router.asPath == "/account" ? "active" : ""}>

@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 
 import Feature from '../../../component/feature';
@@ -133,7 +134,7 @@ export default function MyWallet() {
                                         return <div key={`wallet_transaction_${item.id}`} className="col-lg-6 col-12 mb-20">
                                             <div className="white-box wh-box d-flex align-items-center">
                                                 <div className="wh-icon">
-                                                    <img src={amountIn ? '/img/credit.svg' : '/img/debit.svg'} />
+                                                    <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="credit-debit" src={amountIn ? '/img/credit.svg' : '/img/debit.svg'} />
                                                 </div>
                                                 <div className="wh-info">
                                                     <div className="xs-heading fw-500">{item.description}</div>

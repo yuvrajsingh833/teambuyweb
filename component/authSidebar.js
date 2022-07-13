@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActionCreators } from "../store/actions/index";
-
+import Image from 'next/image'
 import Loader from './loader'
 
 import * as Validations from "../lib/validation";
@@ -141,7 +141,7 @@ export default function AuthSideBar(props) {
 
             <section className="sidebar-block" id="loginSidebar">
                 <div className="login-img text-right">
-                    <img src="/img/login-img.png" />
+                    <Image layout='raw' style={{ objectFit: 'contain' }} height={300} width={300} src="/img/login-img.png" alt="login-image" />
                 </div>
                 {isLoading ? <Loader /> :
                     <div className="plr-27">
@@ -163,9 +163,9 @@ export default function AuthSideBar(props) {
             </section>
 
             <section className="sidebar-block" id="mobileVerfication">
-                <a style={{ cursor: 'pointer' }} className="back-arrow "><img src="/img/back-arrow.png" /></a>
+                <a style={{ cursor: 'pointer' }} className="back-arrow "><Image layout='raw' style={{ objectFit: 'contain' }} height={12} width={12} src="/img/back-arrow.png" alt="back-arrow.png" /></a>
                 <div className="login-img text-right">
-                    <img src="/img/login-img.png" />
+                    <Image layout='raw' style={{ objectFit: 'contain' }} height={300} width={300} src="/img/login-img.png" alt="login-img.png" />
                 </div>
                 {isLoading ? <Loader /> :
                     <div className="plr-27">

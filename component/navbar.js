@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from 'next/link'
+import Image from 'next/image'
 import { useSelector } from 'react-redux'
 
 import * as Utils from "../lib/utils"
@@ -45,12 +46,12 @@ export default function Navbar(props) {
                 <div className="container">
                     <div className="d-flex align-items-center justify-content-between">
                         <div className="main-logo">
-                            <Link passHref href="/"><a><img src="/img/logo.svg" /></a></Link>
+                            <Link passHref href="/"><a><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={130} alt="main-logo" src="/img/logo.svg" /></a></Link>
                         </div>
                         <div className="header-address d-flex align-items-center">
                             {locationError ? <div className="had-area-desc">{locationError}</div> : <>
                                 <div className="had-icon">
-                                    <img src="/img/location.svg" />
+                                    <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} src="/img/location.svg" alt="location-icon" />
                                 </div>
                                 <div className="had-location">
                                     <div className="had-area-name">{shortAddress}</div>
@@ -71,7 +72,7 @@ export default function Navbar(props) {
                         </div>
 
                         <div className="search-for-mobile">
-                            <a href="#" className="mobile-search"><img src="/img/search.svg" /></a>
+                            <a href="#" className="mobile-search"><Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="search" src="/img/search.svg" /></a>
                         </div>
 
                         <div className="login-for-mobile">
@@ -83,7 +84,7 @@ export default function Navbar(props) {
                         </div>
 
                         <div className="cart-block">
-                            {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className="cart-box"> <img src="/img/cart-icon.svg" /> 0 Items</a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box jq_login"> <img src="/img/cart-icon.svg" /> 0 Items</a>}
+                            {user?.token?.length > 0 ? <a style={{ cursor: 'pointer' }} className="cart-box"> <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src="/img/cart-icon.svg" /> 0 Items</a> : <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box jq_login"> <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src="/img/cart-icon.svg" /> 0 Items</a>}
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,12 @@
+import Image from 'next/image';
+
 export default function Feature({ }) {
     return (<section className="featured-wrap">
         <div className="row">
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="/img/offers.png" />
+                        <Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/offers.png" alt="offers.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Big savings with seasonal discounts</div>
@@ -15,7 +17,7 @@ export default function Feature({ }) {
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="/img/order-out-for-delivery.png" />
+                        <Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/order-out-for-delivery.png" alt="order-out-for-delivery.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Same day delivery guaranteed!</div>
@@ -26,7 +28,7 @@ export default function Feature({ }) {
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="/img/wide-range.png" />
+                        <Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/wide-range.png" alt="wide-range.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Wide range of products</div>
@@ -37,7 +39,7 @@ export default function Feature({ }) {
             <div className="col-md-3">
                 <div className="d-flex align-items-center featured-flex">
                     <div className="featured-icon">
-                        <img src="/img/best-price.png" />
+                        <Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/best-price.png" alt="best-price.png" />
                     </div>
                     <div className="featured-content">
                         <div className="xs-heading green-text">Best prices & offers</div>

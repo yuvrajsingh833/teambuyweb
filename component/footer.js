@@ -26,7 +26,7 @@ export default function Footer(props) {
             <div className="footer-top">
                 <div className="container">
                     <div className="footer-logo">
-                        <Link passHref href="/"><a><img src="/img/footer-logo.png" /> </a></Link>
+                        <Link passHref href="/"><a><Image layout='raw' style={{ objectFit: 'contain' }} height={100} width={313} alt="footer-logo" src="/img/footer-logo.png" /> </a></Link>
                     </div>
                     <div className="row">
                         <div className="col-md-5">
@@ -109,14 +109,14 @@ export default function Footer(props) {
                         <div className="col-md-3">
                             <div className="f-title">Social Links</div>
                             <div className="social-links">
-                                <a ><img src="/img/fb.png" /></a>
-                                <a ><img src="/img/in.png" /></a>
-                                <a ><img src="/img/insta.png" /></a>
-                                <a ><img src="/img/tw.png" /></a>
+                                <a ><Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/fb.png" alt='social-icons' /></a>
+                                <a ><Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/in.png" alt='social-icons' /></a>
+                                <a ><Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/insta.png" alt='social-icons' /></a>
+                                <a ><Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} src="/img/tw.png" alt='social-icons' /></a>
                             </div>
                             <div className="app-link mt-30">
-                                <Link passHref href="https://apps.apple.com/us/app/teambuy/id1616147376"><a target={"_blank"} ><img src="/img/app-store.png" /></a></Link>
-                                <Link passHref href="https://play.google.com/store/apps/details?id=com.teambuy.android"><a target={"_blank"} className="ml-20"><img src="/img/play-store.png" /></a></Link>
+                                <Link passHref href="https://apps.apple.com/us/app/teambuy/id1616147376"><a target={"_blank"} ><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={137} alt="app-store-icon" src="/img/app-store.png" /></a></Link>
+                                <Link passHref href="https://play.google.com/store/apps/details?id=com.teambuy.android"><a target={"_blank"} className="ml-20"><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={137} alt="app-store-icon" src="/img/play-store.png" /></a></Link>
                             </div>
                         </div>
                     </div>

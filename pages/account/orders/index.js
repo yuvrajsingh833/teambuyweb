@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 
@@ -10,8 +11,8 @@ import * as UserService from "../../../services/user";
 import * as Dates from "../../../lib/dateFormatService";
 
 import AccountSideBar from "../../../component/accountSidebar";
-import { Config } from '../../../config/appConfig';
 import LoaderInline from '../../../component/loaderInline';
+import { Config } from '../../../config/appConfig';
 
 const OrderInformation = ({ orderInfo }) => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -202,7 +203,7 @@ export default function MyOrders() {
                                         {allOrders.map(item => {
                                             return <div key={`all_orders_${item.id}`} className="white-box d-flex pd-20 mb-20">
                                                 <div className="order-product-icon mt-10">
-                                                    <img src="/img/product-icon.png" />
+                                                    <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="product" src="/img/product-icon.png" />
                                                 </div>
 
                                                 <OrderInformation orderInfo={item} />

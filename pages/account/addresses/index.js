@@ -1,20 +1,14 @@
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import Head from 'next/head'
 import React, { useEffect, useState } from "react";
-import { useSnackbar } from 'react-simple-snackbar';
-import { ActionCreators } from "../../../store/actions/index";
 
 import Feature from '../../../component/feature';
 import Loader from '../../../component/loader';
 
 import * as UserService from "../../../services/user";
 
-import * as Utils from "../../../lib/utils";
-import * as Validations from "../../../lib/validation";
-
 import AccountSideBar from "../../../component/accountSidebar";
-import { Config } from '../../../config/appConfig';
 
 export default function MyAddresses(props) {
     const [isLoading, setIsLoading] = useState(true);
@@ -92,17 +86,17 @@ export default function MyAddresses(props) {
                             <div className="white-box pd-15">
                                 <div className="add-new-box mb-30">
                                     <a style={{ cursor: 'pointer' }} className="white-box blue-box d-block b-none">
-                                        <img src="/img/add-new-icon.png" /> Add new address
+                                        <Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} alt="add-new-location" src="/img/add-new-icon.png" /> Add new address
                                     </a>
                                 </div>
                                 {allAddresses.map(item => {
                                     return <div key={`all_saved_address_${item.id}`} className={`white-box address-box mb-20 ${item.is_primary == 1 ? 'selected' : ''}`}>
                                         <input type="radio" name="deliveryAddress" className="addressCheck" />
                                         {item.is_primary == 1 ? <span className="default-tag">Default</span> : null}
-                                        <span className="ad-select-icon"><img src="/img/sm-check-icon.svg" /></span>
+                                        <span className="ad-select-icon"><Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} alt="check-icon" src="/img/sm-check-icon.svg" /></span>
                                         <div className="d-flex align-items-center">
                                             <div className="loaction-icon">
-                                                <img src="/img/location.png" />
+                                                <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="location" src="/img/location.png" />
                                             </div>
                                             <div className="pl-15">
                                                 <div className="xs-heading fw-500">{item.full_name}</div>

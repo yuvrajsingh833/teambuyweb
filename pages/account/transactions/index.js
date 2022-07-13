@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 
 import Feature from '../../../component/feature';
@@ -128,7 +129,7 @@ export default function MyTransactions() {
                                         return <div key={`transaction_${item.id}`} className="col-lg-6 col-12 mb-20">
                                             <div className="white-box wh-box d-flex align-items-center">
                                                 <div className="wh-icon">
-                                                    <img src="/img/card.svg" />
+                                                    <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="card" src="/img/card.svg" />
                                                 </div>
                                                 <div className="wh-info">
                                                     <div className="xs-heading fw-500">Order #{item.order_txn_id}</div>

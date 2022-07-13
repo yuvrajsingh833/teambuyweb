@@ -4,7 +4,6 @@ import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
 
-
 import Feature from '../../../../../component/feature';
 import Loader from '../../../../../component/loader';
 
@@ -175,7 +174,7 @@ export default function OrderDetail(props) {
                                     <div className="block-scroll-x-width">
                                         <div className="white-box d-flex pd-20 mb-20">
                                             <div className="order-product-icon mt-10">
-                                                <img src="/img/product-icon.png" />
+                                                <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="product" src="/img/product-icon.png" />
                                             </div>
                                             <OrderInformation orderInfo={orderInfo} />
                                         </div>
