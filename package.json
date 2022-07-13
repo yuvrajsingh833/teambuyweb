@@ -8,7 +8,7 @@
     "start": "next start -p 3002",
     "lint": "next lint",
     "export": "next build && npx next export",
-    "prod": "next build && pm2 start npm --name teambuyweb --start -i max"
+    "prod": "pm2 delete teambuyweb && next build && pm2 start npm --name teambuyweb --start -i max"
   },
   "dependencies": {
     "jquery": "^3.6.0",
