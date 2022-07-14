@@ -39,7 +39,7 @@ export default function RouteGuard({ children }) {
         }
 
         // redirect to login page if accessing a private page and not logged in 
-        if (!signedIn && (url.includes('/account') || url.includes('/cart'))) {
+        if (!signedIn && (url.includes('/account') || url.includes('/cart') || url.includes('/checkout'))) {
             setAuthorized(false);
             router.push({
                 pathname: '/',
