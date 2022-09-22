@@ -1,27 +1,18 @@
+import '../styles/bootstrap.min.css'
+import '../styles/globals.css'
 import '../styles/owl.carousel.css'
 import '../styles/owl.theme.default.css'
-import '../styles/bootstrap.min.css'
-import '../styles/style.css'
 import '../styles/responsive.css'
-import '../styles/globals.css'
+import '../styles/style.css'
 
-import Layout from '../component/layout';
-import RouteGuard from '../middleware/routeGaurd'
+import Layout from '../component/layout'
 
-import { wrapper, store } from "../store/store";
-import { Provider } from "react-redux";
-import SnackbarProvider from 'react-simple-snackbar'
+import { wrapper } from "../store/store"
 
 function MyApp({ Component, pageProps }) {
-	return <Provider store={store}>
-		<RouteGuard>
-			<SnackbarProvider>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
-			</SnackbarProvider>
-		</RouteGuard>
-	</Provider>
+	return <Layout>
+		<Component {...pageProps} />
+	</Layout>
 }
 
 export default wrapper.withRedux(MyApp);

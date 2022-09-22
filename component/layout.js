@@ -5,18 +5,27 @@ import Footer from './footer'
 import FooterScript from './footerScript'
 import WishlistSidebar from './wishlistSidebar'
 
+import RouteGuard from '../middleware/routeGaurd'
+
+import SnackbarProvider from 'react-simple-snackbar'
+
 export default function Layout({ children }) {
     return (
         <>
             <Header />
             <Navbar />
             <AuthSideBar />
-            <WishlistSidebar />
+            <RouteGuard>
+                <SnackbarProvider>
+                    <WishlistSidebar />
 
-            {children}
+                    {children}
 
-            <Footer />
+                    <Footer />
+                </SnackbarProvider>
+            </RouteGuard>
             <FooterScript />
         </>
     )
 }
+
