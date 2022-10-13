@@ -14,6 +14,32 @@ const settings = async () => {
     })
 }
 
+const languages = async () => {
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.languages.endPoint, null, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+
+const languagesLabel = async () => {
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.languagesLabel.endPoint, null, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+
 const deliveryPinCode = async () => {
 
     return new Promise(function (resolve, reject) {
@@ -39,7 +65,7 @@ const dashboard = async ({ userType }) => {
     })
 }
 
-const search = async ({ product, page = 1, limit = 10, hasFilter = false, category = 1, minPrice = 0, maxPrice = 0, rating = 0, userType = 'customer' }) => {
+const search = async ({ product, page = 1, limit = 10, hasFilter = false, category = 1, minPrice = 0, maxPrice = 0, rating = 0, userType = 'business' }) => {
     let queryString = { product, page, limit, hasFilter, category, minPrice, maxPrice, rating, userType }
 
     return new Promise(function (resolve, reject) {
@@ -78,4 +104,4 @@ const calculateDistance = async ({ origins, destinations }) => {
     })
 }
 
-export { settings, deliveryPinCode, dashboard, search, reverseGeoLocation, calculateDistance }
+export { settings, languages, languagesLabel, deliveryPinCode, dashboard, search, reverseGeoLocation, calculateDistance }

@@ -101,3 +101,10 @@ a {
 .global-breadcrumb {
   --bs-breadcrumb-divider: ">";
 }
+
+.separator {
+  color: #171726;
+  height: 2px;
+  opacity: 1;
+  margin: 0;
+}

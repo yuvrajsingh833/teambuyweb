@@ -16,6 +16,10 @@ const API = {
 
   //Master urls
   dashboard: { url: '', endPoint: 'dashboard' },
+  settings: { url: '', endPoint: 'settings' },
+  deliveryPinCode: { url: '', endPoint: 'delivery-pincode' },
+  languages: { url: '', endPoint: 'languages' },
+  languagesLabel: { url: '', endPoint: 'languages-label' },
   reverseGeoLocation: { url: 'reverse-geo-location', endPoint: 'location' },
   calculateDistance: { url: 'calculate-distance', endPoint: 'location' },
   search: { url: '', endPoint: 'search' },

@@ -1,10 +1,9 @@
-import Image from 'next/image'
-import dynamic from "next/dynamic";
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 import * as CategoryService from "../services/category";
-import Link from 'next/link'
 
-import * as Utils from "../lib/utils"
+import * as Utils from "../lib/utils";
 
 export default function Footer(props) {
     const [categories, setCategories] = useState([])
@@ -30,7 +29,7 @@ export default function Footer(props) {
                     </div>
                     <div className="row">
                         <div className="col-md-5">
-                            <div className="f-title">Categories</div>
+                            <div className="f-title">{Utils.getLanguageLabel("Categories")}</div>
                             <div className="d-flex flex-wrap">
                                 <ul className="f-menu w-50">
                                     {categories.slice(0, (categories.length / 2)).map(mapItem => {
@@ -42,7 +41,7 @@ export default function Footer(props) {
                                                     query: { id: mapItem.id, name: Utils.convertToSlug(mapItem.name) },
                                                 }}
                                             >
-                                                <a >{mapItem.name}</a>
+                                                <a >{Utils.getLanguageLabel(mapItem.name)}</a>
                                             </Link>
                                         </li>
                                     })}
@@ -58,7 +57,7 @@ export default function Footer(props) {
                                                     query: { id: mapItem.id, name: Utils.convertToSlug(mapItem.name) },
                                                 }}
                                             >
-                                                <a >{mapItem.name}</a>
+                                                <a >{Utils.getLanguageLabel(mapItem.name)}</a>
                                             </Link>
                                         </li>
                                     })}
@@ -67,40 +66,40 @@ export default function Footer(props) {
                             </div>
                         </div>
                         <div className="col-md-2">
-                            <div className="f-title">Company</div>
+                            <div className="f-title">{Utils.getLanguageLabel("Company")}</div>
                             <ul className="f-menu">
-                                <li><a >Who We Are</a></li>
-                                <li><a >Blog</a></li>
+                                <li><a >{Utils.getLanguageLabel("Who We Are")}</a></li>
+                                <li><a >{Utils.getLanguageLabel("Blog")}</a></li>
                                 <li>
                                     <Link passHref href={{ pathname: "/pages/career" }}>
-                                        <a className="black-text font-poppins">Careers</a>
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Careers")}</a>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link passHref href={{ pathname: "/pages/contact-us" }}>
-                                        <a className="black-text font-poppins">Report Fraud</a>
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Report Fraud")}</a>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link passHref href={{ pathname: "/pages/contact-us" }}>
-                                        <a className="black-text font-poppins">Contact</a>
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Contact")}</a>
                                     </Link>
                                 </li>
                             </ul>
                         </div>
                         <div className="col-md-2">
-                            <div className="f-title">For Consumers</div>
+                            <div className="f-title">{Utils.getLanguageLabel("For Consumers")}</div>
                             <ul className="f-menu">
-                                <li><Link passHref href="/pages/privacy-policy"><a >Privacy</a></Link></li>
-                                <li><Link passHref href="/pages/terms-and-conditions"><a >Terms</a></Link></li>
+                                <li><Link passHref href="/pages/privacy-policy"><a >{Utils.getLanguageLabel("Privacy")}</a></Link></li>
+                                <li><Link passHref href="/pages/terms-and-conditions"><a >{Utils.getLanguageLabel("Terms")}</a></Link></li>
                                 <li>
                                     <Link passHref href={{ pathname: "/pages/faqs" }}>
-                                        <a className="black-text font-poppins">FAQs</a>
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("FAQs")}</a>
                                     </Link>
                                 </li>
                                 <li>
                                     <Link passHref href={{ pathname: "/pages/security" }}>
-                                        <a className="black-text font-poppins">Security</a>
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Security")}</a>
                                     </Link>
                                 </li>
                                 <li><a >Mobile</a></li>
@@ -124,10 +123,10 @@ export default function Footer(props) {
             </div>
             <div className="footer-bottom">
                 <div className="container">
-                    <div className="fb-title">Brands available on teambuy</div>
-                    <div className="fb-content mt-20">Mother's Choice g Fresh O'range Savemore 24 Mantra Aashirvaad Act II Amul Axe Bambino Best Value Bingo Bisleri Boost Bournvita Britannia Brooke Bond Bru Cadbury Cheetos Cinthol Closeup Coca-Cola Colgate Dabur Danone Del Monte Dettol Dhara Dove Durex English Oven Everest Fiama Di Wills Garnier Gatorade Gillette Glucon-D Grocery Gowardhan Hajmola Haldiram's Head & Shoulders Heinz Himalaya Horlicks India Gate Kellogg's Kinley Kissan Knorr L'Oreal Lay's Lijjat Limca Lipton Maggi Madhur McCain MDH Minute Maid Mirinda Mother Dairy Mountain Dew MTR Nescafe Nestle Nivea Nutella Oral-B Oreo Palmolive Pantene Paper Boat Parachute Parle Patanjali Pears Pepsi Pepsodent Pillsbury Princeware Rajdhani Real Red Bull Safal Saffola Shakti Bhog Smith & Jones Sprite Stayfree Sundrop Sunfeast Sunsilk Taj Mahal Tang Tata sampann Tata tea Tetley Thums Up Tropicana Twinings Uncle Chipps Unibic Vaseline Veet Wagh Bakri Wai Wai Whisper Whole Farm </div>
+                    {/* <div className="fb-title">Brands available on teambuy</div>
+                    <div className="fb-content mt-20">Mother's Choice g Fresh O'range Savemore 24 Mantra Aashirvaad Act II Amul Axe Bambino Best Value Bingo Bisleri Boost Bournvita Britannia Brooke Bond Bru Cadbury Cheetos Cinthol Closeup Coca-Cola Colgate Dabur Danone Del Monte Dettol Dhara Dove Durex English Oven Everest Fiama Di Wills Garnier Gatorade Gillette Glucon-D Grocery Gowardhan Hajmola Haldiram's Head & Shoulders Heinz Himalaya Horlicks India Gate Kellogg's Kinley Kissan Knorr L'Oreal Lay's Lijjat Limca Lipton Maggi Madhur McCain MDH Minute Maid Mirinda Mother Dairy Mountain Dew MTR Nescafe Nestle Nivea Nutella Oral-B Oreo Palmolive Pantene Paper Boat Parachute Parle Patanjali Pears Pepsi Pepsodent Pillsbury Princeware Rajdhani Real Red Bull Safal Saffola Shakti Bhog Smith & Jones Sprite Stayfree Sundrop Sunfeast Sunsilk Taj Mahal Tang Tata sampann Tata tea Tetley Thums Up Tropicana Twinings Uncle Chipps Unibic Vaseline Veet Wagh Bakri Wai Wai Whisper Whole Farm </div> */}
                     <hr className="custom-hr" />
-                    <div className="fb-content">By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. {new Date().getFullYear()}©Teambuy. All rights reserved.</div>
+                    <div className="fb-content">{Utils.getLanguageLabel("By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners.")} {new Date().getFullYear()}©{Utils.getLanguageLabel("Teambuy")}. {Utils.getLanguageLabel("All rights reserved.")}</div>
                 </div>
             </div>
         </footer>

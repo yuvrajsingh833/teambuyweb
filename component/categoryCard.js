@@ -27,7 +27,7 @@ export default function CategoryCard({ item }) {
                         />
                     </div>
                     <div className="product-content">
-                        <div className="xs-heading category-name">{item.name}</div>
+                        <div className="xs-heading category-name">{Utils.getLanguageLabel(item.name)}</div>
                     </div>
                 </div>
             </a>

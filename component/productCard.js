@@ -16,7 +16,6 @@ export default function ProductCard({ item }) {
     const setProductLike = (productId) => {
         if (user?.token?.length > 0) {
             setIsLiked(!isLiked)
-
             UserService.updateUserWishlist({ productID: productId }).then((response) => { console.log(response) }).catch(e => {
                 console.log(`${productId} updateUserWishlist error : ${e}`)
             })

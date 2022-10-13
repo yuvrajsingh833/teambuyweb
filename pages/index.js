@@ -80,7 +80,7 @@ export default function Home(props) {
       <section className="category-wrap ptb-30">
         <div className="container">
           <div className="heading-flex">
-            <div className="sm-heading">Shop by category</div>
+            <div className="sm-heading">{Utils.getLanguageLabel("Shop by category")}</div>
           </div>
           <div className="catrgory-list mt-10">
             <ul>
@@ -96,7 +96,7 @@ export default function Home(props) {
             <section key={`${featuredCategory.heading}_${featuredCategory.categoryID}`} className="everyday-usage-wrap ptb-30">
               <div className="container">
                 <div className="d-flex align-items-center heading-flex">
-                  <div className="sm-heading">{featuredCategory.heading}</div>
+                  <div className="sm-heading">{Utils.getLanguageLabel(featuredCategory.heading)}</div>
                   <div className="ml-auto">
                     <Link
                       passHref
@@ -105,7 +105,7 @@ export default function Home(props) {
                         query: { id: featuredCategory.categoryID, name: Utils.convertToSlug(featuredCategory.heading) },
                       }}
                     >
-                      <a className="green-link">View All</a>
+                      <a className="green-link">{Utils.getLanguageLabel("View All")}</a>
                     </Link>
                   </div>
                 </div>
@@ -130,9 +130,9 @@ export default function Home(props) {
           <div className="teambuy-app-block">
             <div className="ta-block1-flex row align-items-center">
               <div className="col-md-5">
-                <div className="ta-heading">TeamBuy</div>
-                <div className="ta-subheading">Buy in a group and avail never seen before discounts on groceries and home essentials</div>
-                <div className="ta-subheading2">Teambuy is a Hyperlocal on demand social commerce platform for Grocery and home essentials delivery.Teambuy is making E-commerce more social, pocket friendly, fun, interactive and quick, one  customer at a time</div>
+                <div className="ta-heading">{Utils.getLanguageLabel("TeamBuy")}</div>
+                <div className="ta-subheading">{Utils.getLanguageLabel("Buy in a group and avail never seen before discounts on groceries and home essentials")}</div>
+                <div className="ta-subheading2">{Utils.getLanguageLabel("Teambuy is a Hyperlocal on demand social commerce platform for Grocery and home essentials delivery.Teambuy is making E-commerce more social, pocket friendly, fun, interactive and quick, one  customer at a time")}</div>
               </div>
               <div className="col-md-7 text-right">
                 <img src="/img/ta-block-img1.png" alt="delivery-icon" />
@@ -143,16 +143,16 @@ export default function Home(props) {
                 <img src="/img/app-screens-img.png" alt="feature screen" />
               </div>
               <div className="col-md-7">
-                <div className="tab1-heading">Get the app now</div>
-                <div className="tab1-subheading mt-10">we will send you a link, open it on your phone to download the app</div>
+                <div className="tab1-heading">{Utils.getLanguageLabel("Get the app now")}</div>
+                <div className="tab1-subheading mt-10">{Utils.getLanguageLabel("we will send you a link, open it on your phone to download the app")}</div>
                 <div className="mt-10">
                   <div className="custom-radio d-inline-block">
                     <input type="radio" id="emailApp" name="radio-group" />
-                    <label htmlFor="emailApp">Email</label>
+                    <label htmlFor="emailApp">{Utils.getLanguageLabel("Email")}</label>
                   </div>
                   <div className="custom-radio d-inline-block ml-20">
                     <input type="radio" id="phoneApp" name="radio-group" />
-                    <label htmlFor="phoneApp">Phone</label>
+                    <label htmlFor="phoneApp">{Utils.getLanguageLabel("Phone")}</label>
                   </div>
                 </div>
                 <form className="app-link-form mt-10">
@@ -161,11 +161,11 @@ export default function Home(props) {
                       <input type="text" className="form-control" placeholder="Enter your email address" />
                     </div>
                     <div className="col-md-5">
-                      <button className="green-btn">Send Now</button>
+                      <button className="green-btn">{Utils.getLanguageLabel("Send Now")}</button>
                     </div>
                   </div>
                 </form>
-                <div className="tab1-subheading mt-20">Or download the app from</div>
+                <div className="tab1-subheading mt-20">{Utils.getLanguageLabel("Or download the app from")}</div>
                 <div className="app-link mt-20">
                   <Link passHref href="https://apps.apple.com/us/app/teambuy/id1616147376"><a target={"_blank"} ><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={137} alt="app-store-icon" src="/img/app-store.png" /></a></Link>
                   <Link passHref href="https://play.google.com/store/apps/details?id=com.teambuy.android"><a target={"_blank"} className="ml-20"><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={137} alt="app-store-icon" src="/img/play-store.png" /></a></Link>
@@ -175,8 +175,6 @@ export default function Home(props) {
           </div>
         </div>
       </section>
-
-
       <Feature />
     </>
   )
