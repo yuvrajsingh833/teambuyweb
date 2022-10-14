@@ -52,7 +52,7 @@ export default function AccountSideBar(props) {
                 </li> */}
                 <hr className="custom-hr2" />
                 <li>
-                    <Link passHref href={{ pathname: "/account/wallet" }}><a ><span className="lm-icon lm-signout-icon"></span> {Utils.getLanguageLabel("Sign out")} <span className="lm-arrow"></span></a></Link>
+                    <a onClick={() => setShowModal(true)} style={{ cursor: 'pointer' }}><span className="lm-icon lm-signout-icon"></span> {Utils.getLanguageLabel("Sign out")} <span className="lm-arrow"></span></a>
                 </li>
                 <div className="mt-10 green-text xs-heading fw-500 text-center">{Utils.getLanguageLabel("Version")} 0.0.2</div>
             </ul>
