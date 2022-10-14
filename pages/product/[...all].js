@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import Feature from '../../component/feature';
 import Loader from '../../component/loader';
 import ProductCard from "../../component/productCard";
-import { Config } from '../../config/appConfig';
+import { Config } from '../../config/config';
 import * as Dates from '../../lib/dateFormatService';
 import * as Enums from '../../lib/enums';
 import * as ProductService from "../../services/product";
@@ -23,7 +23,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 export default function ProductDetail(props) {
     const router = useRouter();
     const { all } = router.query
-    const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.productBanner}`
+    const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.productBanner}`
 
     const [isLoading, setIsLoading] = useState(true);
     const [productID, setProductID] = useState();

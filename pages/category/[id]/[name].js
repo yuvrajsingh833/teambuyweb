@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
 
-import { Config } from '../../../config/appConfig';
+import { Config } from '../../../config/config';
 
 import Feature from '../../../component/feature';
 import Loader from '../../../component/loader';
@@ -28,8 +28,8 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 
 export default function SubCategory(props) {
-    const BASE_URL_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.categoryIcon}`
-    const BASE_URL_SUB_CATEGORY = `${Config.BaseURL[Config.Env].web}${Config.FilePath.subCategoryIcon}`
+    const BASE_URL_CATEGORY = `${Config.BaseURL.fileServer}${Config.FilePath.categoryIcon}`
+    const BASE_URL_SUB_CATEGORY = `${Config.BaseURL.fileServer}${Config.FilePath.subCategoryIcon}`
 
     const router = useRouter();
     const { id, name } = router.query;

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 
 import Loader from '../../component/loader'
 
-import { Config } from '../../config/appConfig';
+import { Config } from '../../config/config';
 
 import * as Utils from '../../lib/utils';
 import * as CategoryService from "../../services/category";
@@ -41,7 +41,7 @@ export default function Category(props) {
     }, [props])
 
     const renderCategory = (data) => {
-        const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.categoryIcon}`
+        const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.categoryIcon}`
         if (data)
             return data.map((item, index) => {
                 let subCategory = item.subCategory

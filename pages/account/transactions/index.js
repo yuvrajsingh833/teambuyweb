@@ -12,7 +12,7 @@ import * as Dates from "../../../lib/dateFormatService";
 
 import AccountSideBar from "../../../component/accountSidebar";
 import LoaderInline from '../../../component/loaderInline';
-import { Config } from '../../../config/appConfig';
+import { Config } from '../../../config/config';
 
 export default function MyTransactions(props) {
     const [isLoading, setIsLoading] = useState(true);

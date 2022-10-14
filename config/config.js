@@ -1,27 +1,9 @@
-const ENV = ['local', 'stage', 'production'];
-
 export const Config = {
-	/**
-	 * Use index key according to the environment set
-	 * 0: Local
-	 * 1: Stage
-	 * 2: Production
-	 */
-	Env: ENV[1],
-
 	BaseURL: {
-		local: {
-			web: 'http://admin.teambuy.co.io/',
-			api: 'http://api.teambuy.co.io/v1/',
-		},
-		stage: {
-			web: 'https://teambuyadmin.csiworld.tech/',
-			api: 'https://teambuyapi.csiworld.tech/v1/',
-		},
-		production: {
-			web: 'https://admin.teambuy.co.in/',
-			api: 'https://api.teambuy.co.in/v1/',
-		},
+		web: 'https://v2.teambuy.co.in/',
+		admin: 'https://teambuyadmin.csiworld.tech/',
+		fileServer: 'https://teambuyadmin.csiworld.tech/',
+		api: 'https://teambuyapi.csiworld.tech/v1/',
 	},
 
 	FilePath: {

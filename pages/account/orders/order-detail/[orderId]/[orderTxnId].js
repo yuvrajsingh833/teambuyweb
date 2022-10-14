@@ -13,7 +13,7 @@ import * as Dates from "../../../../../lib/dateFormatService";
 import * as Utils from "../../../../../lib/utils";
 
 import AccountSideBar from "../../../../../component/accountSidebar";
-import { Config } from '../../../../../config/appConfig';
+import { Config } from '../../../../../config/config';
 
 const OrderInformation = ({ orderInfo }) => {
 
@@ -118,7 +118,7 @@ const OrderInformation = ({ orderInfo }) => {
 }
 
 export default function OrderDetail(props) {
-    const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.productBanner}`
+    const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.productBanner}`
     const router = useRouter();
     const { orderId, orderTxnId } = router.query;
 

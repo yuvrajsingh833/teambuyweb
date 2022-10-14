@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import * as Utils from '../lib/utils'
 import * as Enums from '../lib/enums'
 
-import { Config } from '../config/appConfig';
+import { Config } from '../config/config';
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -26,7 +26,7 @@ export default function PromotionalOffers(props) {
     }, [props]);
 
     const renderBanner = (data) => {
-        const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.promotionalBanner}`
+        const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.promotionalBanner}`
 
         return data.map(item => {
             return <div key={`top_banners_${item.id}`}

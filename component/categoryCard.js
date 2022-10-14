@@ -1,10 +1,10 @@
-import { Config } from '../config/appConfig';
+import { Config } from '../config/config';
 import Image from 'next/image'
 import Link from 'next/link'
 import * as Utils from "../lib/utils"
 
 export default function CategoryCard({ item }) {
-    const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.categoryIcon}`
+    const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.categoryIcon}`
     return (
         <Link
             passHref

@@ -12,7 +12,7 @@ import * as Dates from "../../../lib/dateFormatService";
 import AccountSideBar from "../../../component/accountSidebar";
 import LoaderInline from '../../../component/loaderInline';
 import NoDataFound from "../../../component/nodataFound";
-import { Config } from '../../../config/appConfig';
+import { Config } from '../../../config/config';
 import * as Utils from "../../../lib/utils";
 
 export default function MyNotifications(props) {

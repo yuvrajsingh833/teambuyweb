@@ -1,7 +1,9 @@
-import { Config } from './appConfig';
+import { Config } from './config';
 
-const WEB_BASE_URL = Config.BaseURL[Config.Env].web;
-const API_BASE_URL = Config.BaseURL[Config.Env].api;
+const WEB_BASE_URL = Config.BaseURL.web;
+const FILE_SERVER_BASE_URL = Config.BaseURL.fileServer;
+const ADMIN_BASE_URL = Config.BaseURL.admin;
+const API_BASE_URL = Config.BaseURL.api;
 const API = {
   /**
    * Set all the URLs here in the below provided format
@@ -66,4 +68,4 @@ const API = {
   updatePayment: { url: 'update-payment', endPoint: 'payment' },
 
 };
-export { WEB_BASE_URL, API_BASE_URL, API }
+export { WEB_BASE_URL, API_BASE_URL, API, FILE_SERVER_BASE_URL, ADMIN_BASE_URL }

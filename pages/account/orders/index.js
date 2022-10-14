@@ -14,7 +14,7 @@ import * as Utils from "../../../lib/utils";
 import AccountSideBar from "../../../component/accountSidebar";
 import LoaderInline from '../../../component/loaderInline';
 import NoDataFound from "../../../component/nodataFound";
-import { Config } from '../../../config/appConfig';
+import { Config } from '../../../config/config';
 
 const OrderInformation = ({ orderInfo }) => {
     const [isExpanded, setIsExpanded] = useState(false);

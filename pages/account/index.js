@@ -14,10 +14,10 @@ import * as Utils from "../../lib/utils";
 import * as Validations from "../../lib/validation";
 
 import AccountSideBar from "../../component/accountSidebar";
-import { Config } from '../../config/appConfig';
+import { Config } from '../../config/config';
 
 export default function MyAccount(props) {
-    const BASE_URL = `${Config.BaseURL[Config.Env].web}${Config.FilePath.userAvatar}`
+    const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.userAvatar}`
 
     const [openSnackbar] = useSnackbar()
 
