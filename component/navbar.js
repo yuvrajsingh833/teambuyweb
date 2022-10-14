@@ -65,8 +65,11 @@ export default function Navbar(props) {
             <header className="header-wrap">
                 <div className="container">
                     <div className="d-flex align-items-center justify-content-between">
-                        <div className="main-logo">
+                        <div className="main-logo for-desktop">
                             <Link passHref href="/"><a><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={130} alt="main-logo" src="/img/logo.svg" /></a></Link>
+                        </div>
+                        <div className="main-logo for-tab">
+                            <Link passHref href="/"><a><Image layout='raw' style={{ objectFit: 'contain' }} height={40} width={40} alt="main-logo" src="/img/logo-small.svg" /></a></Link>
                         </div>
                         <div className="header-address d-flex align-items-center">
                             {locationError ? <div className="had-area-desc">{locationError}</div> : <>
@@ -75,7 +78,7 @@ export default function Navbar(props) {
                                 </div>
                                 <div className="had-location">
                                     <div className="had-area-name">{Utils.truncateString(shortAddress, 20)}</div>
-                                    <hr className="separator" />
+                                    <hr className="separator for-desktop" />
                                     <div className="had-area-desc">{Utils.truncateString(fullAddress, 25)}</div>
                                 </div>
                             </>}

@@ -73,8 +73,8 @@ export default function Category(props) {
                                     />
                                 </div>
                                 <div className="category-info" style={{ backgroundColor: item.bg_color_dark, borderColor: item.bg_color_dark }}>
-                                    <div className="xs-heading fw-500">{item.name}</div>
-                                    <div className="xs-heading font-12 mt-10">{Utils.truncateString(subCategoryItems.join(", "), 100)}</div>
+                                    <div className="xs-heading fw-500">{Utils.getLanguageLabel(item.name)}</div>
+                                    <div className="xs-heading font-12 mt-10">{Utils.truncateString(subCategoryItems.map(d => Utils.getLanguageLabel(d)).join(", "), 100)}</div>
                                 </div>
                             </div>
                         </a>

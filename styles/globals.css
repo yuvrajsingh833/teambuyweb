@@ -123,3 +123,12 @@ a {
 .cancel-btn:focus {
   color: #171726;
 }
+
+.for-mobile {
+  display: none;
+}
+
+.sub-category-nav {
+  display: flex;
+  justify-content: space-between;
+}

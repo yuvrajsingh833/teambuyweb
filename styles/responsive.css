@@ -250,6 +250,9 @@
   .container-sm {
     max-width: 100%;
   }
+  .for-tab {
+    display: block;
+  }
   .ptb-50 {
     padding-top: 25px !important;
     padding-bottom: 25px !important;
@@ -419,9 +422,6 @@
   }
   .for-desktop {
     display: none;
-  }
-  .for-mobile {
-    display: block;
   }
   .scp-flex .common-left .nav-pills .nav-link {
     text-align: center;

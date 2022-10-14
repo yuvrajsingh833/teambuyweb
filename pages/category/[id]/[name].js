@@ -173,7 +173,7 @@ export default function SubCategory(props) {
                                 />
                             </div>
                             <div className="dtd-content">
-                                <div className="xs-heading fw-500 text-center">{item.name}</div>
+                                <div className="xs-heading fw-500 text-center">{Utils.getLanguageLabel(item.name)}</div>
                             </div>
                         </div>
                     </a>
@@ -210,15 +210,15 @@ export default function SubCategory(props) {
                                 <div className="d-flex align-items-center">
                                     <nav className="custom-breadcrumb global-breadcrumb" aria-label="breadcrumb">
                                         <ol className="breadcrumb">
-                                            <li className="breadcrumb-item"><Link href="/"><a>Home</a></Link></li>
-                                            <li className="breadcrumb-item active" aria-current="page">{categoryName}</li>
+                                            <li className="breadcrumb-item"><Link href="/"><a>{Utils.getLanguageLabel("Home")}</a></Link></li>
+                                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel(categoryName)}</li>
                                         </ol>
                                     </nav>
                                 </div>
                                 <div className="ml-auto d-flex align-items-center product-count-filter">
-                                    <div className="product-count">Total {productInfo.totalItems} product(s)</div>
+                                    <div className="product-count">{Utils.getLanguageLabel("Total")} {productInfo.totalItems} {Utils.getLanguageLabel("product(s)")}</div>
                                     <div className="sort-by-block ml-15 d-flex align-items-center">
-                                        <div className="sort-label">Sort By</div>
+                                        <div className="sort-label">{Utils.getLanguageLabel("Sort By")}</div>
                                         <div className=" ml-15">
                                             <select className="form-control">
                                                 <option>Price Low to High</option>
@@ -229,18 +229,19 @@ export default function SubCategory(props) {
                             </div>
 
                             <div className="d-flex common-flex mt-30 scp-flex">
-                                <div className="sm-heading for-mobile w-100 mb-2">{categoryName}</div>
+                                <div className="sm-heading for-mobile w-100 mb-2">{Utils.getLanguageLabel(categoryName)}</div>
                                 {/* Sub category side bar */}
                                 <div className="common-left">
-                                    <div className="sm-heading for-desktop">{categoryName}</div>
+                                    <div className="sm-heading for-desktop">{Utils.getLanguageLabel(categoryName)}</div>
                                     <div className="nav flex-column nav-pills mt-20">
                                         {allSubCategories.map(subCategoryItem => {
-                                            let activeClass = `nav-link ${subCategoryItem.id == subCategoryID ? 'active' : ''}`;
+                                            let activeClass = `nav-link sub-category-nav ${subCategoryItem.id == subCategoryID ? 'active' : ''}`;
                                             return <button onClick={() => {
                                                 setSubCategoryID(subCategoryItem.id)
                                                 setSubCategoryName(subCategoryItem.name)
                                                 getAllProducts(subCategoryItem.id, 1)
-                                            }} key={`list_${categoryName}_${subCategoryItem.name}`} className={activeClass}>
+                                            }}
+                                                key={`list_${categoryName}_${subCategoryItem.name}`} className={activeClass}>
                                                 <div className="product-img for-mobile">
                                                     <Image
                                                         src={BASE_URL_SUB_CATEGORY + subCategoryItem.icon}
@@ -251,8 +252,8 @@ export default function SubCategory(props) {
                                                         layout="raw"
                                                     />
                                                 </div>
-                                                <div>{subCategoryItem.name}</div>
-                                                <span className="arrow-right"></span>
+                                                <div>{Utils.getLanguageLabel(subCategoryItem.name)}</div>
+                                                <span className="arrow-right for-desktop"></span>
                                             </button>
                                         })}
                                     </div>
