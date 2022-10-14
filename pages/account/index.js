@@ -152,15 +152,15 @@ export default function MyAccount(props) {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/" }}>
-                                    <a>Home</a>
+                                    <a>{Utils.getLanguageLabel("Home")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/account" }}>
-                                    <a >My account</a>
+                                    <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">Update Profile</li>
+                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("Update Profile")}</li>
                         </ol>
                     </nav>
                 </div>
@@ -199,14 +199,14 @@ export default function MyAccount(props) {
                                     <div className="row">
                                         <div className="col-lg-4 col-sm-6  pb-4">
                                             <div className="form-group pos-rel">
-                                                <input onChange={(event) => { setName(event.target.value) }} type="text" className="form-control" value={name} />
+                                                <input onChange={(event) => { setName(event.target.value) }} type="text" className="form-control" value={name} placeholder={Utils.getLanguageLabel("Enter your name")} />
                                                 <span className="form-icon user-icon"></span>
                                             </div>
                                             <span style={{ fontSize: '12px', color: '#D83734' }}>{nameError}</span>
                                         </div>
                                         <div className="col-lg-4 col-sm-6  pb-4">
                                             <div className="form-group pos-rel">
-                                                <input onChange={(event) => { setMobileNumber(event.target.value) }} type="text" className="form-control" placeholder="Enter your mobile number" value={mobileNumber} />
+                                                <input onChange={(event) => { setMobileNumber(event.target.value) }} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Enter your mobile number")} value={mobileNumber} />
                                                 <span className="form-icon phone-icon"></span>
                                             </div>
                                             <span style={{ fontSize: '12px', color: '#D83734' }}>{mobileNumberError}</span>
@@ -215,14 +215,14 @@ export default function MyAccount(props) {
                                     <div className="row">
                                         <div className="col-lg-4 col-sm-6  pb-4">
                                             <div className="form-group pos-rel">
-                                                <input onChange={(event) => { setEmail(event.target.value) }} type="text" className="form-control" value={email} />
+                                                <input onChange={(event) => { setEmail(event.target.value) }} type="text" className="form-control" value={email} placeholder={Utils.getLanguageLabel("Enter your email")} />
                                                 <span className="form-icon email-icon"></span>
                                             </div>
                                             <span style={{ fontSize: '12px', color: '#D83734' }}>{emailError}</span>
                                         </div>
                                     </div>
                                     <div className="mt-10">
-                                        <button onClick={() => { handleUpdateProfile() }} type="button" className="green-btn">UPDATE profile</button>
+                                        <button onClick={() => { handleUpdateProfile() }} type="button" className="green-btn">{Utils.getLanguageLabel("UPDATE profile")}</button>
                                     </div>
                                 </form>
                             </div>
@@ -230,7 +230,6 @@ export default function MyAccount(props) {
                     </div>
                 </div>
             </section>
-
             <Feature />
         </>
     )

@@ -5,7 +5,9 @@ import React, { useEffect, useState } from "react";
 
 import Feature from '../../../component/feature';
 import Loader from '../../../component/loader';
+import * as Utils from "../../../lib/utils";
 
+import NoDataFound from "../../../component/nodataFound";
 import * as UserService from "../../../services/user";
 
 import AccountSideBar from "../../../component/accountSidebar";
@@ -58,15 +60,15 @@ export default function MyAddresses(props) {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/" }}>
-                                    <a>Home</a>
+                                    <a>{Utils.getLanguageLabel("Home")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/account" }}>
-                                    <a >My account</a>
+                                    <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">My Addresses</li>
+                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("My Addresses")}</li>
                         </ol>
                     </nav>
                 </div>
@@ -86,13 +88,19 @@ export default function MyAddresses(props) {
                             <div className="white-box pd-15">
                                 <div className="add-new-box mb-30">
                                     <a style={{ cursor: 'pointer' }} className="white-box blue-box d-block b-none">
-                                        <Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} alt="add-new-location" src="/img/add-new-icon.png" /> Add new address
+                                        <Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} alt="add-new-location" src="/img/add-new-icon.png" /> {Utils.getLanguageLabel("Add new address")}
                                     </a>
                                 </div>
+                                {allAddresses.length < 1 &&
+                                    <NoDataFound
+                                        image="/bgicon/location.png"
+                                        title="No Saved Addresses"
+                                        subtitle="Please add a new address."
+                                    />}
                                 {allAddresses.map(item => {
                                     return <div key={`all_saved_address_${item.id}`} className={`white-box address-box mb-20 ${item.is_primary == 1 ? 'selected' : ''}`}>
                                         <input type="radio" name="deliveryAddress" className="addressCheck" />
-                                        {item.is_primary == 1 ? <span className="default-tag">Default</span> : null}
+                                        {item.is_primary == 1 ? <span className="default-tag">{Utils.getLanguageLabel("Default")}</span> : null}
                                         <span className="ad-select-icon"><Image layout='raw' style={{ objectFit: 'contain' }} height={25} width={25} alt="check-icon" src="/img/sm-check-icon.svg" /></span>
                                         <div className="d-flex align-items-center">
                                             <div className="loaction-icon">
@@ -105,7 +113,7 @@ export default function MyAddresses(props) {
                                             </div>
                                         </div>
                                         {item.is_primary != 1 ? <div className='text-right mt-20'>
-                                            <button onClick={() => updateUserAddress(item.id)} type="button" className="green-btn">Make Default</button>
+                                            <button onClick={() => updateUserAddress(item.id)} type="button" className="green-btn">{Utils.getLanguageLabel("Make Default")}</button>
                                         </div> : null}
                                     </div>
                                 })}

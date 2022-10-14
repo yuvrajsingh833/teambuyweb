@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
-import { useRouter } from 'next/router'
 
 import Feature from '../../../../../component/feature';
 import Loader from '../../../../../component/loader';
@@ -14,7 +14,6 @@ import * as Utils from "../../../../../lib/utils";
 
 import AccountSideBar from "../../../../../component/accountSidebar";
 import { Config } from '../../../../../config/appConfig';
-import LoaderInline from '../../../../../component/loaderInline';
 
 const OrderInformation = ({ orderInfo }) => {
 
@@ -26,6 +25,8 @@ const OrderInformation = ({ orderInfo }) => {
     const [isOutForDeliveryDate, setIsOutForDeliveryDate] = useState(null);
     const [isDelivered, setIsDelivered] = useState(false);
     const [isDeliveredDate, setIsDeliveredDate] = useState(null);
+    const [isCancelled, setIsCancelled] = useState(false);
+    const [isCancelledDate, setIsCancelledDate] = useState(null);
 
     useEffect(() => {
         orderInfo?.orderDeliveryStatus.map(deliveryItem => {
@@ -41,6 +42,9 @@ const OrderInformation = ({ orderInfo }) => {
             } if (deliveryItem.status == "delivered") {
                 setIsDelivered(true)
                 setIsDeliveredDate(deliveryItem.created_at)
+            } if (deliveryItem.status == "cancelled") {
+                setIsCancelled(true)
+                setIsCancelledDate(deliveryItem.created_at)
             }
         })
     }, [])
@@ -48,14 +52,14 @@ const OrderInformation = ({ orderInfo }) => {
     return <div className="order-product-info">
         <div className="row">
             <div className="col-3 align-self-center">
-                <div className="xs-heading fw-500">Order #{orderInfo.order_txn_id}</div>
-                <div className="xs-heading font-12">Placed on <span className="fw-500">{Dates.localDate(orderInfo.created_at)}</span></div>
-                <div className="xs-heading font-12">Items: <span className="fw-500">{orderInfo.orderItems.length}</span>&nbsp;&nbsp;&nbsp; Total: <span className="fw-500">₹{orderInfo.total_price}</span></div>
+                <div className="xs-heading fw-500">{Utils.getLanguageLabel("Order")} #{orderInfo.order_txn_id}</div>
+                <div className="xs-heading font-12">{Utils.getLanguageLabel("Placed on")} <span className="fw-500">{Dates.localDate(orderInfo.created_at)}</span></div>
+                <div className="xs-heading font-12">{Utils.getLanguageLabel("Items")}: <span className="fw-500">{orderInfo.orderItems.length}</span>&nbsp;&nbsp;&nbsp; {Utils.getLanguageLabel("Total")}: <span className="fw-500">{Utils.convertToPriceFormat(orderInfo.total_price)}</span></div>
             </div>
             <div className="col-5 align-self-center">
                 <div className="row">
                     <div className="col-md-10">
-                        <div className="sm-heading list-disc">Delivery address</div>
+                        <div className="sm-heading list-disc">{Utils.getLanguageLabel("Delivery address")}</div>
                         <div className="mt-10 pl-15">
                             <div className="xs-heading">{orderInfo?.orderDeliveryAddress[0]?.full_name}
                                 {/* <span className="fw-300">(Home address)</span> */}
@@ -67,32 +71,47 @@ const OrderInformation = ({ orderInfo }) => {
                 </div>
             </div>
             <div className="col-4 text-center align-self-center">
-                <ul className="op-delivery-process">
-                    <li className={isPlaced ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Order placed</div>
-                            <div className="ml-auto font-12">{isPlaced ? Dates.localDate(isPlacedDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                    <li className={isAccepted ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Order confirmed</div>
-                            <div className="ml-auto font-12">{isAccepted ? Dates.localDate(isAcceptedDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                    <li className={isOutForDelivery ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Out for delivery</div>
-                            <div className="ml-auto font-12">{isOutForDelivery ? Dates.localDate(isOutForDeliveryDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                    <li className={isDelivered ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Order delivered</div>
-                            <div className="ml-auto font-12">{isDelivered ? Dates.localDate(isDeliveredDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                </ul>
+                {isCancelled == true ?
+                    <ul className="op-delivery-process">
+                        <li className={isPlaced ? "" : "pending"}>
+                            <div className="d-flex align-items-center">
+                                <div>{Utils.getLanguageLabel("Order placed")}</div>
+                                <div className="ml-auto font-12">{isPlaced ? Dates.localDate(isPlacedDate) : Utils.getLanguageLabel("Pending")}</div>
+                            </div>
+                        </li>
+                        <li className={isCancelled ? "" : "pending"}>
+                            <div className="d-flex align-items-center">
+                                <div>{Utils.getLanguageLabel("Order Cancelled")}</div>
+                                <div className="ml-auto font-12">{isCancelled ? Dates.localDate(isCancelledDate) : Utils.getLanguageLabel("Pending")}</div>
+                            </div>
+                        </li>
+                    </ul> :
+                    <ul className="op-delivery-process">
+                        <li className={isPlaced ? "" : "pending"}>
+                            <div className="d-flex align-items-center">
+                                <div>{Utils.getLanguageLabel("Order placed")}</div>
+                                <div className="ml-auto font-12">{isPlaced ? Dates.localDate(isPlacedDate) : Utils.getLanguageLabel("Pending")}</div>
+                            </div>
+                        </li>
+                        <li className={isAccepted ? "" : "pending"}>
+                            <div className="d-flex align-items-center">
+                                <div>{Utils.getLanguageLabel("Order confirmed")}</div>
+                                <div className="ml-auto font-12">{isAccepted ? Dates.localDate(isAcceptedDate) : Utils.getLanguageLabel("Pending")}</div>
+                            </div>
+                        </li>
+                        <li className={isOutForDelivery ? "" : "pending"}>
+                            <div className="d-flex align-items-center">
+                                <div>{Utils.getLanguageLabel("Out for delivery")}</div>
+                                <div className="ml-auto font-12">{isOutForDelivery ? Dates.localDate(isOutForDeliveryDate) : Utils.getLanguageLabel("Pending")}</div>
+                            </div>
+                        </li>
+                        <li className={isDelivered ? "" : "pending"}>
+                            <div className="d-flex align-items-center">
+                                <div>{Utils.getLanguageLabel("Order delivered")}</div>
+                                <div className="ml-auto font-12">{isDelivered ? Dates.localDate(isDeliveredDate) : Utils.getLanguageLabel("Pending")}</div>
+                            </div>
+                        </li>
+                    </ul>}
             </div>
         </div>
     </div>
@@ -140,17 +159,17 @@ export default function OrderDetail(props) {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/" }}>
-                                    <a>Home</a>
+                                    <a>{Utils.getLanguageLabel("Home")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/account" }}>
-                                    <a >My account</a>
+                                    <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/account/orders" }}>
-                                    <a >My Orders</a>
+                                    <a>{Utils.getLanguageLabel("My Orders")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item active" aria-current="page">{orderTxnId}</li>
@@ -184,10 +203,10 @@ export default function OrderDetail(props) {
 
                                 <div className="row mt-20 od-block">
                                     <div className="col-md-5">
-                                        <div className="xs-heading list-disc fw-500">Order items</div>
+                                        <div className="xs-heading list-disc fw-500">{Utils.getLanguageLabel("Order items")}</div>
 
                                         {orderInfo?.orderItems.map((orderItemInfo, index) => {
-                                            let productDetail = JSON.parse(orderItemInfo?.full_product_info)
+                                            let productDetail = JSON.parse(Utils.stripSlashes(orderItemInfo?.full_product_info))
                                             return <div key={`bill_order_items_${productDetail._id}_${index}`} className="white-box pd-0 mt-10">
                                                 <div className="cart-main-box pd-15">
                                                     <div className="d-flex to-product-flex align-items-center">
@@ -208,7 +227,7 @@ export default function OrderDetail(props) {
                                                                 <div>
                                                                     <div className="xs-heading fw-500 font-12">{productDetail.name} x{orderItemInfo.quantity}</div>
                                                                     <div className="weight-count">{productDetail.size}</div>
-                                                                    <div className="product-price">₹{Number(orderItemInfo.total_amount).toLocaleString('en-US', { maximumFractionDigits: 2 })}</div>
+                                                                    <div className="product-price">{Utils.convertToPriceFormat(orderItemInfo.total_amount)}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -220,33 +239,33 @@ export default function OrderDetail(props) {
                                     </div>
 
                                     <div className="col-md-4 offset-md-3">
-                                        <div className="xs-heading list-disc fw-500">Bill Details</div>
+                                        <div className="xs-heading list-disc fw-500">{Utils.getLanguageLabel("Bill Details")}</div>
                                         <div className="cart-table">
                                             <table className="w-100">
                                                 <tbody>
                                                     <tr>
-                                                        <td>Sub total</td>
-                                                        <td className="text-right">₹{Number(orderInfo.total_price + orderInfo.coupon_discount + orderInfo.wallet_amount - orderInfo.delivery_charges).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+                                                        <td>{Utils.getLanguageLabel("Sub total")}</td>
+                                                        <td className="text-right">{Utils.convertToPriceFormat(orderInfo.total_price + orderInfo.coupon_discount + orderInfo.wallet_amount - orderInfo.delivery_charges)}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Team buy discount</td>
-                                                        <td className="green-text text-right">-₹{Number(orderInfo.teambuy_discount).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+                                                        <td>{Utils.getLanguageLabel("Team buy discount")}</td>
+                                                        <td className="green-text text-right">-{Utils.convertToPriceFormat(orderInfo.teambuy_discount)}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Coupon discount</td>
-                                                        <td className="green-text text-right">-₹{Number(orderInfo.coupon_discount).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+                                                        <td>{Utils.getLanguageLabel("Coupon discount")}</td>
+                                                        <td className="green-text text-right">-{Utils.convertToPriceFormat(orderInfo.coupon_discount)}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Wallet discount</td>
-                                                        <td className="green-text text-right">-₹{Number(orderInfo.wallet_amount).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+                                                        <td>{Utils.getLanguageLabel("Wallet discount")}</td>
+                                                        <td className="green-text text-right">-{Utils.convertToPriceFormat(orderInfo.wallet_amount)}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Delivery Charge</td>
-                                                        <td className="red-text text-right">+₹{Number(orderInfo.delivery_charges).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+                                                        <td>{Utils.getLanguageLabel("Delivery Charge")}</td>
+                                                        <td className="red-text text-right">+{Utils.convertToPriceFormat(orderInfo.delivery_charges)}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td className="fw-500">Total payable amount</td>
-                                                        <td className="fw-500 text-right">₹{Number(orderInfo.total_price).toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+                                                        <td className="fw-500">{Utils.getLanguageLabel("Total payable amount")}</td>
+                                                        <td className="fw-500 text-right">{Utils.convertToPriceFormat(orderInfo.total_price)}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

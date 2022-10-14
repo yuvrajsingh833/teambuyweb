@@ -1,13 +1,26 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Utils from "../lib/utils";
+import { deleteCookie } from 'cookies-next';
+import { ConfirmModal } from './modal';
 
 export default function AccountSideBar(props) {
     const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
+
+    const makeUserLogout = () => {
+        setShowModal(false)
+        deleteCookie("appData")
+        if (typeof window !== 'undefined') {
+            localStorage.setItem("appData", JSON.stringify({}));
+        }
+        window.location.reload()
+    }
 
     useEffect(() => {
+        setShowModal(false)
     }, [props]);
 
     return (
@@ -43,6 +56,15 @@ export default function AccountSideBar(props) {
                 </li>
                 <div className="mt-10 green-text xs-heading fw-500 text-center">{Utils.getLanguageLabel("Version")} 0.0.2</div>
             </ul>
+
+            <ConfirmModal
+                title="Are you sure"
+                subTitle="You want to logout?"
+                showModal={showModal}
+                onCancelPress={() => setShowModal(false)}
+                onConfirmPress={() => {
+                    makeUserLogout()
+                }} />
         </>
     )
 }

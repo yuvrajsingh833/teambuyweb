@@ -108,3 +108,18 @@ a {
   opacity: 1;
   margin: 0;
 }
+
+.cancel-btn {
+  background: #fff;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #171726;
+  border: none;
+  padding: 10px 30px 8px;
+}
+.cancel-btn:focus {
+  color: #171726;
+}

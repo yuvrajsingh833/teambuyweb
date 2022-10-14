@@ -1,23 +1,23 @@
 import dynamic from "next/dynamic";
 import Head from 'next/head';
-import React, { useEffect, useState } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from "react";
 
 import { Config } from '../../../config/appConfig';
 
+import Feature from '../../../component/feature';
 import Loader from '../../../component/loader';
 import ProductCard from "../../../component/productCard";
-import Feature from '../../../component/feature';
 
-import * as Utils from '../../../lib/utils';
 import * as Enums from '../../../lib/enums';
+import * as Utils from '../../../lib/utils';
 
+import LoaderInline from "../../../component/loaderInline";
+import NoDataFound from "../../../component/nodataFound";
 import * as CategoryService from "../../../services/category";
 import * as ProductService from "../../../services/product";
-import LoaderInline from "../../../component/loaderInline";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -273,38 +273,22 @@ export default function SubCategory(props) {
                                                 </div>
                                                 {isLoadingMore && <LoaderInline />}
                                             </div>
-                                        </div> : <section className="cart-wrap">
-                                            <div className="empty-cart">
-                                                <div className="ce-icon text-center">
-                                                    <Image
-                                                        alt="fail"
-                                                        src="/bgicon/order-placed.png"
-                                                        height={60}
-                                                        width={60}
-                                                    />
-                                                </div>
-                                                <div className="sm-heading text-center mt-30">Oops! Category empty</div>
-                                                <div className="xs-heading text-center font-12">Please choose another category.</div>
-                                            </div>
-                                        </section>}
+                                        </div> :
+                                        <NoDataFound
+                                            image="/bgicon/order-placed.png"
+                                            title="Oops! Category empty"
+                                            subtitle="Please choose another category."
+                                        />
+                                    }
                                 </div>
                             </div>
                         </div> :
                         isLoading ? <Loader /> :
-                            <section className="cart-wrap">
-                                <div className="empty-cart">
-                                    <div className="ce-icon text-center">
-                                        <Image
-                                            alt="fail"
-                                            src="/bgicon/order-placed.png"
-                                            height={60}
-                                            width={60}
-                                        />
-                                    </div>
-                                    <div className="sm-heading text-center mt-30">Oops! Category empty</div>
-                                    <div className="xs-heading text-center font-12">Please choose another category.</div>
-                                </div>
-                            </section>
+                            <NoDataFound
+                                image="/bgicon/order-placed.png"
+                                title="Oops! Category empty"
+                                subtitle="Please choose another category."
+                            />
                     }
                 </div>
             </section>

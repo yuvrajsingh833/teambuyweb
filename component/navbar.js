@@ -18,7 +18,6 @@ export default function Navbar(props) {
     const [locationError, setLocationError] = useState(null)
 
     const [allLanguages, setAllLanguages] = useState([]);
-    const [languageLabelData, setLanguagesData] = useState([]);
 
     const getLocation = () => {
         if (!navigator.geolocation) {
@@ -42,9 +41,6 @@ export default function Navbar(props) {
             setAllLanguages(response.data)
             Utils.saveStateAsyncStorage(response.data, "defaultLanguage")
             MasterService.languagesLabel().then(response => {
-                setLanguagesData(response.data)
-
-                console.log(":response.data", response.data)
                 Utils.saveStateAsyncStorage(response.data, "languageLabelData")
                 setIsLoading(false)
             }).catch(e => {
@@ -75,19 +71,19 @@ export default function Navbar(props) {
                         <div className="header-address d-flex align-items-center">
                             {locationError ? <div className="had-area-desc">{locationError}</div> : <>
                                 <div className="had-icon">
-                                    <Image layout='raw' style={{ objectFit: 'contain' }} height={30} width={30} src="/img/location.svg" alt="location-icon" />
+                                    <Image layout='raw' style={{ objectFit: 'contain' }} height={20} width={20} src="/img/location.svg" alt="location-icon" />
                                 </div>
                                 <div className="had-location">
-                                    <div className="had-area-name">{shortAddress}</div>
+                                    <div className="had-area-name">{Utils.truncateString(shortAddress, 20)}</div>
                                     <hr className="separator" />
-                                    <div className="had-area-desc">{Utils.truncateString(fullAddress, 50)}</div>
+                                    <div className="had-area-desc">{Utils.truncateString(fullAddress, 25)}</div>
                                 </div>
                             </>}
 
                         </div>
 
                         <div className="search-box">
-                            <input type="text" className="search-input" placeholder="Search Store" />
+                            <input type="text" className="search-input" placeholder={Utils.getLanguageLabel("Search Store")} />
                             <span className="search-icon"></span>
                         </div>
 

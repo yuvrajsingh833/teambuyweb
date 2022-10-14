@@ -1,13 +1,15 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 
 import Feature from '../../../component/feature';
 import Loader from '../../../component/loader';
+import * as Utils from "../../../lib/utils";
 
 import * as PaymentService from "../../../services/payment";
 
+import NoDataFound from "../../../component/nodataFound";
 import * as Dates from "../../../lib/dateFormatService";
 
 import AccountSideBar from "../../../component/accountSidebar";
@@ -92,15 +94,15 @@ export default function MyWallet(props) {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/" }}>
-                                    <a>Home</a>
+                                    <a>{Utils.getLanguageLabel("Home")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/account" }}>
-                                    <a >My account</a>
+                                    <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">My Wallet</li>
+                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("My Wallet")}</li>
                         </ol>
                     </nav>
                 </div>
@@ -119,10 +121,16 @@ export default function MyWallet(props) {
                             <div className="white-box wallet-block">
                                 <div className="d-inline-flex align-items-end wallet-price-flex">
                                     <div className="wallet-total">₹{walletInfo?.amount || 0}</div>
-                                    <div className="wallet-vaild-date">Available amount in wallet as on {Dates.localDate(walletInfo?.created_at || Dates.getUTCTimestamp(new Date()))}</div>
+                                    <div className="wallet-vaild-date">{Utils.getLanguageLabel("Available amount in wallet as on")} {Dates.localDate(walletInfo?.created_at || Dates.getUTCTimestamp(new Date()))}</div>
                                 </div>
 
                                 <div className="row wallet-history">
+                                    {allTransactions.length < 1 &&
+                                        <NoDataFound
+                                            image="/bgicon/payment.png"
+                                            title="No transactions"
+                                            subtitle="There were no transactions happened till now."
+                                        />}
                                     {allTransactions.map(item => {
                                         let amountIn = true;
                                         if (item.end_balance > item.start_balance) {

@@ -9,9 +9,11 @@ import Loader from '../../../component/loader';
 import * as UserService from "../../../services/user";
 
 import * as Dates from "../../../lib/dateFormatService";
+import * as Utils from "../../../lib/utils";
 
 import AccountSideBar from "../../../component/accountSidebar";
 import LoaderInline from '../../../component/loaderInline';
+import NoDataFound from "../../../component/nodataFound";
 import { Config } from '../../../config/appConfig';
 
 const OrderInformation = ({ orderInfo }) => {
@@ -25,6 +27,8 @@ const OrderInformation = ({ orderInfo }) => {
     const [isOutForDeliveryDate, setIsOutForDeliveryDate] = useState(null);
     const [isDelivered, setIsDelivered] = useState(false);
     const [isDeliveredDate, setIsDeliveredDate] = useState(null);
+    const [isCancelled, setIsCancelled] = useState(false);
+    const [isCancelledDate, setIsCancelledDate] = useState(null);
 
     useEffect(() => {
         orderInfo?.orderDeliveryStatus.map(deliveryItem => {
@@ -40,6 +44,9 @@ const OrderInformation = ({ orderInfo }) => {
             } if (deliveryItem.status == "delivered") {
                 setIsDelivered(true)
                 setIsDeliveredDate(deliveryItem.created_at)
+            } if (deliveryItem.status == "cancelled") {
+                setIsCancelled(true)
+                setIsCancelledDate(deliveryItem.created_at)
             }
         })
     }, [])
@@ -47,37 +54,54 @@ const OrderInformation = ({ orderInfo }) => {
     return <div className="order-product-info">
         <div className="row">
             <div className="col-4 align-self-center">
-                <div className="xs-heading fw-500">Order #{orderInfo.order_txn_id}</div>
-                <div className="xs-heading font-12">Placed on <span className="fw-500">{Dates.localDate(orderInfo.created_at)}</span></div>
-                <div className="xs-heading font-12">Items: <span className="fw-500">{orderInfo.orderItems.length}</span>&nbsp;&nbsp;&nbsp; Total: <span className="fw-500">₹{orderInfo.total_price}</span></div>
+                <div className="xs-heading fw-500">{Utils.getLanguageLabel("Order")} #{orderInfo.order_txn_id}</div>
+                <div className="xs-heading font-12">{Utils.getLanguageLabel("Placed on")} <span className="fw-500">{Dates.localDate(orderInfo.created_at)}</span></div>
+                <div className="xs-heading font-12">{Utils.getLanguageLabel("Items")}: <span className="fw-500">{orderInfo.orderItems.length}</span>&nbsp;&nbsp;&nbsp; {Utils.getLanguageLabel("Total")}: <span className="fw-500">{Utils.convertToPriceFormat(orderInfo.total_price)}</span></div>
             </div>
             <div className="col-4 align-self-center">
-                {isExpanded && <ul className="op-delivery-process">
-                    <li className={isPlaced ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Order placed</div>
-                            <div className="ml-auto font-12">{isPlaced ? Dates.localDate(isPlacedDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                    <li className={isAccepted ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Order confirmed</div>
-                            <div className="ml-auto font-12">{isAccepted ? Dates.localDate(isAcceptedDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                    <li className={isOutForDelivery ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Out for delivery</div>
-                            <div className="ml-auto font-12">{isOutForDelivery ? Dates.localDate(isOutForDeliveryDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                    <li className={isDelivered ? "" : "pending"}>
-                        <div className="d-flex align-items-center">
-                            <div>Order delivered</div>
-                            <div className="ml-auto font-12">{isDelivered ? Dates.localDate(isDeliveredDate) : "Pending"}</div>
-                        </div>
-                    </li>
-                </ul>}
+                {isExpanded ?
+                    isCancelled == true ?
+                        <ul className="op-delivery-process">
+                            <li className={isPlaced ? "" : "pending"}>
+                                <div className="d-flex align-items-center">
+                                    <div>{Utils.getLanguageLabel("Order placed")}</div>
+                                    <div className="ml-auto font-12">{isPlaced ? Dates.localDate(isPlacedDate) : Utils.getLanguageLabel("Pending")}</div>
+                                </div>
+                            </li>
+                            <li className={isCancelled ? "" : "pending"}>
+                                <div className="d-flex align-items-center">
+                                    <div>{Utils.getLanguageLabel("Order Cancelled")}</div>
+                                    <div className="ml-auto font-12">{isCancelled ? Dates.localDate(isCancelledDate) : Utils.getLanguageLabel("Pending")}</div>
+                                </div>
+                            </li>
+                        </ul> :
+                        <ul className="op-delivery-process">
+                            <li className={isPlaced ? "" : "pending"}>
+                                <div className="d-flex align-items-center">
+                                    <div>{Utils.getLanguageLabel("Order placed")}</div>
+                                    <div className="ml-auto font-12">{isPlaced ? Dates.localDate(isPlacedDate) : Utils.getLanguageLabel("Pending")}</div>
+                                </div>
+                            </li>
+                            <li className={isAccepted ? "" : "pending"}>
+                                <div className="d-flex align-items-center">
+                                    <div>{Utils.getLanguageLabel("Order confirmed")}</div>
+                                    <div className="ml-auto font-12">{isAccepted ? Dates.localDate(isAcceptedDate) : Utils.getLanguageLabel("Pending")}</div>
+                                </div>
+                            </li>
+                            <li className={isOutForDelivery ? "" : "pending"}>
+                                <div className="d-flex align-items-center">
+                                    <div>{Utils.getLanguageLabel("Out for delivery")}</div>
+                                    <div className="ml-auto font-12">{isOutForDelivery ? Dates.localDate(isOutForDeliveryDate) : Utils.getLanguageLabel("Pending")}</div>
+                                </div>
+                            </li>
+                            <li className={isDelivered ? "" : "pending"}>
+                                <div className="d-flex align-items-center">
+                                    <div>{Utils.getLanguageLabel("Order delivered")}</div>
+                                    <div className="ml-auto font-12">{isDelivered ? Dates.localDate(isDeliveredDate) : Utils.getLanguageLabel("Pending")}</div>
+                                </div>
+                            </li>
+                        </ul> : null
+                }
             </div>
             <div className="col-4 text-center align-self-center">
                 <Link
@@ -88,7 +112,7 @@ const OrderInformation = ({ orderInfo }) => {
                     }}
                 >
                     <a>
-                        <button className="green-btn">{isDelivered ? "VIEW ORDER" : "TRACK ORDER"}</button>
+                        <button className="green-btn">{isDelivered ? Utils.getLanguageLabel("VIEW ORDER") : Utils.getLanguageLabel("TRACK ORDER")}</button>
                     </a>
                 </Link>
                 <a style={isExpanded ? { cursor: 'pointer', transform: `rotate(180deg)` } : { cursor: 'pointer' }} onClick={() => setIsExpanded(!isExpanded)} className="order-down-arrow"></a>
@@ -173,15 +197,15 @@ export default function MyOrders(props) {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/" }}>
-                                    <a>Home</a>
+                                    <a>{Utils.getLanguageLabel("Home")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/account" }}>
-                                    <a >My account</a>
+                                    <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">My Orders</li>
+                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("My Orders")}</li>
                         </ol>
                     </nav>
                 </div>
@@ -200,6 +224,12 @@ export default function MyOrders(props) {
                             <div className="white-box all-orders-block">
                                 <div className="block-scroll-x">
                                     <div className="block-scroll-x-width">
+                                        {allOrders.length < 1 &&
+                                            <NoDataFound
+                                                image="/bgicon/order.png"
+                                                title="No order"
+                                                subtitle="Place a new order."
+                                            />}
                                         {allOrders.map(item => {
                                             return <div key={`all_orders_${item.id}`} className="white-box d-flex pd-20 mb-20">
                                                 <div className="order-product-icon mt-10">

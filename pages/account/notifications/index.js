@@ -11,7 +11,9 @@ import * as Dates from "../../../lib/dateFormatService";
 
 import AccountSideBar from "../../../component/accountSidebar";
 import LoaderInline from '../../../component/loaderInline';
+import NoDataFound from "../../../component/nodataFound";
 import { Config } from '../../../config/appConfig';
+import * as Utils from "../../../lib/utils";
 
 export default function MyNotifications(props) {
     const [isLoading, setIsLoading] = useState(true);
@@ -89,15 +91,15 @@ export default function MyNotifications(props) {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/" }}>
-                                    <a>Home</a>
+                                    <a>{Utils.getLanguageLabel("Home")}</a>
                                 </Link>
                             </li>
                             <li className="breadcrumb-item">
                                 <Link passHref href={{ pathname: "/account" }}>
-                                    <a >My account</a>
+                                    <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">My Notifications</li>
+                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("My Notifications")}</li>
                         </ol>
                     </nav>
                 </div>
@@ -115,11 +117,17 @@ export default function MyNotifications(props) {
 
                         <div className="common-right">
                             <div className="white-box notifaction-block">
+                                {allNotifications.length < 1 &&
+                                    <NoDataFound
+                                        image="/bgicon/user.png"
+                                        title="No new notification"
+                                        subtitle="No update for you at the moment."
+                                    />}
                                 {allNotifications.map(item => {
                                     return <div key={`all_notifications_${item.id}`} className="white-box pd-15 d-flex align-items-center mb-20">
                                         <div>
-                                            <div className="xs-heading fw-500">{item.title}</div><br />
-                                            <div className="xs-heading font-12">{item.content} {item.formatted_address}</div>
+                                            <div className="xs-heading fw-500">{Utils.getLanguageLabel(item.title)}</div><br />
+                                            <div className="xs-heading font-12">{item.content}</div>
                                         </div>
                                         <div className="ml-auto">
                                             <div className="xs-heading font-12 gray-text faq-date">{Dates.localDate(item.created_at)}</div>
