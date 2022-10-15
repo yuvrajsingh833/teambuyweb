@@ -14,7 +14,7 @@ export default function Layout({ children }) {
         <>
             <Header />
             <Navbar />
-            <AuthSideBar />
+            {/* <AuthSideBar /> */}
             <RouteGuard>
                 <SnackbarProvider>
                     <WishlistSidebar />

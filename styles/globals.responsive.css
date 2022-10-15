@@ -16,6 +16,37 @@
   .for-mobile {
     display: none;
   }
+
+  .nav-fl-1 {
+    flex: 1;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  .nav-fl-2 {
+    flex: 2;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  .nav-fl-3 {
+    flex: 3;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .nav-fl-4 {
+    flex: 4;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .nav-fl-5 {
+    flex: 5;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .nav-fl-6 {
+    flex: 6;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 
 @media (max-width: 575px) {
@@ -38,5 +69,39 @@
     padding: 10px 0;
     box-shadow: 0 0px 0px rgb(0 0 0 / 10%);
     position: relative;
+  }
+
+  .nav-fl-1 {
+    flex: 3;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  .nav-fl-2 {
+    flex: 2;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  .nav-fl-3 {
+    flex: 3;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .nav-fl-4 {
+    flex: 4;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .nav-fl-5 {
+    flex: 5;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .nav-fl-6 {
+    flex: 6;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .search-box {
+    width: 95%;
   }
 }

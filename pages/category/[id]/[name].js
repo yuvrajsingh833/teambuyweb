@@ -217,14 +217,14 @@ export default function SubCategory(props) {
                                 </div>
                                 <div className="ml-auto d-flex align-items-center product-count-filter">
                                     <div className="product-count">{Utils.getLanguageLabel("Total")} {productInfo.totalItems} {Utils.getLanguageLabel("product(s)")}</div>
-                                    <div className="sort-by-block ml-15 d-flex align-items-center">
+                                    {/* <div className="sort-by-block ml-15 d-flex align-items-center">
                                         <div className="sort-label">{Utils.getLanguageLabel("Sort By")}</div>
                                         <div className=" ml-15">
                                             <select className="form-control">
                                                 <option>Price Low to High</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
 

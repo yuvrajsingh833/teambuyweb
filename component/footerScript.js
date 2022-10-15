@@ -101,6 +101,14 @@ export default function FooterScript({ }) {
                         $('body').addClass('overflow-active');
                         $('.sidebar-overlay-bg').addClass('active');
                     };
+
+                    function openLanguageDropDown() {
+                        $("#languageDropDown").addClass("show");
+                    }
+
+                    function closeLanguageDropDown() {
+                        $("#languageDropDown").removeClass("show");
+                    }
                 `}
             </Script>
         </>

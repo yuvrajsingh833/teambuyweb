@@ -12,6 +12,8 @@ import * as Dates from '../../lib/dateFormatService';
 import * as Enums from '../../lib/enums';
 import * as ProductService from "../../services/product";
 
+import * as Utils from '../../lib/utils';
+
 var $ = require("jquery");
 if (typeof window !== "undefined") {
     window.$ = window.jQuery = require("jquery");
@@ -63,9 +65,9 @@ export default function ProductDetail(props) {
             <div className="r-rating">
                 {arrayData.map((item, index) => {
                     if (parseFloat(item) <= parseFloat(data))
-                        return <img key={`product_star_rating_${index}`} src="/img/fill-star.svg" />
+                        return <Image layout='raw' height={10} width={10} key={`product_star_rating_${index}`} src="/img/fill-star.svg" alt='fill-star' />
                     else
-                        return <img key={`product_star_rating_${index}`} src="/img/blank-star.svg" />
+                        return <Image layout='raw' height={10} width={10} key={`product_star_rating_${index}`} src="/img/blank-star.svg" alt='blank-star' />
                 })}
             </div>
         )
@@ -96,7 +98,7 @@ export default function ProductDetail(props) {
     return (
         <>
             <Head>
-                <title>{productDetail?.name} {productDetail?.size} | Teambuy</title>
+                <title>{productDetail?.name} | Teambuy</title>
             </Head>
             <section className="detail-wrap ptb-30">
                 <div className="container">
@@ -110,7 +112,7 @@ export default function ProductDetail(props) {
                                     nav={false}
                                     dots={true}
                                     items={1}
-                                >{productDetail?.product_images.length > 0 ?
+                                >{productDetail?.product_images.length < 0 ?
                                     (productDetail.product_images).map((imageItem, index) => {
                                         return <div key={`product_image_${index}`} className="item">
                                             <div className="dtl-img-box">
@@ -126,7 +128,7 @@ export default function ProductDetail(props) {
                                         </div>
                                     }) : <div className="item">
                                         <div className="dtl-img-box">
-                                            <img src="/img/default-image.png" />
+                                            <Image alt='default-image' layout='raw' height={120} width={120} style={{ objectFit: 'contain', height: '220px' }} src="/img/default-image.png" />
                                         </div>
                                     </div>}
                                 </OwlCarousel>
@@ -136,7 +138,6 @@ export default function ProductDetail(props) {
                                 <div className="d-flex product-dtl-heading">
                                     <div>
                                         <div className="dtl-heading">{productDetail?.name} {productDetail?.size} </div>
-                                        <div className="xs-heading mt-10 fw-500 green-text">{productDetail.business_caret_size} piece per case </div>
                                         <div className="xs-heading fw-500">MRP &#8377;{Number(productDetail.business_gst_amount + productDetail.business_price_without_gst).toLocaleString('en-US', { maximumFractionDigits: 2 })} </div>
                                         <div className="mt-6">
                                             <FacebookShareButton
@@ -167,15 +168,15 @@ export default function ProductDetail(props) {
                                     </div>
                                     <div className="ml-auto">
                                         <div className=" lr-box d-flex align-items-center">
-                                            <div>{productDetail?.average_rating} <img style={{ verticalAlign: 'middle' }} src="/img/fill-star.png" /></div>&nbsp;
-                                            <div>{productDetail.product_comments.length}  Likes</div>
+                                            <div>{productDetail?.average_rating} <Image alt='star' layout='raw' height={10} width={10} style={{ verticalAlign: 'middle' }} src="/img/fill-star.png" /></div>&nbsp;
+                                            <div>{productDetail.product_comments.length}  {Utils.getLanguageLabel("Likes")}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="dtl-content mt-20">{productDetail.highlight}</div>
                                 <div className="d-inline-flex mt-10">
                                     <div>
-                                        <div className="xs-heading mt-20 fw-500">Size</div>
+                                        <div className="xs-heading mt-20 fw-500">{Utils.getLanguageLabel("Size")}</div>
                                         <div className="d-inline-flex mt-10">
                                             <div className="tags">
                                                 <span>{productDetail.size}</span>
@@ -183,7 +184,7 @@ export default function ProductDetail(props) {
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="xs-heading mt-20 fw-500">Brand</div>
+                                        <div className="xs-heading mt-20 fw-500">{Utils.getLanguageLabel("Brand")}</div>
                                         <div className="d-inline-flex mt-10">
                                             <div className="tags">
                                                 <span>{productDetail.brand}</span>
@@ -194,10 +195,10 @@ export default function ProductDetail(props) {
                                 <div className="dtl-action-block d-flex align-items-center">
                                     <div>
                                         <div className="product-price font-19">MRP ₹380</div>
-                                        <div className="special-disc">Get on <span>₹280</span> with team buying</div>
+                                        <div className="special-disc">{Utils.getLanguageLabel("Get on")} <span>₹280</span> {Utils.getLanguageLabel("with team buying")}</div>
                                     </div>
                                     <div className="ml-auto">
-                                        <button className="green-btn"><img src="/img/cart.svg" /> Add to cart</button>
+                                        <button className="green-btn"><Image alt='add-to-cart' layout='raw' height={20} width={20} src="/img/cart.svg" /> {Utils.getLanguageLabel("Add to cart")}</button>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +206,7 @@ export default function ProductDetail(props) {
 
                         <div className="row mlr-25 mt-20 desc-review-block">
                             <div className="col-md-6 plr-25">
-                                <div className="sm-heading">Product description</div>
+                                <div className="sm-heading">{Utils.getLanguageLabel("Product description")}</div>
                                 {(typeof productDetail.description == "object") ?
                                     Object.keys(productDetail.description).map(descriptionItems => {
                                         return (
@@ -219,14 +220,14 @@ export default function ProductDetail(props) {
                             </div>
                             <div className="col-md-6 plr-25">
                                 <div className="d-flex align-items-center">
-                                    <div className="sm-heading">Reviews & ratings</div>
+                                    <div className="sm-heading">{Utils.getLanguageLabel("Reviews & ratings")}</div>
                                     <div className="ml-auto">
-                                        <a data-bs-toggle="modal" data-bs-target="#rateTheProductModal" className="black-link green-text text-uppercase fw-500">+ rate product</a>
+                                        <a data-bs-toggle="modal" data-bs-target="#rateTheProductModal" className="black-link green-text text-uppercase fw-500">+ {Utils.getLanguageLabel("rate product")}</a>
                                     </div>
                                 </div>
                                 <div className="rr-total-box">
                                     {renderAverageRatingStars(productDetail.average_rating)}
-                                    <div className="r-review fw-500">{productDetail.average_rating} out of 5 ({productDetail?.product_comments?.length} rating(s))</div>
+                                    <div className="r-review fw-500">{productDetail.average_rating} out of 5 ({productDetail?.product_comments?.length} {Utils.getLanguageLabel("rating(s)")})</div>
                                 </div>
                                 {renderComments(productDetail.product_comments.slice(0, 5))}
                             </div>
@@ -237,7 +238,7 @@ export default function ProductDetail(props) {
             <div className="similar-product-wrap">
                 <div className="container">
                     <div className="heading-flex">
-                        <div className="sm-heading">Similar products</div>
+                        <div className="sm-heading">{Utils.getLanguageLabel("Similar products")}</div>
                     </div>
                     <OwlCarousel
                         className="seven-items-slider owl-carousel common-navs mt-20"
