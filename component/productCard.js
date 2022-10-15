@@ -66,51 +66,51 @@ export default function ProductCard({ item, showLogin }) {
     }
 
     const renderAddToCartButton = () => {
-        if (item.stock < item.reserve_stock) {
-            return <button type="button" className="cancel-btn gray-tag-big">Out of stock</button>
-        }
-
-        if (user?.token?.length > 0) {
-            if (cartQuantity > 0) {
-                return <div className="ml-auto d-inline-flex align-items-start product-count">
-                    <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity - 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+        if (Number(item.stock) >= Number(item.reserve_stock)) {
+            if (user?.token?.length > 0) {
+                if (cartQuantity > 0) {
+                    return <div className="ml-auto d-inline-flex align-items-start product-count">
+                        <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity - 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                            <Image
+                                width={30}
+                                alt={"add button"}
+                                height={30}
+                                src={"/img/minus.svg"} />
+                        </a>
+                        <a className="add-product-icon" style={{ height: '30px', width: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>{cartQuantity}</a>
+                        <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                            <Image
+                                width={30}
+                                alt={"add button"}
+                                height={30}
+                                src={"/img/plus.svg"} />
+                        </a>
+                    </div>
+                } else {
+                    return <div className="ml-auto">
+                        <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                            <Image
+                                width={30}
+                                alt={"add button"}
+                                height={30}
+                                src={"/img/md_add_button.svg"} />
+                        </a>
+                    </div>
+                }
+            } else {
+                return <div className="ml-auto ">
+                    <a onClick={() => openLogin()} style={{ cursor: 'pointer' }} className="add-product-icon">
                         <Image
                             width={30}
-                            alt={"add button"}
-                            height={30}
-                            src={"/img/minus.svg"} />
-                    </a>
-                    <a className="add-product-icon" style={{ height: '30px', width: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>{cartQuantity}</a>
-                    <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
-                        <Image
-                            width={30}
+                            quality={100}
                             alt={"add button"}
                             height={30}
                             src={"/img/plus.svg"} />
                     </a>
                 </div>
-            } else {
-                return <div className="ml-auto">
-                    <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
-                        <Image
-                            width={30}
-                            alt={"add button"}
-                            height={30}
-                            src={"/img/md_add_button.svg"} />
-                    </a>
-                </div>
             }
         } else {
-            return <div className="ml-auto ">
-                <a onClick={() => openLogin()} style={{ cursor: 'pointer' }} className="add-product-icon">
-                    <Image
-                        width={30}
-                        quality={100}
-                        alt={"add button"}
-                        height={30}
-                        src={"/img/plus.svg"} />
-                </a>
-            </div>
+            return <button type="button" className="cancel-btn gray-tag-big">Out of stock</button>
         }
     }
 

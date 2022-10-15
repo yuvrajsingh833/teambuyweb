@@ -95,7 +95,12 @@ export default function WishlistSidebar(props) {
                                             <div className="d-flex align-items-center mt-10">
                                                 <div>
                                                     {(Number(item.stock) >= Number(item.reserve_stock)) ?
-                                                        <button onClick={() => addToCart(productDetail._id)} className="green-btn wishlist-btn"><Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src="/img/cart.svg" /> {Utils.getLanguageLabel("move to cart")}</button> : <p style={{ fontSize: '14px', marginTop: '14px' }} >{Utils.getLanguageLabel("Product out of stock")}</p>}
+                                                        <button onClick={() => addToCart(productDetail._id)} className="green-btn wishlist-btn">
+                                                            <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src="/img/cart.svg" />
+                                                            {Utils.getLanguageLabel("move to cart")}
+                                                        </button> :
+                                                        <p style={{ fontSize: '14px', marginTop: '14px' }} >{Utils.getLanguageLabel("Product out of stock")}</p>
+                                                    }
                                                 </div>
                                                 <div className="ml-auto">
                                                     <button onClick={() => removeFromWishlist(productDetail._id)} className="red-btn wishlist-btn">{Utils.getLanguageLabel("remove")}</button>

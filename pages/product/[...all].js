@@ -100,40 +100,40 @@ export default function ProductDetail(props) {
     }
 
     const renderAddToCartButton = () => {
-        if (productDetail.stock < productDetail.reserve_stock) {
-            return <button type="button" className="cancel-btn gray-tag-big">Out of stock</button>
-        }
-
-        if (user?.token?.length > 0) {
-            if (cartQuantity > 0) {
-                return <div className="d-inline-flex align-items-start product-count">
-                    <a onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity - 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
-                        <Image
-                            width={40}
-                            alt={"add button"}
-                            height={40}
-                            src={"/img/minus.svg"} />
-                    </a>
-                    <a className="add-product-icon" style={{ height: '40px', width: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>{cartQuantity}</a>
-                    <a onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
-                        <Image
-                            width={40}
-                            alt={"add button"}
-                            height={40}
-                            src={"/img/plus.svg"} />
-                    </a>
-                </div>
+        if (Number(productDetail.stock) >= Number(productDetail.reserve_stock)) {
+            if (user?.token?.length > 0) {
+                if (cartQuantity > 0) {
+                    return <div className="d-inline-flex align-items-start product-count">
+                        <a onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity - 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                            <Image
+                                width={40}
+                                alt={"add button"}
+                                height={40}
+                                src={"/img/minus.svg"} />
+                        </a>
+                        <a className="add-product-icon" style={{ height: '40px', width: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>{cartQuantity}</a>
+                        <a onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                            <Image
+                                width={40}
+                                alt={"add button"}
+                                height={40}
+                                src={"/img/plus.svg"} />
+                        </a>
+                    </div>
+                } else {
+                    return <button onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity + 1))} className="green-btn">
+                        <Image alt='add-to-cart' layout='raw' height={20} width={20} src="/img/cart.svg" />
+                        {Utils.getLanguageLabel("Add to cart")}
+                    </button>
+                }
             } else {
-                return <button onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity + 1))} className="green-btn">
+                return <button onClick={() => openLogin()} className="green-btn">
                     <Image alt='add-to-cart' layout='raw' height={20} width={20} src="/img/cart.svg" />
                     {Utils.getLanguageLabel("Add to cart")}
                 </button>
             }
         } else {
-            return <button onClick={() => openLogin()} className="green-btn">
-                <Image alt='add-to-cart' layout='raw' height={20} width={20} src="/img/cart.svg" />
-                {Utils.getLanguageLabel("Add to cart")}
-            </button>
+            return <button type="button" className="cancel-btn gray-tag-big">Out of stock</button>
         }
     }
 
@@ -190,7 +190,7 @@ export default function ProductDetail(props) {
                                     nav={false}
                                     dots={true}
                                     items={1}
-                                >{productDetail?.product_images.length < 0 ?
+                                >{productDetail?.product_images.length > 0 ?
                                     (productDetail.product_images).map((imageItem, index) => {
                                         return <div key={`product_image_${index}`} className="item">
                                             <div className="dtl-img-box">
