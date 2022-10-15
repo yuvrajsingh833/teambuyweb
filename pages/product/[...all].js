@@ -100,7 +100,7 @@ export default function ProductDetail(props) {
     }
 
     const renderAddToCartButton = () => {
-        if (Number(productDetail.stock) >= Number(productDetail.reserve_stock)) {
+        if (Number(productDetail.stock) >= Number(productDetail.reserve_stock) && productDetail.stock != 0 && productDetail.reserve_stock != 0) {
             if (user?.token?.length > 0) {
                 if (cartQuantity > 0) {
                     return <div className="d-inline-flex align-items-start product-count">

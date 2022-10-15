@@ -115,6 +115,12 @@ a {
   margin: 0;
 }
 
+.gray-tag-small {
+  padding: 5px 5px !important;
+  width: 100%;
+  background: #f3f3f3 !important;
+}
+
 .cancel-btn {
   background: #fff;
   border-radius: 6px;
@@ -146,26 +152,31 @@ a {
   margin-left: 4px;
   margin-right: 4px;
 }
+
 .nav-fl-2 {
   flex: 2;
   margin-left: 4px;
   margin-right: 4px;
 }
+
 .nav-fl-3 {
   flex: 3;
   margin-left: 5px;
   margin-right: 5px;
 }
+
 .nav-fl-4 {
   flex: 4;
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .nav-fl-5 {
   flex: 5;
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .nav-fl-6 {
   flex: 6;
   margin-left: 10px;
@@ -183,6 +194,7 @@ a {
   border: none;
   cursor: pointer;
 }
+
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
   position: relative;

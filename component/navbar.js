@@ -48,14 +48,11 @@ export default function Navbar(props) {
                 MasterService.reverseGeoLocation({ lat: position?.coords?.latitude, long: position?.coords?.longitude }).then(response => {
                     setShortAddress(response.data.additionalInformation.address_components[0].long_name)
                     setFullAddress(response.data.formattedAddress)
-                    getAllLanguages()
                 }).catch(e => {
                     console.log(`getLocation error : ${e}`)
-                    getAllLanguages()
                 })
             }, () => {
                 setLocationError(Utils.getLanguageLabel("Please enable the geolocation on your browser."))
-                getAllLanguages()
             });
         }
     }
@@ -78,6 +75,7 @@ export default function Navbar(props) {
 
     useEffect(() => {
         getUserInfo()
+        getAllLanguages()
     }, [props])
 
     const changeSelectedLanguage = (language) => {

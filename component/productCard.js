@@ -9,9 +9,6 @@ import * as UserService from "../services/user";
 import * as CheckoutService from "../services/checkout";
 
 export default function ProductCard({ item, showLogin }) {
-
-    console.log(item)
-
     const userData = useSelector(state => state.userData)
     const user = userData?.userData
 
@@ -66,92 +63,86 @@ export default function ProductCard({ item, showLogin }) {
     }
 
     const renderAddToCartButton = () => {
-        if (Number(item.stock) >= Number(item.reserve_stock)) {
-            if (user?.token?.length > 0) {
-                if (cartQuantity > 0) {
-                    return <div className="ml-auto d-inline-flex align-items-start product-count">
-                        <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity - 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
-                            <Image
-                                width={30}
-                                alt={"add button"}
-                                height={30}
-                                src={"/img/minus.svg"} />
-                        </a>
-                        <a className="add-product-icon" style={{ height: '30px', width: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>{cartQuantity}</a>
-                        <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
-                            <Image
-                                width={30}
-                                alt={"add button"}
-                                height={30}
-                                src={"/img/plus.svg"} />
-                        </a>
-                    </div>
-                } else {
-                    return <div className="ml-auto">
-                        <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
-                            <Image
-                                width={30}
-                                alt={"add button"}
-                                height={30}
-                                src={"/img/md_add_button.svg"} />
-                        </a>
-                    </div>
-                }
-            } else {
-                return <div className="ml-auto ">
-                    <a onClick={() => openLogin()} style={{ cursor: 'pointer' }} className="add-product-icon">
+        if (user?.token?.length > 0) {
+            if (cartQuantity > 0) {
+                return <div className="ml-auto d-inline-flex align-items-start product-count">
+                    <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity - 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
                         <Image
                             width={30}
-                            quality={100}
+                            alt={"add button"}
+                            height={30}
+                            src={"/img/minus.svg"} />
+                    </a>
+                    <a className="add-product-icon" style={{ height: '30px', width: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>{cartQuantity}</a>
+                    <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                        <Image
+                            width={30}
                             alt={"add button"}
                             height={30}
                             src={"/img/plus.svg"} />
                     </a>
                 </div>
+            } else {
+                return <div className="ml-auto">
+                    <a onClick={() => setProductCartQuantity(item._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                        <Image
+                            width={30}
+                            alt={"add button"}
+                            height={30}
+                            src={"/img/md_add_button.svg"} />
+                    </a>
+                </div>
             }
         } else {
-            return <button type="button" className="cancel-btn gray-tag-big">Out of stock</button>
+            return <div className="ml-auto ">
+                <a onClick={() => openLogin()} style={{ cursor: 'pointer' }} className="add-product-icon">
+                    <Image
+                        width={30}
+                        quality={100}
+                        alt={"add button"}
+                        height={30}
+                        src={"/img/plus.svg"} />
+                </a>
+            </div>
         }
     }
 
     return (
-        <>
-            <div className="white-box">
-                <a onClick={() => setProductLike(item._id)} style={{ cursor: 'pointer', position: 'absolute', zIndex: 1 }} className={`product-wishlist ${isLiked ? 'selected' : ''}`}></a>
-                <Link Link
-                    key={`product_item_${item._id}`}
-                    passHref
-                    href={{
-                        pathname: '/product/[name]/[id]',
-                        query: { id: item._id, name: Utils.convertToSlug(item.name) },
-                    }}
-                >
-                    <a>
-                        <div className="product-img">
-                            <Image
-                                src={Utils.generateProductImage(item)}
-                                alt={item?.name}
-                                layout="raw"
-                                height={200}
-                                width={200}
-                                className={'common-product-image'}
-                                style={{ objectFit: 'contain' }}
-                            />
-                        </div>
-
-                    </a>
-                </Link>
-                <div className="product-content">
-                    <div className="xs-heading text-ellipsis">{item.name}</div>
-                    <div className="weight-count mt-1">{item.size}</div>
-                    <div className="d-flex align-items-center mt-10">
-                        <div className="product-price">&#8377;{Number(item.gst_amount + item.price_without_gst).toLocaleString('en-US', { maximumFractionDigits: 2 })}</div>
-                        {renderAddToCartButton()}
+        <div className="white-box">
+            <a onClick={() => setProductLike(item._id)} style={{ cursor: 'pointer', position: 'absolute', zIndex: 1 }} className={`product-wishlist ${isLiked ? 'selected' : ''}`}></a>
+            <Link Link
+                key={`product_item_${item._id}`}
+                passHref
+                href={{
+                    pathname: '/product/[name]/[id]',
+                    query: { id: item._id, name: Utils.convertToSlug(item.name) },
+                }}
+            >
+                <a>
+                    <div className="product-img">
+                        <Image
+                            src={Utils.generateProductImage(item)}
+                            alt={item?.name}
+                            layout="raw"
+                            height={200}
+                            width={200}
+                            className={'common-product-image'}
+                            style={{ objectFit: 'contain' }}
+                        />
                     </div>
+                </a>
+            </Link>
+            <div className="product-content">
+                <div className="xs-heading text-ellipsis">{item.name}</div>
+                <div className="weight-count mt-1">{item.size}</div>
+                <div className="d-flex align-items-center mt-10">
+                    <div className="product-price">&#8377;{Number(item.gst_amount + item.price_without_gst).toLocaleString('en-US', { maximumFractionDigits: 2 })}</div>
+                    {(Number(item.stock) >= Number(item.reserve_stock) && item.stock != 0 && item.reserve_stock != 0) && renderAddToCartButton()}
                 </div>
-
+                <div className="d-flex align-items-center mt-10">
+                    {!(Number(item.stock) >= Number(item.reserve_stock) && item.stock != 0 && item.reserve_stock != 0) && <button type="button" className="cancel-btn gray-tag-small">Out of stock</button>}
+                </div>
             </div>
-
-        </>
+        </div>
     )
 }
