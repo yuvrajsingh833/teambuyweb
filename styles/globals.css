@@ -42,9 +42,11 @@ a {
 .one {
   animation-delay: 0.5s;
 }
+
 .two {
   animation-delay: 1s;
 }
+
 .three {
   animation-delay: 2s;
 }
@@ -53,13 +55,16 @@ a {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(20px);
   }
+
   100% {
     transform: translateY(0);
   }
 }
+
 .common-category-image {
   position: absolute !important;
   inset: 50 50 !important;
@@ -73,6 +78,7 @@ a {
   min-height: 0 !important;
   width: auto !important;
 }
+
 .category-image {
   max-width: 80% !important;
   max-height: 80% !important;
@@ -120,11 +126,13 @@ a {
   border: none;
   padding: 10px 30px 8px;
 }
+
 .cancel-btn:focus {
   color: #171726;
 }
 
-.for-mobile {
+.for-mobile,
+.for-tab {
   display: none;
 }
 
