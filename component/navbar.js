@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSelector } from 'react-redux'
+import { ActionCreators } from "../store/actions/index";
+
+import AuthSideBar from './authSidebar'
 
 import * as Utils from "../lib/utils"
 
 import * as MasterService from "../services/master";
+import * as UserService from "../services/user";
+import WishlistSidebar from "./wishlistSidebar";
 
 export default function Navbar(props) {
     const userData = useSelector(state => state.userData)
@@ -13,10 +18,27 @@ export default function Navbar(props) {
     global.user = userData?.userData
 
     const [isLoading, setIsLoading] = useState(true)
+    const [showLogin, setShowLogin] = useState(false)
+    const [showWishlist, setShowWishlist] = useState(false)
     const [shortAddress, setShortAddress] = useState(null)
     const [fullAddress, setFullAddress] = useState(null)
     const [locationError, setLocationError] = useState(null)
     const [allLanguages, setAllLanguages] = useState([]);
+
+    const getUserInfo = () => {
+        global?.user?.token?.length > 0 && UserService.getUserDetail().then(response => {
+            let oldUserData = JSON.parse(JSON.stringify(global.user));
+            let newUserData = JSON.parse(JSON.stringify(response.data));
+
+            let mergeData = { ...oldUserData, ...newUserData }
+
+            global.user = mergeData;
+            Utils.saveStateAsyncStorage({ userData: mergeData });
+            ActionCreators.setLoggedInUserData(mergeData)
+        }).catch(error => console.log(error))
+
+        getLocation()
+    }
 
     const getLocation = () => {
         if (!navigator.geolocation) {
@@ -55,12 +77,22 @@ export default function Navbar(props) {
     }
 
     useEffect(() => {
-        getLocation()
+        getUserInfo()
     }, [props])
 
     const changeSelectedLanguage = (language) => {
         Utils.saveStateAsyncStorage(language, "defaultLanguage");
         window.location.reload();
+    }
+
+    const openLogin = () => {
+        setShowLogin(true);
+        setTimeout(() => { window.openLoginSideBar() }, 300)
+    }
+
+    const openWishlist = () => {
+        setShowWishlist(true);
+        setTimeout(() => { window.openWishlistSideBar() }, 300)
     }
 
     if (isLoading) return <header />
@@ -116,9 +148,9 @@ export default function Navbar(props) {
 
                             <div className="px-2">
                                 {user?.token?.length > 0 ?
-                                    <a style={{ cursor: 'pointer' }} onClick={() => window.openWishlistSideBar()}>
-                                        <Image layout='raw' style={{ objectFit: 'contain' }} height={20} width={20} alt="wishlist-icon" src="/img/wishlist-icon.svg" /></a> :
-                                    <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()}>
+                                    <a style={{ cursor: 'pointer' }} onClick={() => openWishlist()}>
+                                        <Image layout='raw' style={{ objectFit: 'contain' }} height={20} width={20} alt="wishlist-icon" src={global.user.wishlistCount > 0 ? "/img/wishlist-active-icon.svg" : "/img/wishlist-icon.svg"} /></a> :
+                                    <a style={{ cursor: 'pointer' }} onClick={() => openLogin()}>
                                         <Image layout='raw' style={{ objectFit: 'contain' }} height={20} width={20} alt="wishlist-icon" src="/img/wishlist-icon.svg" /></a>
                                 }
                             </div>
@@ -128,7 +160,7 @@ export default function Navbar(props) {
                                     <Link passHref href="/account">
                                         <a style={{ cursor: 'pointer' }}><Image layout='raw' style={{ objectFit: 'contain' }} height={20} width={20} alt="lm-user" src="/img/user-icon.svg" /></a>
                                     </Link> :
-                                    <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} ><Image layout='raw' style={{ objectFit: 'contain' }} height={18} width={18} alt="lm-user" src="/img/lm-user.svg" /></a>
+                                    <a style={{ cursor: 'pointer' }} onClick={() => openLogin()} ><Image layout='raw' style={{ objectFit: 'contain' }} height={20} width={20} alt="lm-user" src="/img/user-icon.svg" /></a>
                                 }
                             </div>
                         </div>
@@ -136,9 +168,9 @@ export default function Navbar(props) {
                         <div className="cart-block nav-fl-1">
                             {user?.token?.length > 0 ?
                                 <a style={{ cursor: 'pointer' }} className="cart-box">
-                                    <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src="/img/cart-icon.svg" /> 0 Items
+                                    <Image id='cartCountImage' layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src={global.user.cartCount > 0 ? "/img/cart-active-icon.svg" : "/img/cart-icon.svg"} />  <span id='cartCount' >{global.user.cartCount || 0}</span> Item(s)
                                 </a> :
-                                <a style={{ cursor: 'pointer' }} onClick={() => window.openLoginSideBar()} className="cart-box">
+                                <a style={{ cursor: 'pointer' }} onClick={() => openLogin()} className="cart-box">
                                     <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src="/img/cart-icon.svg" /> 0 Items
                                 </a>
                             }
@@ -146,6 +178,9 @@ export default function Navbar(props) {
                     </div>
                 </div>
             </header>
+            {showLogin && <AuthSideBar />}
+            {showWishlist && <WishlistSidebar />}
         </section>
+
     )
 }

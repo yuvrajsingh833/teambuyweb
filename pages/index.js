@@ -14,6 +14,7 @@ import * as Enums from '../lib/enums';
 import * as Utils from "../lib/utils";
 
 import PromotionalOffers from "../component/promotionalOffers";
+import AuthSideBar from "../component/authSidebar";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -26,6 +27,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 export default function Home(props) {
 
   const [isLoading, setIsLoading] = useState(true);
+  const [showLogin, setShowLogin] = useState(false)
 
   const [dashboardData, setDashboardData] = useState([])
   const [featuredCategories, setFeaturedCategories] = useState([])
@@ -42,6 +44,11 @@ export default function Home(props) {
       console.log(`getDashboard error : ${e}`)
       setIsLoading(false)
     })
+  }
+
+  const openLogin = () => {
+    setShowLogin(true);
+    setTimeout(() => { window.openLoginSideBar() }, 300)
   }
 
   useEffect(() => {
@@ -66,7 +73,7 @@ export default function Home(props) {
       return data.map(item => {
         return <div key={`product_item_${item._id}`}
           className="item">
-          <ProductCard item={item} />
+          <ProductCard item={item} showLogin={(value) => { openLogin() }} />
         </div>
       })
   }
@@ -175,6 +182,7 @@ export default function Home(props) {
           </div>
         </div>
       </section>
+      {showLogin && <AuthSideBar />}
       <Feature />
     </>
   )

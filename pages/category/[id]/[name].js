@@ -18,6 +18,7 @@ import LoaderInline from "../../../component/loaderInline";
 import NoDataFound from "../../../component/nodataFound";
 import * as CategoryService from "../../../services/category";
 import * as ProductService from "../../../services/product";
+import AuthSideBar from "../../../component/authSidebar";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -35,6 +36,7 @@ export default function SubCategory(props) {
     const { id, name } = router.query;
 
     const [isLoading, setIsLoading] = useState(true);
+    const [showLogin, setShowLogin] = useState(false)
     const [isLoadingMore, setIsLoadingMore] = useState(false);
 
     const [categoryID, setCategoryID] = useState();
@@ -128,6 +130,11 @@ export default function SubCategory(props) {
         if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoadingMore) return;
         setIsLoadingMore(true)
     };
+
+    const openLogin = () => {
+        setShowLogin(true);
+        setTimeout(() => { window.openLoginSideBar() }, 300)
+    }
 
     useEffect(() => {
         setIsLoading(true)
@@ -268,7 +275,7 @@ export default function SubCategory(props) {
                                                     {allProducts.map((item, index) => {
                                                         return <div key={`product_item_${item._id}_${index}`}
                                                             className="item" >
-                                                            <ProductCard item={item} />
+                                                            <ProductCard item={item} showLogin={(value) => { openLogin() }} />
                                                         </div>
                                                     })}
                                                 </div>
@@ -293,6 +300,7 @@ export default function SubCategory(props) {
                     }
                 </div>
             </section>
+            {showLogin && <AuthSideBar />}
             <Feature />
         </>
     )

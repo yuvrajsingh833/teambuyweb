@@ -2,17 +2,24 @@ import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, T
 import dynamic from "next/dynamic";
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
+
 import Feature from '../../component/feature';
 import Loader from '../../component/loader';
 import ProductCard from "../../component/productCard";
+import RateProductModal from '../../component/rateProductModal';
+
 import { Config } from '../../config/config';
 import * as Dates from '../../lib/dateFormatService';
 import * as Enums from '../../lib/enums';
-import * as ProductService from "../../services/product";
-
 import * as Utils from '../../lib/utils';
+
+import * as ProductService from "../../services/product";
+import * as CheckoutService from "../../services/checkout";
+import * as UserService from "../../services/user";
+import AuthSideBar from '../../component/authSidebar';
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -29,6 +36,7 @@ export default function ProductDetail(props) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [productID, setProductID] = useState();
+    const [showLogin, setShowLogin] = useState(false)
     const [productDetail, setProductDetail] = useState({});
     const [showProductDescription, setShowProductDescription] = useState(false);
     const [showRatingModal, setShowRatingModal] = useState(false);
@@ -59,6 +67,76 @@ export default function ProductDetail(props) {
         all != undefined && getProductDetail(all)
     }, [all, props])
 
+    const openLogin = () => {
+        setShowLogin(true);
+        setTimeout(() => { window.openLoginSideBar() }, 300)
+    }
+
+    const setProductCartQuantity = (productId, quantity) => {
+        let postParams = { productID: productId, quantity: quantity, cartType: "individual" }
+        setCartQuantity(quantity)
+
+        if (user?.token?.length > 0) {
+            UserService.updateUserCart(postParams).then(response => {
+                CheckoutService.getCart().then(response => {
+                    if (response.data.length > 0) {
+                        document.getElementById("cartCountImage").src = "/img/cart-active-icon.svg";
+                        document.getElementById("cartCountImage").srcset = "/img/cart-active-icon.svg 1x, /img/cart-active-icon.svg 2x";
+                        document.getElementById("cartCount").innerHTML = `${response.data.length}`;
+                    } else {
+                        document.getElementById("cartCountImage").src = "/img/cart-icon.svg";
+                        document.getElementById("cartCountImage").srcset = "/img/cart-icon.svg 1x, /img/cart-icon.svg 2x";
+                        document.getElementById("cartCount").innerHTML = `0`;
+                    }
+                }).catch(e => {
+                    console.log(`${productId} getCart error : ${e}`)
+                })
+            }).catch(e => {
+                console.log(`${productId} updateUserCart error : ${e}`)
+            })
+        } else {
+            openLogin()
+        }
+    }
+
+    const renderAddToCartButton = () => {
+        if (productDetail.stock < productDetail.reserve_stock) {
+            return <button type="button" className="cancel-btn gray-tag-big">Out of stock</button>
+        }
+
+        if (user?.token?.length > 0) {
+            if (cartQuantity > 0) {
+                return <div className="d-inline-flex align-items-start product-count">
+                    <a onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity - 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                        <Image
+                            width={40}
+                            alt={"add button"}
+                            height={40}
+                            src={"/img/minus.svg"} />
+                    </a>
+                    <a className="add-product-icon" style={{ height: '40px', width: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F3F3' }}>{cartQuantity}</a>
+                    <a onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity + 1))} style={{ cursor: 'pointer' }} className="add-product-icon">
+                        <Image
+                            width={40}
+                            alt={"add button"}
+                            height={40}
+                            src={"/img/plus.svg"} />
+                    </a>
+                </div>
+            } else {
+                return <button onClick={() => setProductCartQuantity(productDetail._id, Number(cartQuantity + 1))} className="green-btn">
+                    <Image alt='add-to-cart' layout='raw' height={20} width={20} src="/img/cart.svg" />
+                    {Utils.getLanguageLabel("Add to cart")}
+                </button>
+            }
+        } else {
+            return <button onClick={() => openLogin()} className="green-btn">
+                <Image alt='add-to-cart' layout='raw' height={20} width={20} src="/img/cart.svg" />
+                {Utils.getLanguageLabel("Add to cart")}
+            </button>
+        }
+    }
+
     const renderAverageRatingStars = (data) => {
         const arrayData = [1, 2, 3, 4, 5];
         return (
@@ -88,7 +166,7 @@ export default function ProductDetail(props) {
             return data.map(item => {
                 return <div key={`product_similar_item_${item._id}`}
                     className="item">
-                    <ProductCard item={item} />
+                    <ProductCard item={item} showLogin={(value) => { openLogin() }} />
                 </div>
             })
     }
@@ -141,26 +219,26 @@ export default function ProductDetail(props) {
                                         <div className="xs-heading fw-500">MRP &#8377;{Number(productDetail.business_gst_amount + productDetail.business_price_without_gst).toLocaleString('en-US', { maximumFractionDigits: 2 })} </div>
                                         <div className="mt-6">
                                             <FacebookShareButton
-                                                url={'https://teambuy.co.in/' + router.asPath}
+                                                url={'https://teambuy.co.in' + router.asPath}
                                                 quote={productDetail.highlight}
                                                 hashtag={'#teambuy'}
                                             >
                                                 <FacebookIcon size={20} round />
                                             </FacebookShareButton>
                                             <WhatsappShareButton
-                                                url={'https://teambuy.co.in/' + router.asPath}
+                                                url={'https://teambuy.co.in' + router.asPath}
                                                 title={productDetail.highlight}
                                                 separator=":: "
                                             >
                                                 <WhatsappIcon size={20} round />
                                             </WhatsappShareButton>
                                             <TwitterShareButton
-                                                url={'https://teambuy.co.in/' + router.asPath}
+                                                url={'https://teambuy.co.in' + router.asPath}
                                                 title={productDetail.highlight}
                                             >
                                                 <TwitterIcon size={20} round />
                                             </TwitterShareButton>
-                                            <LinkedinShareButton url={'https://teambuy.co.in/' + router.asPath}>
+                                            <LinkedinShareButton url={'https://teambuy.co.in' + router.asPath}>
                                                 <LinkedinIcon size={20} round />
                                             </LinkedinShareButton>
                                             <a href="" className="product-wishlist dtl-wishlist"></a>
@@ -198,7 +276,7 @@ export default function ProductDetail(props) {
                                         <div className="special-disc">{Utils.getLanguageLabel("Get on")} <span>₹280</span> {Utils.getLanguageLabel("with team buying")}</div>
                                     </div>
                                     <div className="ml-auto">
-                                        <button className="green-btn"><Image alt='add-to-cart' layout='raw' height={20} width={20} src="/img/cart.svg" /> {Utils.getLanguageLabel("Add to cart")}</button>
+                                        {renderAddToCartButton()}
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +300,7 @@ export default function ProductDetail(props) {
                                 <div className="d-flex align-items-center">
                                     <div className="sm-heading">{Utils.getLanguageLabel("Reviews & ratings")}</div>
                                     <div className="ml-auto">
-                                        <a data-bs-toggle="modal" data-bs-target="#rateTheProductModal" className="black-link green-text text-uppercase fw-500">+ {Utils.getLanguageLabel("rate product")}</a>
+                                        <a style={{ cursor: 'pointer' }} onClick={() => setShowRatingModal(true)} className="black-link green-text text-uppercase fw-500">+ {Utils.getLanguageLabel("rate product")}</a>
                                     </div>
                                 </div>
                                 <div className="rr-total-box">
@@ -254,6 +332,14 @@ export default function ProductDetail(props) {
                 </div>
             </div>
             <Feature />
+
+            {showRatingModal && <RateProductModal
+                showModal={showRatingModal}
+                productId={productDetail._id}
+                onCancelPress={() => { setShowRatingModal(false); document.location.reload() }}
+            />}
+
+            {showLogin && <AuthSideBar />}
         </>
     )
 }

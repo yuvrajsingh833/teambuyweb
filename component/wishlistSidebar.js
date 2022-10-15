@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ActionCreators } from "../store/actions/index";
 import Link from 'next/link'
 import Image from 'next/image'
+import { useSelector } from 'react-redux'
 
 import Loader from './loader'
 
@@ -10,19 +11,23 @@ import * as Utils from "../lib/utils"
 import * as UserService from "../services/user";
 
 export default function WishlistSidebar(props) {
+    const userData = useSelector(state => state.userData)
+    const user = userData?.userData
 
     const [isLoading, setIsLoading] = useState(true);
     const [wishlistItems, setWishlistItems] = useState([]);
 
     const getAllWishlistItems = () => {
         setIsLoading(true)
-        UserService.getUserWishlist().then(response => {
-            setWishlistItems(response.data)
-            setIsLoading(false)
-        }).catch(e => {
-            setIsLoading(false)
-            console.log(`.getUserWishlist error : ${e}`)
-        })
+        if (user?.token?.length > 0) {
+            UserService.getUserWishlist().then(response => {
+                setWishlistItems(response.data)
+                setIsLoading(false)
+            }).catch(e => {
+                setIsLoading(false)
+                console.log(`.getUserWishlist error : ${e}`)
+            })
+        }
     }
 
     const removeFromWishlist = (productID) => {
@@ -58,13 +63,14 @@ export default function WishlistSidebar(props) {
 
     return (
         <>
+            <div className="sidebar-overlay-bg" onClick={() => window.closeSidebar()}></div>
             <section className="sidebar-block" id="wishlistSidebar">
                 {wishlistItems.length > 0 ? <div className="plr-13">
-                    <div className="xs-heading fw-500 mt-20">My wishlist</div>
+                    <div className="sm-heading fw-500 mt-20">My wishlist</div>
                     {isLoading ? <Loader /> : wishlistItems.map(item => {
                         if (item?.product_info) {
                             let productDetail = item.product_info;
-                            return <div key={`wishlist_item_${item.id}`} className="wishlist-list mt-50">
+                            return <div key={`wishlist_item_${item.id}`} className="wishlist-list mt-20">
                                 <div className="white-box wishlist-box">
                                     <div className="d-flex to-product-flex">
                                         <div className="product-img">
