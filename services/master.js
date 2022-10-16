@@ -26,7 +26,6 @@ const languages = async () => {
     })
 }
 
-
 const languagesLabel = async () => {
 
     return new Promise(function (resolve, reject) {
@@ -38,7 +37,6 @@ const languagesLabel = async () => {
             })
     })
 }
-
 
 const deliveryPinCode = async () => {
 
@@ -65,11 +63,49 @@ const dashboard = async ({ userType }) => {
     })
 }
 
+const searchSuggestion = async ({ searchText }) => {
+    let queryString = { searchText }
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.searchSuggestion.endPoint + '?' + Utils.JSONToQueryString(queryString), null, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
 const search = async ({ product, page = 1, limit = 10, hasFilter = false, category = 1, minPrice = 0, maxPrice = 0, rating = 0, userType = 'business' }) => {
     let queryString = { product, page, limit, hasFilter, category, minPrice, maxPrice, rating, userType }
 
     return new Promise(function (resolve, reject) {
         HTTPRequest.Get(API.search.endPoint + '?' + Utils.JSONToQueryString(queryString), null, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+const faqs = async ({ type }) => {
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.faqs.endPoint, type, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+const subscribeNewsletter = async ({ email }) => {
+    let postParams = { email }
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Post(API.subscribeNewsletter.endPoint, API.subscribeNewsletter.url, postParams)
             .then(result => {
                 resolve(result)
             }).catch(e => {
@@ -104,4 +140,4 @@ const calculateDistance = async ({ origins, destinations }) => {
     })
 }
 
-export { settings, languages, languagesLabel, deliveryPinCode, dashboard, search, reverseGeoLocation, calculateDistance }
+export { settings, languages, languagesLabel, deliveryPinCode, dashboard, search, searchSuggestion, faqs, subscribeNewsletter, reverseGeoLocation, calculateDistance }

@@ -1,18 +1,22 @@
 @media (max-width: 1199px) {
   .search-box {
-    border-top: solid 0px #cccc !important;
-    top: 65px !important;
+    position: relative;
+    z-index: 0;
+    top: 0;
     box-shadow: 0 0px 0px rgb(0 0 0 / 15%);
+    border: 0;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .for-desktop {
     display: none;
   }
+
   .for-tab {
     display: block;
   }
+
   .for-mobile {
     display: none;
   }
@@ -22,26 +26,96 @@
     margin-left: 4px;
     margin-right: 4px;
   }
+
   .nav-fl-2 {
     flex: 2;
     margin-left: 4px;
     margin-right: 4px;
   }
+
   .nav-fl-3 {
     flex: 3;
     margin-left: 5px;
     margin-right: 5px;
   }
+
   .nav-fl-4 {
     flex: 4;
     margin-left: 10px;
     margin-right: 10px;
   }
+
   .nav-fl-5 {
     flex: 5;
     margin-left: 10px;
     margin-right: 10px;
   }
+
+  .nav-fl-6 {
+    flex: 6;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-box {
+    position: absolute;
+    border-top: solid 0px #cccc !important;
+    top: 65px !important;
+    box-shadow: 0 0px 0px rgb(0 0 0 / 15%);
+    width: 96%;
+  }
+
+  .header-wrap {
+    background: #fff;
+    padding: 10px 0;
+    box-shadow: 0 0px 0px rgb(0 0 0 / 10%);
+    position: relative;
+  }
+
+  .for-desktop {
+    display: none;
+  }
+
+  .for-tab {
+    display: block;
+  }
+
+  .for-mobile {
+    display: none;
+  }
+
+  .nav-fl-1 {
+    flex: 1;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .nav-fl-2 {
+    flex: 2;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .nav-fl-3 {
+    flex: 3;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .nav-fl-4 {
+    flex: 4;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .nav-fl-5 {
+    flex: 5;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
   .nav-fl-6 {
     flex: 6;
     margin-left: 10px;
@@ -53,9 +127,11 @@
   .for-desktop {
     display: none;
   }
+
   .for-tab {
     display: none;
   }
+
   .for-mobile {
     display: block;
   }
@@ -64,6 +140,7 @@
     display: block;
     justify-content: space-between;
   }
+
   .header-wrap {
     background: #fff;
     padding: 10px 0;
@@ -76,32 +153,56 @@
     margin-left: 4px;
     margin-right: 4px;
   }
+
   .nav-fl-2 {
     flex: 2;
     margin-left: 4px;
     margin-right: 4px;
   }
+
   .nav-fl-3 {
     flex: 3;
     margin-left: 5px;
     margin-right: 5px;
   }
+
   .nav-fl-4 {
     flex: 4;
     margin-left: 10px;
     margin-right: 10px;
   }
+
   .nav-fl-5 {
     flex: 5;
     margin-left: 10px;
     margin-right: 10px;
   }
+
   .nav-fl-6 {
     flex: 6;
     margin-left: 10px;
     margin-right: 10px;
   }
+
   .search-box {
     width: 95%;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-fl-1 {
+    flex: 1;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .cart-box {
+    padding: 7px 10px;
+  }
+
+  .search-box {
+    border-top: solid 0px #cccc !important;
+    top: 50px !important;
+    box-shadow: 0 0px 0px rgb(0 0 0 / 15%);
   }
 }

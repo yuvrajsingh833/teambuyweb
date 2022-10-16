@@ -24,7 +24,10 @@ const API = {
   languagesLabel: { url: '', endPoint: 'languages-label' },
   reverseGeoLocation: { url: 'reverse-geo-location', endPoint: 'location' },
   calculateDistance: { url: 'calculate-distance', endPoint: 'location' },
+  searchSuggestion: { url: '', endPoint: 'search-suggestion' },
   search: { url: '', endPoint: 'search' },
+  faqs: { url: '', endPoint: 'faqs' },
+  subscribeNewsletter: { url: '', endPoint: 'subscribe-newsletter' },
 
   //Category urls
   allCategory: { url: 'all', endPoint: 'category' },
