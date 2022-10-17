@@ -202,7 +202,7 @@ export default function CartPage(props) {
         }
 
         /** Total payable price calculation */
-        let totalPrice = (Number(subTotal) + Number(appliedDeliveryCharges) + Number(appliedGSTAmount)) - (Number(appliedDiscountAmount) + Number(appliedWalletAmount) + Number(appliedTeambuyDiscount))
+        let totalPrice = (Number(subTotal) + Number(appliedDeliveryCharges) + Number(appliedGSTAmount)) - (Number(appliedDiscountAmount) + Number(appliedWalletAmount))
 
         return {
             SUB_TOTAL: subTotal,
@@ -269,7 +269,7 @@ export default function CartPage(props) {
                                 <div className="xs-heading fw-500">{productDetail.name}</div>
                                 <div className="weight-count">{productDetail.size}</div>
                                 <div className="product-price ml-auto mt-0">{Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst)}</div>
-                                {productDetail.discount > 0 && <div className="special-disc">You save {((productDetail.gst_amount + productDetail.price_without_gst - productDetail.discount)(productDetail.gst_amount + productDetail.price_without_gst)) * 100}% on this order</div>}
+                                {productDetail.teambuy_offer_price > 0 && <div className="special-disc">Save {Utils.convertToPriceFormat(productDetail.teambuy_offer_price)} on group purchase</div>}
 
                                 <div className="ml-auto px-10">
                                     <div className="countItem md-countItem">
@@ -293,7 +293,6 @@ export default function CartPage(props) {
             </div>
         })
     }
-
 
     if (isLoading) return <Loader />
 
@@ -338,8 +337,8 @@ export default function CartPage(props) {
                                     {teambuyOfferPrice > 0 && <hr className="custom-hr2" />}
                                     {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block">
                                         <div>
-                                            <div className="xs-heading font-12">Share cart with friends to avail Teambuy price and</div>
-                                            <div className="sm-heading mt-6">Get instant cashback of <span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div>
+                                            <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail Teambuy price and")}</div>
+                                            <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div>
                                         </div>
                                         <div className="ml-auto">
                                             <FacebookShareButton
@@ -391,10 +390,10 @@ export default function CartPage(props) {
                                                     <td>{Utils.getLanguageLabel("Sub total")}</td>
                                                     <td className="text-right">{Utils.convertToPriceFormat(calculatePrice().SUB_TOTAL)}</td>
                                                 </tr>
-                                                <tr>
+                                                {/* <tr>
                                                     <td>{Utils.getLanguageLabel("Team buy discount")}</td>
                                                     <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)}</td>
-                                                </tr>
+                                                </tr> */}
                                                 <tr>
                                                     <td>{Utils.getLanguageLabel("Coupon discount")}</td>
                                                     <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_COUPON_DISCOUNT)}</td>
@@ -421,45 +420,43 @@ export default function CartPage(props) {
                                 </div>
 
                                 {(calculatePrice().APPLICABLE_COUPON_DISCOUNT + calculatePrice().APPLIED_TEAM_BUY_DISCOUNT) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
-                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_COUPON_DISCOUNT + calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)}</span> on this order</span>
+                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_COUPON_DISCOUNT + calculatePrice().APPLICABLE_WALLET_DISCOUNT)}</span> on this order</span>
                                 </div>}
 
                                 {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">Some product are Out of stock</button></div>}
 
-                                {!hasOutOfStockProduct && <div className="text-center mt-30">
-                                    <button className="green-btn process-checkout-btn">{Utils.getLanguageLabel("proceed to checkout")} <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" /></button>
+                                {!hasOutOfStockProduct && <div className="text-center mt-30 d-flex justify-content-center">
+                                    <Link passHref href={{ pathname: '/checkout' }}>
+                                        <button className="green-btn process-checkout-btn mx-2 px-3 ">
+                                            {Utils.getLanguageLabel("proceed to checkout")}
+                                            <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
+                                        </button>
+                                    </Link>
+                                    {teambuyOfferPrice > 0 && <Link passHref href={{ pathname: '/cart/share-cart' }}>
+                                        <button className="green-btn process-checkout-btn mx-2 px-3 " style={{ color: '#171726' }}>{Utils.getLanguageLabel("JOIN THE TEAM NOW & SAVE")} {Utils.convertToPriceFormat(teambuyOfferPrice)} {Utils.getLanguageLabel("More")}</button>
+                                    </Link>}
                                 </div>}
-
-                                {/* {!hasOutOfStockProduct && <div className="text-center mt-30">
-                                    <button className="green-btn process-checkout-btn">{Utils.getLanguageLabel("JOIN THE TEAM NOW")} <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" /></button>
-                                </div> } */}
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-            }
+            </section>}
 
-
-
-            {
-                cartItems.length < 1 && <section className="cart-wrap">
-                    <div className="empty-cart">
-                        <div className="ce-icon text-center">
-                            <Image layout='raw' style={{ objectFit: 'contain' }} height={140} width={140} quality={100} alt="empty-wishlist" src="/img/empty-cart.png" />
-                        </div>
-                        <div className="sm-heading text-center mt-30">{Utils.getLanguageLabel("Your cart in empty!")}</div>
-                        <div className="xs-heading text-center font-12">{Utils.getLanguageLabel("Shop for some product in order")} <br />
-                            {Utils.getLanguageLabel("to purchase them")}</div>
-                        <div className="text-center mt-20">
-                            <Link passHref href={{ pathname: '/category' }}>
-                                <button className="green-btn">{Utils.getLanguageLabel("SHOp NOW")}</button>
-                            </Link>
-                        </div>
+            {cartItems.length < 1 && <section className="cart-wrap">
+                <div className="empty-cart">
+                    <div className="ce-icon text-center">
+                        <Image layout='raw' style={{ objectFit: 'contain' }} height={140} width={140} quality={100} alt="empty-wishlist" src="/img/empty-cart.png" />
                     </div>
-                </section>
-            }
-
+                    <div className="sm-heading text-center mt-30">{Utils.getLanguageLabel("Your cart in empty!")}</div>
+                    <div className="xs-heading text-center font-12">{Utils.getLanguageLabel("Shop for some product in order")} <br />
+                        {Utils.getLanguageLabel("to purchase them")}</div>
+                    <div className="text-center mt-20">
+                        <Link passHref href={{ pathname: '/category' }}>
+                            <button className="green-btn">{Utils.getLanguageLabel("SHOp NOW")}</button>
+                        </Link>
+                    </div>
+                </div>
+            </section>}
 
             {showLogin && <AuthSideBar />}
             <Feature />
