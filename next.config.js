@@ -12,7 +12,11 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['teambuyadmin.csiworld.tech', '*.teambuy.co.in']
+    domains: [
+      '*.teambuy.co.in',
+      'admin.teambuy.co.in',
+      'teambuyadmin.csiworld.tech'
+    ]
   },
   experimental: {
     images: {
