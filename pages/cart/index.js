@@ -55,6 +55,8 @@ export default function CartPage(props) {
 
     const [hasOutOfStockProduct, setHasOutOfStockProduct] = useState(false);
 
+    const [teambuyOfferPrice, setTeambuyOfferPrice] = useState(0);
+
 
     const [walletInfo, setWalletInfo] = useState({});
 
@@ -80,15 +82,18 @@ export default function CartPage(props) {
             } catch (error) { console.log("navIssue") }
             let gst = 0;
             let subTotal = 0;
+            let teambuyOfferDiscount = 0;
             response.data.map(mapItems => {
                 if (!(mapItems.product_info.stock >= mapItems.product_info.reserve_stock && mapItems.product_info.stock != 0)) {
                     setHasOutOfStockProduct(true)
                 }
                 gst = gst + (mapItems.product_info.gst_amount * mapItems.quantity)
                 subTotal = subTotal + (mapItems.product_info.price_without_gst * mapItems.quantity)
+                teambuyOfferDiscount = teambuyOfferDiscount + (mapItems.product_info.teambuy_offer_price * mapItems.quantity)
             })
 
             setSubTotalAmount(subTotal)
+            setTeambuyOfferPrice(teambuyOfferDiscount)
             setGSTAmount(gst)
             setCartItems(response.data)
             setIsLoading(false)
@@ -188,7 +193,7 @@ export default function CartPage(props) {
         }
 
         /**Calculate teambuy discount */
-        let appliedTeambuyDiscount = 0;
+        let appliedTeambuyDiscount = teambuyOfferPrice;
 
         /** Delivery charge calculation */
         let appliedDeliveryCharges = deliveryCharge
@@ -197,7 +202,7 @@ export default function CartPage(props) {
         }
 
         /** Total payable price calculation */
-        let totalPrice = Number(subTotal) + Number(appliedDeliveryCharges) + Number(appliedGSTAmount) - Number(appliedDiscountAmount) - Number(appliedWalletAmount) - Number(appliedTeambuyDiscount)
+        let totalPrice = (Number(subTotal) + Number(appliedDeliveryCharges) + Number(appliedGSTAmount)) - (Number(appliedDiscountAmount) + Number(appliedWalletAmount) + Number(appliedTeambuyDiscount))
 
         return {
             SUB_TOTAL: subTotal,
@@ -275,9 +280,9 @@ export default function CartPage(props) {
                                 </div>
                             </div>
 
-                            {!(Number(item.stock) >= Number(item.reserve_stock) && item.stock != 0) && <div className="ml-auto"><button type="button" className="cancel-btn gray-tag-small">Out of stock</button></div>}
+                            {!(Number(productDetail.stock) >= Number(productDetail.reserve_stock) && Number(productDetail.stock) != 0) && <div className="ml-auto"><button type="button" className="cancel-btn gray-tag-small">Out of stock</button></div>}
 
-                            {(Number(item.stock) >= Number(item.reserve_stock) && item.stock != 0) && <div className="ml-auto">
+                            {(Number(productDetail.stock) >= Number(productDetail.reserve_stock) && Number(productDetail.stock) != 0) && <div className="ml-auto">
                                 {productDetail.discount > 0 && <div className="product-price font-19"><span className="cut-price">{Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst)}</span> {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst - productDetail.discount) * item.quantity)}</div>}
 
                                 {productDetail.discount < 1 && <div className="product-price font-19">{Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst - productDetail.discount) * item.quantity)}</div>}
@@ -330,11 +335,11 @@ export default function CartPage(props) {
                                         </div>
                                     </div>
 
-                                    <hr className="custom-hr2" />
-                                    <div className="d-flex align-items-center share-friend-block">
+                                    {teambuyOfferPrice > 0 && <hr className="custom-hr2" />}
+                                    {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block">
                                         <div>
                                             <div className="xs-heading font-12">Share cart with friends to avail Teambuy price and</div>
-                                            <div className="sm-heading mt-6">Get instant cashback of <span className="green-text  fw-700">₹250</span></div>
+                                            <div className="sm-heading mt-6">Get instant cashback of <span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div>
                                         </div>
                                         <div className="ml-auto">
                                             <FacebookShareButton
@@ -362,7 +367,7 @@ export default function CartPage(props) {
                                             </LinkedinShareButton>
 
                                         </div>
-                                    </div>
+                                    </div>}
                                 </div>
                                 <div className="yellow-bg offer-discount-box">
                                     <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/black-discount.svg" />
@@ -393,6 +398,10 @@ export default function CartPage(props) {
                                                 <tr>
                                                     <td>{Utils.getLanguageLabel("Coupon discount")}</td>
                                                     <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_COUPON_DISCOUNT)}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{Utils.getLanguageLabel("Wallet discount")}</td>
+                                                    <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_WALLET_DISCOUNT)}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>{Utils.getLanguageLabel("Delivery Charge")}</td>
