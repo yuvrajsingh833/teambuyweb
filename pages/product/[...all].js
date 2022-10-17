@@ -2,7 +2,6 @@ import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, T
 import dynamic from "next/dynamic";
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
 
@@ -16,10 +15,10 @@ import * as Dates from '../../lib/dateFormatService';
 import * as Enums from '../../lib/enums';
 import * as Utils from '../../lib/utils';
 
-import * as ProductService from "../../services/product";
-import * as CheckoutService from "../../services/checkout";
-import * as UserService from "../../services/user";
 import AuthSideBar from '../../component/authSidebar';
+import * as CheckoutService from "../../services/checkout";
+import * as ProductService from "../../services/product";
+import * as UserService from "../../services/user";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -219,26 +218,26 @@ export default function ProductDetail(props) {
                                         <div className="xs-heading fw-500">MRP &#8377;{Number(productDetail.business_gst_amount + productDetail.business_price_without_gst).toLocaleString('en-US', { maximumFractionDigits: 2 })} </div>
                                         <div className="mt-6">
                                             <FacebookShareButton
-                                                url={'https://teambuy.co.in' + router.asPath}
+                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
                                                 quote={productDetail.highlight}
                                                 hashtag={'#teambuy'}
                                             >
                                                 <FacebookIcon size={20} round />
                                             </FacebookShareButton>
                                             <WhatsappShareButton
-                                                url={'https://teambuy.co.in' + router.asPath}
+                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
                                                 title={productDetail.highlight}
                                                 separator=":: "
                                             >
                                                 <WhatsappIcon size={20} round />
                                             </WhatsappShareButton>
                                             <TwitterShareButton
-                                                url={'https://teambuy.co.in' + router.asPath}
+                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
                                                 title={productDetail.highlight}
                                             >
                                                 <TwitterIcon size={20} round />
                                             </TwitterShareButton>
-                                            <LinkedinShareButton url={'https://teambuy.co.in' + router.asPath}>
+                                            <LinkedinShareButton url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}>
                                                 <LinkedinIcon size={20} round />
                                             </LinkedinShareButton>
                                             <a href="" className="product-wishlist dtl-wishlist"></a>

@@ -121,14 +121,10 @@ export default function Navbar(props) {
                         </div>
 
                         <div className="search-box nav-fl-6">
-                            <input type="text" className="search-input" placeholder={Utils.getLanguageLabel("Search Store")} />
-                            <span className="search-icon"></span>
-                        </div>
-
-                        <div className="search-for-mobile">
-                            <a href="#" className="mobile-search">
-                                <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="search" src="/img/search.svg" />
-                            </a>
+                            <form action="/search">
+                                <input type="text" name="searchText" className="search-input" placeholder={Utils.getLanguageLabel("Search Store")} />
+                                <span className="search-icon"></span>
+                            </form>
                         </div>
 
                         <div className="account-wish-block nav-fl-1">
@@ -165,9 +161,11 @@ export default function Navbar(props) {
 
                         <div className="cart-block nav-fl-1">
                             {user?.token?.length > 0 ?
-                                <a style={{ cursor: 'pointer' }} className="cart-box">
-                                    <Image id='cartCountImage' layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src={global.user.cartCount > 0 ? "/img/cart-active-icon.svg" : "/img/cart-icon.svg"} />  <span id='cartCount' >{global.user.cartCount || 0}</span> Item(s)
-                                </a> :
+                                <Link passHref href="/cart">
+                                    <a className="cart-box">
+                                        <Image id='cartCountImage' layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src={global.user.cartCount > 0 ? "/img/cart-active-icon.svg" : "/img/cart-icon.svg"} />  <span id='cartCount' >{global.user.cartCount || 0}</span> Item(s)
+                                    </a>
+                                </Link> :
                                 <a style={{ cursor: 'pointer' }} onClick={() => openLogin()} className="cart-box">
                                     <Image layout='raw' style={{ objectFit: 'contain' }} height={15} width={15} alt="cart-icon" src="/img/cart-icon.svg" /> 0 Items
                                 </a>

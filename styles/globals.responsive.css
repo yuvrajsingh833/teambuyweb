@@ -122,7 +122,11 @@
     margin-right: 10px;
   }
 }
-
+@media (max-width: 600px) {
+  .cart-main-width {
+    width: 100% !important;
+  }
+}
 @media (max-width: 575px) {
   .for-desktop {
     display: none;

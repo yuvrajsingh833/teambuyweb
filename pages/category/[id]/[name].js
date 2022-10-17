@@ -125,17 +125,6 @@ export default function SubCategory(props) {
             setIsLoading(false)
         })
     }
-
-    const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoadingMore) return;
-        setIsLoadingMore(true)
-    };
-
-    const openLogin = () => {
-        setShowLogin(true);
-        setTimeout(() => { window.openLoginSideBar() }, 300)
-    }
-
     useEffect(() => {
         setIsLoading(true)
 
@@ -146,12 +135,20 @@ export default function SubCategory(props) {
 
     }, [props])
 
-
     useEffect(() => {
         if (!isLoadingMore) return;
         getMoreProducts();
     }, [isLoadingMore]);
 
+    const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight || isLoadingMore) return;
+        setIsLoadingMore(true)
+    };
+
+    const openLogin = () => {
+        setShowLogin(true);
+        setTimeout(() => { window.openLoginSideBar() }, 300)
+    }
 
     const renderCategory = (data) => {
         if (data)

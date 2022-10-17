@@ -1,12 +1,11 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from "react";
-import { ActionCreators } from "../store/actions/index";
-import Link from 'next/link'
-import Image from 'next/image'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
-import Loader from './loader'
+import Loader from './loader';
 
-import * as Utils from "../lib/utils"
+import * as Utils from "../lib/utils";
 
 import * as UserService from "../services/user";
 
