@@ -10,7 +10,7 @@ import Loader from '../../component/loader'
 import LoaderInline from "../../component/loaderInline";
 import ProductCard from '../../component/productCard'
 
-import NoDataFound from '../../component/noDataFound'
+import NoDataFound from '../../component/nodataFound'
 import { Config } from "../../config/config"
 import * as MasterService from "../../services/master"
 import AuthSideBar from "../../component/authSidebar";
