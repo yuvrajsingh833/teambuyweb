@@ -110,6 +110,7 @@ export default function ProductCard({ item, showLogin }) {
     return (
         <div className="white-box">
             <a onClick={() => setProductLike(item._id)} style={{ cursor: 'pointer', position: 'absolute', zIndex: 1 }} className={`product-wishlist ${isLiked ? 'selected' : ''}`}></a>
+            {item.teambuy_offer_price > 0 && <div className="off-tag"> {Utils.getLanguageLabel("Buy with team & get")} <br /> <span className="off-count">{Utils.convertToPriceFormat(item.teambuy_offer_price)} OFF</span> </div>}
             <Link Link
                 key={`product_item_${item._id}`}
                 passHref
@@ -136,7 +137,7 @@ export default function ProductCard({ item, showLogin }) {
                 <div className="xs-heading text-ellipsis">{item.name}</div>
                 <div className="weight-count mt-1">{item.size}</div>
                 <div className="d-flex align-items-center mt-10">
-                    <div className="product-price">&#8377;{Number(item.gst_amount + item.price_without_gst).toLocaleString('en-US', { maximumFractionDigits: 2 })}</div>
+                    <div className="product-price">{Utils.convertToPriceFormat(item.gst_amount + item.price_without_gst)}</div>
                     {(Number(item.stock) >= Number(item.reserve_stock) && item.stock != 0 && item.reserve_stock != 0) && renderAddToCartButton()}
                 </div>
                 <div className="d-flex align-items-center mt-10">

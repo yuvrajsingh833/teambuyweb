@@ -271,8 +271,8 @@ export default function ProductDetail(props) {
                                 </div>
                                 <div className="dtl-action-block d-flex align-items-center">
                                     <div>
-                                        <div className="product-price font-19">MRP ₹380</div>
-                                        <div className="special-disc">{Utils.getLanguageLabel("Get on")} <span>₹280</span> {Utils.getLanguageLabel("with team buying")}</div>
+                                        <div className="product-price font-19">MRP {Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst)}</div>
+                                        <div className="special-disc">{Utils.getLanguageLabel("Get on")} <span>{Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst - productDetail.teambuy_offer_price)}</span> {Utils.getLanguageLabel("with team buying")}</div>
                                     </div>
                                     <div className="ml-auto">
                                         {renderAddToCartButton()}
