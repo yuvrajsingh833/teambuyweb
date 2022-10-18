@@ -24,14 +24,11 @@ export default function CartPage(props) {
     const router = useRouter();
 
     const userData = useSelector(state => state.userData)
-    const user = userData?.userData
     global.user = userData?.userData
 
     const [showLogin, setShowLogin] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
     const [appliedCoupon, setAppliedCoupon] = useState((couponApplied && Object.keys(couponApplied).length > 0) ? couponApplied : null);
-
-    const [showClearCartAlert, setShowClearCartAlert] = useState(false)
 
     const [cartItems, setCartItems] = useState([]);
 
@@ -42,7 +39,6 @@ export default function CartPage(props) {
     const [hasOutOfStockProduct, setHasOutOfStockProduct] = useState(false);
 
     const [teambuyOfferPrice, setTeambuyOfferPrice] = useState(0);
-
 
     const [walletInfo, setWalletInfo] = useState({});
 
@@ -204,19 +200,6 @@ export default function CartPage(props) {
 
             TOTAL: totalPrice
         }
-    }
-
-    const clearUserCart = () => {
-        setShowClearCartAlert(false)
-        setIsLoading(true)
-        UserService.clearUserCart().then(response => {
-            setIsLoading(false)
-            getAllCartItems()
-        }).catch(e => {
-            console.log(`clearUserCart error : ${e}`)
-            setIsLoading(false)
-            getAllCartItems()
-        })
     }
 
     const openLogin = () => {

@@ -1,23 +1,21 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script'
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useSelector } from 'react-redux';
 
+import AccountSideBar from "../../../component/accountSidebar";
 import Feature from '../../../component/feature';
 import Loader from '../../../component/loader';
-import AccountSideBar from "../../../component/accountSidebar";
-import { ConfirmModal } from '../../../component/modal'
+import { ConfirmModal } from '../../../component/modal';
 
 import * as Utils from "../../../lib/utils";
-import * as Dates from "../../../lib/dateFormatService"
 
 import NoDataFound from "../../../component/nodataFound";
+import * as Validations from "../../../lib/validation";
+import * as MasterService from "../../../services/master";
 import * as UserService from "../../../services/user";
-import * as Validations from "../../../lib/validation"
-import * as MasterService from "../../../services/master"
 
 export default function MyAddresses(props) {
     const userData = useSelector(state => state.userData)
@@ -27,7 +25,6 @@ export default function MyAddresses(props) {
 
     const [showModal, setShowModal] = useState(false);
     const [showAddressModal, setShowAddressModal] = useState(false);
-    const [isEditMode, setIsEditMode] = useState(false);
 
     const [allStates, setAllStates] = useState([]);
     const [allCities, setAllCities] = useState([]);
@@ -146,7 +143,6 @@ export default function MyAddresses(props) {
     }, [props])
 
     const saveUserAddress = () => {
-        setIsEditMode(false)
         let postParams = {
             "name": fullName,
             "apt": apt,
@@ -225,7 +221,6 @@ export default function MyAddresses(props) {
     }
 
     const onAddPress = () => {
-        setIsEditMode(false)
         setFullName(user.name)
         setApt('')
         setState('')
