@@ -307,34 +307,13 @@ export default function CartPage(props) {
                                     {teambuyOfferPrice > 0 && <hr className="custom-hr2" />}
                                     {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block">
                                         <div>
-                                            <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail Teambuy price and")}</div>
-                                            <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div>
+                                            <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail")}<br />{Utils.getLanguageLabel(" Teambuy price and")}
+                                                <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div></div>
                                         </div>
                                         <div className="ml-auto">
-                                            <FacebookShareButton
-                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
-                                                quote={`Hey, join the team and get a huge discount on the purchase`}
-                                                hashtag={'#teambuy'}
-                                            >
-                                                <FacebookIcon size={40} round />
-                                            </FacebookShareButton>
-                                            <WhatsappShareButton
-                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
-                                                title={`Hey, join the team and get a huge discount on the purchase`}
-                                                separator=":: "
-                                            >
-                                                <WhatsappIcon size={40} round />
-                                            </WhatsappShareButton>
-                                            <TwitterShareButton
-                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
-                                                title={`Hey, join the team and get a huge discount on the purchase`}
-                                            >
-                                                <TwitterIcon size={40} round />
-                                            </TwitterShareButton>
-                                            <LinkedinShareButton url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}>
-                                                <LinkedinIcon size={40} round />
-                                            </LinkedinShareButton>
-
+                                            <Link passHref href={{ pathname: '/cart/share-cart' }}>
+                                                <button className="sm-green-btn share-btn">Share with friends <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/share.svg" /></button>
+                                            </Link>
                                         </div>
                                     </div>}
                                 </div>
