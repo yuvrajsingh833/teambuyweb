@@ -222,7 +222,7 @@ export default function MyAddresses(props) {
         window.hideAddressModal()
     }
 
-    const onAddPress = (item) => {
+    const onAddPress = () => {
         setIsEditMode(false)
         setFullName(user.name)
         setApt('')
