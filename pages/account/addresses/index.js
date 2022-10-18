@@ -75,7 +75,7 @@ export default function MyAddresses(props) {
                             tempAddress.push(addressItem.long_name)
                         }
                     })
-                    console.log(tempAddress.join(", "))
+
                     setAddress(tempAddress.join(", "))
                 }).catch(e => { console.log(`getLocation error : ${e}`) })
             }, () => {
