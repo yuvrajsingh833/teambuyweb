@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script'
 import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
 import { useSelector } from 'react-redux';
 
 import Feature from '../../../component/feature';
@@ -25,6 +26,7 @@ export default function MyAddresses(props) {
     const [isLoading, setIsLoading] = useState(true);
 
     const [showModal, setShowModal] = useState(false);
+    const [showAddressModal, setShowAddressModal] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
 
     const [allStates, setAllStates] = useState([]);
@@ -219,7 +221,7 @@ export default function MyAddresses(props) {
         setFullName(user.name);
         setEmail(user.email);
         setMobileNumber(user.mobile_number);
-        window.hideAddressModal()
+        setShowAddressModal(false)
     }
 
     const onAddPress = () => {
@@ -233,7 +235,7 @@ export default function MyAddresses(props) {
         setMobileNumber(user.mobile_number)
         setAddressType('Home')
         setSelectedAddress({})
-        setTimeout(() => { window.showAddressModal() }, 200)
+        setShowAddressModal(true)
     }
 
     if (isLoading) return <Loader />
@@ -319,124 +321,104 @@ export default function MyAddresses(props) {
                 </div>
             </section>
 
-            <Feature />
-
             <ConfirmModal
                 subTitle="You want to remove this address?"
                 showModal={showModal}
                 onCancelPress={() => setShowModal(false)}
                 onConfirmPress={() => deleteUserAddress()} />
 
-            <div className="modal fade custom-modal" id="addAddressModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-body">
-                        <div className="modal-content">
-                            <div className="d-flex align-items-center modal-header">
-                                <h5 className="modal-title" >{Utils.getLanguageLabel("add new address")}</h5>
-                                <div className="ml-auto">
-                                    <a style={{ cursor: 'pointer' }} onClick={() => handleAddressClose()} className="red-text font-13 font-poppins text-uppercase">close</a>
+            <Modal
+                className="modal fade custom-modal"
+                aria-labelledby="staticBackdropLabel"
+                centered
+                backdrop="static"
+                keyboard={false}
+                show={showAddressModal}
+                onHide={() => handleAddressClose()}>
+                <div className="modal-content">
+                    <div className="d-flex align-items-center modal-header">
+                        <h5 className="modal-title" >{Utils.getLanguageLabel("add new address")}</h5>
+                        <div className="ml-auto">
+                            <a style={{ cursor: 'pointer' }} onClick={() => handleAddressClose()} className="red-text font-13 font-poppins text-uppercase">close</a>
+                        </div>
+                    </div>
+                    <form className="custom-form mt-30 mb-30 px-3">
+                        <div className="row">
+                            <div className="col-md-6 col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <input onChange={(event) => { setFullName(event.target.value) }} value={fullName} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Full name")} />
+                                    <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{fullNameError}</span>
                                 </div>
                             </div>
-                            <form className="custom-form mt-30 mb-30 px-3">
-                                <div className="row">
-                                    <div className="col-md-6 col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <input onChange={(event) => { setFullName(event.target.value) }} value={fullName} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Full name")} />
-                                            <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{fullNameError}</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6 col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <input onChange={(event) => { setMobileNumber(event.target.value) }} value={mobileNumber} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Mobile number")} />
-                                            <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{mobileNumberError}</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-12 col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <input onChange={(event) => { setEmail(event.target.value) }} value={email} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Email address (for invoice and update)")} />
-                                            <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{emailError}</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <input onChange={(event) => { setAddress(event.target.value) }} value={address} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Enter your locality")} />
-                                            <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{addressError}</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <input onChange={(event) => { setApt(event.target.value) }} value={apt} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Enter your full address")} />
-                                        </div>
-                                    </div>
-                                    {/* <div className="col-md-6 col-12 pb-4">
+                            <div className="col-md-6 col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <input onChange={(event) => { setMobileNumber(event.target.value) }} value={mobileNumber} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Mobile number")} />
+                                    <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{mobileNumberError}</span>
+                                </div>
+                            </div>
+                            <div className="col-md-12 col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <input onChange={(event) => { setEmail(event.target.value) }} value={email} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Email address (for invoice and update)")} />
+                                    <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{emailError}</span>
+                                </div>
+                            </div>
+                            <div className="col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <input onChange={(event) => { setAddress(event.target.value) }} value={address} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Enter your locality")} />
+                                    <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{addressError}</span>
+                                </div>
+                            </div>
+                            <div className="col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <input onChange={(event) => { setApt(event.target.value) }} value={apt} type="text" className="form-control" placeholder={Utils.getLanguageLabel("Enter your full address")} />
+                                </div>
+                            </div>
+                            {/* <div className="col-md-6 col-12 pb-4">
                                         <div className="form-group pos-rel">
                                             <input onChange={(event) => { setAddressType(event.target.value) }} value={addressType} type="text" className="form-control" placeholder="Address type (Home/Work/Office)" />
                                         </div>
                                     </div> */}
-                                    <div className="col-md-4 col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <select onChange={(event) => getAllCities(event.target.value)} value={state} className="form-control">
-                                                <option>{Utils.getLanguageLabel("Select state")}</option>
-                                                {
-                                                    allStates.map(item => {
-                                                        return <option key={`${item.state}`} value={item.state}>{item.state}</option>
-                                                    })
-                                                }
-                                            </select>
-                                            <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{stateError}</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4 col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <select onChange={(event) => setCity(event.target.value)} value={city} className="form-control">
-                                                <option>{Utils.getLanguageLabel("Select city")}</option>
-                                                {
-                                                    allCities.map(item => {
-                                                        return <option key={`${item.city}`} value={item.city}>{item.city}</option>
-                                                    })
-                                                }
-                                            </select>
-                                            <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{cityError}</span>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-4 col-12 pb-4">
-                                        <div className="form-group pos-rel">
-                                            <input onChange={(event) => { setPincode(event.target.value) }} value={pincode} type="number" className="form-control" placeholder={Utils.getLanguageLabel("PIN code")} />
-                                            <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{pincodeError}</span>
-                                        </div>
-                                    </div>
+                            <div className="col-md-4 col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <select onChange={(event) => getAllCities(event.target.value)} value={state} className="form-control">
+                                        <option>{Utils.getLanguageLabel("Select state")}</option>
+                                        {
+                                            allStates.map(item => {
+                                                return <option key={`${item.state}`} value={item.state}>{item.state}</option>
+                                            })
+                                        }
+                                    </select>
+                                    <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{stateError}</span>
                                 </div>
-                                <div className="mt-10 text-end">
-                                    <button type='button' onClick={() => handleAddressUpdateOrEdit()} className="green-btn mnw-248">{Utils.getLanguageLabel("add new address")}</button>
+                            </div>
+                            <div className="col-md-4 col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <select onChange={(event) => setCity(event.target.value)} value={city} className="form-control">
+                                        <option>{Utils.getLanguageLabel("Select city")}</option>
+                                        {
+                                            allCities.map(item => {
+                                                return <option key={`${item.city}`} value={item.city}>{item.city}</option>
+                                            })
+                                        }
+                                    </select>
+                                    <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{cityError}</span>
                                 </div>
-                            </form>
+                            </div>
+                            <div className="col-md-4 col-12 pb-4">
+                                <div className="form-group pos-rel">
+                                    <input onChange={(event) => { setPincode(event.target.value) }} value={pincode} type="number" className="form-control" placeholder={Utils.getLanguageLabel("PIN code")} />
+                                    <span style={{ fontSize: '12px', color: '#D83734', fontFamily: 'Poppins' }}>{pincodeError}</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div className="mt-10 text-end">
+                            <button type='button' onClick={() => handleAddressUpdateOrEdit()} className="green-btn mnw-248">{Utils.getLanguageLabel("add new address")}</button>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            </Modal>
 
-            <Script id="my-address-script" strategy="afterInteractive" >
-                {`
-                    $(".jq_set_default").click(function(){
-                        $(".address-box").removeClass("selected");
-                        $(".jq_set_default").text("make default");
-                        $(this).closest(".address-box").addClass("selected");
-                        $(this).text("Default address");
-                    });  
-
-                    function hideAddressModal(){
-                        $(document).ready(function(){
-                            $('#addAddressModal').modal('hide');
-                        });
-                    }
-
-                    function showAddressModal(){
-                        $(document).ready(function(){
-                            $('#addAddressModal').modal('show');
-                        });
-                    }
-                `}
-            </Script>
+            <Feature />
         </>
     )
 }
