@@ -1,17 +1,15 @@
-import dynamic from "next/dynamic";
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { RWebShare } from "react-web-share";
-// import CouponModal from "../../component/couponModel";
 import Loader from '../../component/loader';
 
 import { Config } from '../../config/config';
 import * as Utils from "../../lib/utils";
 
+import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share';
 import { useRouter } from 'next/router';
 import AuthSideBar from "../../component/authSidebar";
 import Feature from "../../component/feature";
@@ -19,18 +17,10 @@ import * as CheckoutService from "../../services/checkout";
 import * as MasterService from "../../services/master";
 import * as PaymentService from "../../services/payment";
 import * as UserService from "../../services/user";
-import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share';
-
-var $ = require("jquery");
-if (typeof window !== "undefined") {
-    window.$ = window.jQuery = require("jquery");
-}
-const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
-    ssr: false,
-});
-
 
 export default function CartPage(props) {
+    const couponApplied = Utils.getStateAsyncStorage("appliedCoupon")
+
     const router = useRouter();
 
     const userData = useSelector(state => state.userData)
@@ -39,10 +29,7 @@ export default function CartPage(props) {
 
     const [showLogin, setShowLogin] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-    const [showCouponModal, setShowCouponModal] = useState(false);
-    const [appliedCoupon, setAppliedCoupon] = useState(null);
-
-    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [appliedCoupon, setAppliedCoupon] = useState((couponApplied && Object.keys(couponApplied).length > 0) ? couponApplied : null);
 
     const [showClearCartAlert, setShowClearCartAlert] = useState(false)
 
@@ -51,7 +38,6 @@ export default function CartPage(props) {
     const [GSTAmount, setGSTAmount] = useState(0);
     const [subTotalAmount, setSubTotalAmount] = useState(0);
     const [couponDiscount, setCouponDiscount] = useState(0);
-    const [userType, setUserType] = useState(user ? user.userType : global.user.userType)
 
     const [hasOutOfStockProduct, setHasOutOfStockProduct] = useState(false);
 
@@ -64,6 +50,7 @@ export default function CartPage(props) {
     const [minCartForFreeDelivery, setMinCartForFreeDelivery] = useState(0);
     const [maxUsableWalletAmount, setMaxUsableWalletAmount] = useState(0);
     const [maxUsableWalletPercent, setMaxUsableWalletPercent] = useState(0);
+
 
     const getAllCartItems = () => {
         setIsLoading(true)
@@ -80,9 +67,11 @@ export default function CartPage(props) {
                     document.getElementById("cartCount").innerHTML = `0`;
                 }
             } catch (error) { console.log("navIssue") }
+
             let gst = 0;
             let subTotal = 0;
             let teambuyOfferDiscount = 0;
+
             response.data.map(mapItems => {
                 if (!(mapItems.product_info.stock >= mapItems.product_info.reserve_stock && mapItems.product_info.stock != 0)) {
                     setHasOutOfStockProduct(true)
@@ -108,7 +97,6 @@ export default function CartPage(props) {
     useEffect(() => {
 
         setIsLoading(true)
-        setIsRefreshing(false)
         setCartItems([]);
         setGSTAmount(0);
         setSubTotalAmount(0);
@@ -140,7 +128,6 @@ export default function CartPage(props) {
             }).catch(e => { console.log(`settings error : ${e}`) })
         }).catch(e => { console.log(`allWalletTransactions error : ${e}`) })
 
-        setAppliedCoupon(null);
         if (global?.user?.token?.length > 0) {
             getAllCartItems()
         } else {
@@ -369,14 +356,21 @@ export default function CartPage(props) {
                                     </div>}
                                 </div>
                                 <div className="yellow-bg offer-discount-box">
-                                    <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/black-discount.svg" />
-                                    <span className="sm-heading">Avail offers & discounts</span>
+                                    <Link passHref href={{ pathname: '/cart/apply-coupon' }}>
+                                        <a>
+                                            <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/black-discount.svg" />
+                                            <span className="sm-heading">Avail offers & discounts</span>
+                                        </a>
+                                    </Link>
                                 </div>
-                                {/* <div className="yellow-bg offer-discount-box">
-                                    <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/black-discount.svg" />
-                                    <span className="sm-heading fw-300">Applied <span className="fw-500">LAZYWEEK</span></span>
-                                    <a href="#" className="coupon-cross"><Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/cross-icon.svg" /></a>
-                                </div> */}
+
+                                {appliedCoupon && <div className="yellow-bg offer-discount-box">
+                                    <span className="sm-heading fw-300">{Utils.getLanguageLabel("Applied")} <span className="fw-500">{appliedCoupon?.code}</span></span>
+                                    <a style={{ cursor: 'pointer' }} onClick={() => {
+                                        Utils.deleteStateAsyncStorage("appliedCoupon")
+                                        setAppliedCoupon(null)
+                                    }} className="coupon-cross"><Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/cross-icon.svg" /></a>
+                                </div>}
                             </div>
                         </div>
                         <div className="col-lg-6">
@@ -419,8 +413,8 @@ export default function CartPage(props) {
                                     </div>
                                 </div>
 
-                                {(calculatePrice().APPLICABLE_COUPON_DISCOUNT + calculatePrice().APPLIED_TEAM_BUY_DISCOUNT) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
-                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_COUPON_DISCOUNT + calculatePrice().APPLICABLE_WALLET_DISCOUNT)}</span> on this order</span>
+                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
+                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT))}</span> on this order</span>
                                 </div>}
 
                                 {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">Some product are Out of stock</button></div>}

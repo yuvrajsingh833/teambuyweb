@@ -19,7 +19,7 @@ export default function FourOhFour() {
                     />
                 </div>
                 <div className="sm-heading text-center mt-30">Oops! Error 404</div>
-                <div className="xs-heading text-center font-12">Sorry the page you are looking for, is not with us.</div>
+                <div className="xs-heading text-center font-12">The page you are looking for might have been removed,<br /> had it’s name changed or is temporairly unavailable</div>
                 <div className="text-center mt-20">
                     <Link href="/">
                         <button className="green-btn">Go to Home</button>
