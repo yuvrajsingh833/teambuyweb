@@ -17,6 +17,8 @@ const API = {
   logout: { url: 'logout', endPoint: 'auth' },
 
   //Master urls
+  states: { url: '', endPoint: 'states' },
+  cities: { url: '', endPoint: 'cities' },
   dashboard: { url: '', endPoint: 'dashboard' },
   settings: { url: '', endPoint: 'settings' },
   deliveryPinCode: { url: '', endPoint: 'delivery-pincode' },

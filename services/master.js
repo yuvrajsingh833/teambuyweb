@@ -2,6 +2,30 @@ import * as Utils from "../lib/utils";
 import { API } from "../config/urls";
 import * as HTTPRequest from "../lib/httpRequest";
 
+const states = async () => {
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.states.endPoint, null, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+const cities = async ({ state }) => {
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.cities.endPoint, state, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
 const settings = async () => {
 
     return new Promise(function (resolve, reject) {
@@ -140,4 +164,4 @@ const calculateDistance = async ({ origins, destinations }) => {
     })
 }
 
-export { settings, languages, languagesLabel, deliveryPinCode, dashboard, search, searchSuggestion, faqs, subscribeNewsletter, reverseGeoLocation, calculateDistance }
+export { states, cities, settings, languages, languagesLabel, deliveryPinCode, dashboard, search, searchSuggestion, faqs, subscribeNewsletter, reverseGeoLocation, calculateDistance }
