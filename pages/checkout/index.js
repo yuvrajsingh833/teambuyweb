@@ -33,7 +33,7 @@ export default function CheckoutPage(props) {
     const [allCities, setAllCities] = useState([]);
 
     const [allAddresses, setAllAddresses] = useState([]);
-    const [selectedAddress, setSelectedAddress] = useState((selectedDeliveryAddress && Object.keys(selectedDeliveryAddress).length > 0) ? selectedDeliveryAddress : null);
+    const [selectedAddress, setSelectedAddress] = useState((selectedDeliveryAddress && Object.keys(selectedDeliveryAddress).length > 0) ? selectedDeliveryAddress : {});
 
     const [fullAddress, setFullAddress] = useState(null)
 
