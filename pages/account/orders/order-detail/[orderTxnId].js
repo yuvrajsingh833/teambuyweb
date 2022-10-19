@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
 
-import Feature from '../../../../../component/feature';
-import Loader from '../../../../../component/loader';
+import Feature from '../../../../component/feature';
+import Loader from '../../../../component/loader';
 
-import * as UserService from "../../../../../services/user";
+import * as UserService from "../../../../services/user";
 
-import * as Dates from "../../../../../lib/dateFormatService";
-import * as Utils from "../../../../../lib/utils";
+import * as Dates from "../../../../lib/dateFormatService";
+import * as Utils from "../../../../lib/utils";
 
-import AccountSideBar from "../../../../../component/accountSidebar";
-import { Config } from '../../../../../config/config';
+import AccountSideBar from "../../../../component/accountSidebar";
+import { Config } from '../../../../config/config';
 
 const OrderInformation = ({ orderInfo }) => {
 
