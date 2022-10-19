@@ -120,8 +120,8 @@ export default function CheckoutOrderStatusDetail(props) {
                 </div>
             </section>
 
-            <section class="cart-wrap ptb-40">
-                <div class="container">
+            <section className="cart-wrap ptb-40">
+                <div className="container">
                     {status == 'failure' ? <div className="text-center cart-success-block">
                         <div className="success-icon">
                             <Image layout='raw' height={120} width={120} quality={100} alt='status-icon' src="/bgicon/fail.png" />
