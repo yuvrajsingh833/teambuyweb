@@ -346,7 +346,7 @@ export default function CartPage(props) {
                                                     <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)}</td>
                                                 </tr> */}
                                                 <tr>
-                                                    {appliedCoupon && <td>{Utils.getLanguageLabel("Coupon discount")} ({Utils.getLanguageLabel("Coupon Applied")} <span class="fw-700">{appliedCoupon.code}</span>)</td>}
+                                                    {appliedCoupon && <td>{Utils.getLanguageLabel("Coupon discount")} ({Utils.getLanguageLabel("Coupon Applied")} <span className="fw-700">{appliedCoupon.code}</span>)</td>}
 
                                                     {!appliedCoupon && <td>{Utils.getLanguageLabel("Coupon discount")}</td>}
 
