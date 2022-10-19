@@ -145,11 +145,8 @@ export default function CheckoutOrderStatusDetail(props) {
                             <div className="xs-heading mt-30 text-uppercase">you will get confirmation in a while</div>
                             <div className="mt-40 text-center">
                                 <Link passHref href={{
-                                    pathname: '/account/orders/order-detail/[orderProductId]/[orderTxnId]',
-                                    query: {
-                                        orderTxnId: txnid,
-                                        orderProductId: orderInformation?.orderItems[0].id
-                                    }
+                                    pathname: '/account/orders/order-detail//[orderTxnId]',
+                                    query: { orderTxnId: txnid }
                                 }}>
                                     <a className="green-btn mnw-248"><span className="cube-scan"></span> TRACK ORDER</a>
                                 </Link>
