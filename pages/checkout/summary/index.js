@@ -3,28 +3,36 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import router from "next/router";
 
-import Loader from '../../component/loader';
+import { Config } from '../../../config/config';
+import * as Utils from "../../../lib/utils";
+import Base64 from "../../../lib/base64";
+import * as Dates from "../../../lib/dateFormatService";
 
-import { Config } from '../../config/config';
-import * as Utils from "../../lib/utils";
+import Loader from '../../../component/loader';
+import AuthSideBar from "../../../component/authSidebar";
+import Feature from "../../../component/feature";
 
-import AuthSideBar from "../../component/authSidebar";
-import Feature from "../../component/feature";
-import * as CheckoutService from "../../services/checkout";
-import * as MasterService from "../../services/master";
-import * as PaymentService from "../../services/payment";
-import * as UserService from "../../services/user";
+import * as CheckoutService from "../../../services/checkout";
+import * as MasterService from "../../../services/master";
+import * as PaymentService from "../../../services/payment";
+import * as UserService from "../../../services/user";
 
-export default function CartPage(props) {
+export default function CheckoutSummaryPage(props) {
     const couponApplied = Utils.getStateAsyncStorage("appliedCoupon")
+    const selectedDeliveryAddress = Utils.getStateAsyncStorage("selectedDeliveryAddress")
+
+    const appliedCoupon = (couponApplied && Object.keys(couponApplied).length > 0) ? couponApplied : null;
+    const selectedAddress = (selectedDeliveryAddress && Object.keys(selectedDeliveryAddress).length > 0) ? selectedDeliveryAddress : null;
 
     const userData = useSelector(state => state.userData)
     global.user = userData?.userData
 
     const [showLogin, setShowLogin] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-    const [appliedCoupon, setAppliedCoupon] = useState((couponApplied && Object.keys(couponApplied).length > 0) ? couponApplied : null);
+
+    const [paymentMode, setPaymentMode] = useState('online')
 
     const [cartItems, setCartItems] = useState([]);
 
@@ -119,11 +127,7 @@ export default function CartPage(props) {
             }).catch(e => { console.log(`settings error : ${e}`) })
         }).catch(e => { console.log(`allWalletTransactions error : ${e}`) })
 
-        if (global?.user?.token?.length > 0) {
-            getAllCartItems()
-        } else {
-            openLogin()
-        }
+        getAllCartItems()
     }, [props])
 
     const calculatePrice = () => {
@@ -197,17 +201,107 @@ export default function CartPage(props) {
         }
     }
 
-    const openLogin = () => {
-        setShowLogin(true);
-        setTimeout(() => { window.openLoginSideBar() }, 300)
+    const renderPriceAmount = (cartItem, purchaseQuantity) => {
+        let discountPrice = 0;
+        let sellingPrice = 0;
+        if (cartItem.discount.length > 0) {
+            sellingPrice = purchaseQuantity * (cartItem.gst_amount + cartItem.price_without_gst)
+        } else {
+            sellingPrice = purchaseQuantity * (cartItem.gst_amount + cartItem.business_price_without_gst)
+        }
+        return { sellingPrice, discountPrice }
     }
 
-    const setProductCartQuantity = (productId, quantity) => {
-        let postParams = { productID: productId, quantity: quantity, cartType: "individual" }
-        UserService.updateUserCart(postParams).then(response => {
-            getAllCartItems()
+    const placeOrder = async () => {
+        let TXN_ID = `TB_REG_${global.user.id}_${Dates.getUTCTimestamp(new Date())}`;
+
+        let orderInformation = [];
+        await Promise.all(cartItems.map(mapItem => {
+            let info = {
+                "productID": mapItem.product_id,
+                "productName": mapItem.product_info.name,
+                "productPrice": renderPriceAmount(mapItem.product_info, mapItem.quantity).sellingPrice,
+                "productDiscount": renderPriceAmount(mapItem.product_info, mapItem.quantity).discountPrice,
+                "productQuantity": mapItem.quantity,
+                "productInfo": mapItem.product_info
+            }
+
+            orderInformation.push(info)
+        }))
+
+        let postParams = {
+            "orderItems": orderInformation,
+            "orderTXNID": TXN_ID,
+            "orderAmount": (Number(calculatePrice().TOTAL).toFixed(2)),
+            "couponID": appliedCoupon ? appliedCoupon.id : 0,
+            "couponDiscount": calculatePrice().APPLICABLE_COUPON_DISCOUNT,
+            "teambuyDiscount": 0,
+            "addressID": selectedAddress.id,
+            "paymentMode": paymentMode,
+            "teamID": 0,
+            "orderType": 'individual',
+            "preferredOrderDate": 0,
+            "preferredOrderTime": 0,
+            "deliveryCharges": calculatePrice().APPLICABLE_DELIVERY_CHARGE,
+            "walletAmount": calculatePrice().APPLICABLE_WALLET_DISCOUNT
+        }
+
+        setIsLoading(true)
+        PaymentService.createPayment(postParams).then(response => {
+            setIsLoading(false)
+            let postParams = {
+                "amount": (Number(calculatePrice().TOTAL).toFixed(2)),
+                "email": selectedAddress?.email,
+                "firstName": selectedAddress?.full_name,
+                "phone": selectedAddress?.mobile_number,
+                "productInfo": `${global.user.mobileNumber}(${global.user.id}) order from teambuy`,
+                "txnID": TXN_ID,
+                "udf5": ""
+            };
+
+            if (paymentMode == "online") {
+                PaymentService.paymentGateway(postParams).then(response => {
+                    let postData = response.data
+
+                    postParams['furl'] = postData.furl
+                    postParams['hash'] = postData.hash
+                    postParams['key'] = postData.key
+                    postParams['salt'] = postData.salt
+                    postParams['surl'] = postData.surl
+                    postParams['purl'] = postData.purl
+
+                    router.push({
+                        pathname: '/checkout/payment',
+                        query: { pd: Base64.btoa(JSON.stringify(postParams)) }
+                    })
+                }).catch(e => {
+                    console.log(`paymentGateway error : ${e}`)
+                })
+            } else {
+
+                postParams['txnid'] = postParams.txnID;
+                postParams['txnId'] = postParams.txnID;
+                postParams['status'] = 'pending';
+                postParams['error_message'] = 'NO ERROR';
+                postParams['paymentMode'] = 'cod';
+                postParams['hasError'] = false;
+                postParams['transaction_amount'] = postParams.amount.toString();
+                postParams['amt'] = postParams.amount.toString();
+                postParams['addedon'] = Dates.momentDateFormat(new Date(), 'YYYY-MM-DD HH:mm:ss');
+
+                router.push({
+                    pathname: '/checkout/order/[status]',
+                    query: {
+                        status: 'success',
+                        mode: 'cod',
+                        txnid: TXN_ID,
+                        additionalPaymentData: JSON.stringify(postParams)
+                    }
+                })
+            }
         }).catch(e => {
-            console.log(`${productId} updateUserCart error : ${e}`)
+            console.log(`createPaymentInformation error : ${e}`)
+            setIsLoading(false)
         })
     }
 
@@ -215,43 +309,28 @@ export default function CartPage(props) {
         return cartItems.map((item, index) => {
             let productDetail = item.product_info;
 
-            return <div key={`cart_item_${item.id}_${index}`} className="white-box">
-                <div className="d-flex to-product-flex">
-                    <div className="product-img">
-                        <Image
-                            src={Utils.generateProductImage(productDetail)}
-                            alt={productDetail?.name}
-                            layout="raw"
-                            height={200}
-                            width={200}
-                            className={'common-product-image'}
-                            style={{ objectFit: 'contain' }}
-                        />
-                    </div>
-                    <div className="product-content">
-                        <div className="d-flex align-items-center">
-                            <div>
-                                <div className="xs-heading fw-500">{productDetail.name}</div>
-                                <div className="weight-count">{productDetail.size}</div>
-                                <div className="product-price ml-auto mt-0">{Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst)}</div>
-                                {productDetail.teambuy_offer_price > 0 && <div className="special-disc">Save {Utils.convertToPriceFormat(productDetail.teambuy_offer_price)} on group purchase</div>}
+            return <div key={`cart_item_${item.id}_${index}`} className="d-flex to-product-flex align-items-center">
+                <div className="to-product-count fw-700">{index + 1}.</div>
+                <div className="product-img">
+                    <Image src={Utils.generateProductImage(productDetail)} alt={productDetail?.name} layout="raw" height={200} width={200}
+                        className={'common-product-image'} style={{ objectFit: 'contain' }} />
+                </div>
+                <div className="product-content">
+                    <div className="d-flex align-items-center">
+                        <div>
+                            <div className="xs-heading fw-500 font-12">{productDetail.name}</div>
+                            <div className="weight-count">{productDetail.size}</div>
+                        </div>
+                        <div className="ml-auto">
+                            {productDetail.discount > 0 && <div className="product-price"><span
+                                className="cut-price">{Utils.convertToPriceFormat(productDetail.gst_amount +
+                                    productDetail.price_without_gst)}</span>
+                                {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst -
+                                    productDetail.discount) * item.quantity)}</div>}
 
-                                <div className="ml-auto px-10">
-                                    <div className="countItem md-countItem">
-                                        <span onClick={() => setProductCartQuantity(productDetail._id, Number(item.quantity - 1))} className="btn-minus">-</span>
-                                        <input value={item.quantity} className="count" onChange={(event) => { }} />
-                                        <span onClick={() => setProductCartQuantity(productDetail._id, Number(item.quantity + 1))} className="btn-plus">+</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {!(Number(productDetail.stock) >= Number(productDetail.reserve_stock) && Number(productDetail.stock) != 0) && <div className="ml-auto"><button type="button" className="cancel-btn gray-tag-small">Out of stock</button></div>}
-
-                            {(Number(productDetail.stock) >= Number(productDetail.reserve_stock) && Number(productDetail.stock) != 0) && <div className="ml-auto">
-                                {productDetail.discount > 0 && <div className="product-price font-19"><span className="cut-price">{Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst)}</span> {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst - productDetail.discount) * item.quantity)}</div>}
-
-                                {productDetail.discount < 1 && <div className="product-price font-19">{Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst - productDetail.discount) * item.quantity)}</div>}
-                            </div>}
+                            {productDetail.discount < 1 && <div className="product-price">
+                                {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst -
+                                    productDetail.discount) * item.quantity)}</div>}
                         </div>
                     </div>
                 </div>
@@ -281,7 +360,17 @@ export default function CartPage(props) {
                                     <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("Cart")}</li>
+                            <li className="breadcrumb-item">
+                                <Link passHref href={{ pathname: "/cart" }}>
+                                    <a>{Utils.getLanguageLabel("Cart")}</a>
+                                </Link>
+                            </li>
+                            <li className="breadcrumb-item">
+                                <Link passHref href={{ pathname: "/checkout" }}>
+                                    <a>{Utils.getLanguageLabel("Checkout")}</a>
+                                </Link>
+                            </li>
+                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("Order Summary")}</li>
                         </ol>
                     </nav>
                 </div>
@@ -291,43 +380,25 @@ export default function CartPage(props) {
                 <div className="container">
                     <div className="row cart-block">
                         <div className="col-lg-6">
-                            <div className="white-box pd-0">
-                                <div className="cart-main-box">
-                                    <div className="cart-main-scroll">
-                                        <div className="cart-main-width">
-                                            {renderCart()}
-                                        </div>
+
+                            <div className="row mb-20">
+                                <div className="col-md-6">
+                                    <div className="sm-heading list-disc">{Utils.getLanguageLabel("Delivery address")}</div>
+                                    <div className="mt-10">
+                                        <div className="xs-heading">{selectedAddress?.full_name} <span className="fw-300">({selectedAddress?.address_type} {Utils.getLanguageLabel("address")})</span></div>
+                                        <div className="xs-content mt-1">{selectedAddress?.apt}, {selectedAddress?.formatted_address} ,{selectedAddress?.pincode}</div>
+                                        <div className="xs-content mt-0 fw-500">+91 {selectedAddress?.mobile_number}</div>
                                     </div>
-
-                                    {teambuyOfferPrice > 0 && <hr className="custom-hr2" />}
-                                    {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block">
-                                        <div>
-                                            <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail")}<br />{Utils.getLanguageLabel(" Teambuy price and")}
-                                                <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div></div>
-                                        </div>
-                                        <div className="ml-auto">
-                                            <Link passHref href={{ pathname: '/cart/share-cart' }}>
-                                                <button className="sm-green-btn share-btn">Share with friends <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/share.svg" /></button>
-                                            </Link>
-                                        </div>
-                                    </div>}
                                 </div>
-                                <div className="yellow-bg offer-discount-box">
-                                    <Link passHref href={{ pathname: '/cart/apply-coupon' }}>
-                                        <a>
-                                            <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/black-discount.svg" />
-                                            <span className="sm-heading">Avail offers & discounts</span>
-                                        </a>
-                                    </Link>
-                                </div>
+                            </div>
 
-                                {appliedCoupon && <div className="yellow-bg offer-discount-box">
-                                    <span className="sm-heading fw-300">{Utils.getLanguageLabel("Applied")} <span className="fw-500">{appliedCoupon?.code}</span></span>
-                                    <a style={{ cursor: 'pointer' }} onClick={() => {
-                                        Utils.deleteStateAsyncStorage("appliedCoupon")
-                                        setAppliedCoupon(null)
-                                    }} className="coupon-cross"><Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/cross-icon.svg" /></a>
-                                </div>}
+                            <div>
+                                <div className="sm-heading list-disc">{Utils.getLanguageLabel("Order items")}</div>
+                                <div className="white-box pd-0 mt-10">
+                                    <div className="cart-main-box">
+                                        {renderCart()}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div className="col-lg-6">
@@ -346,10 +417,9 @@ export default function CartPage(props) {
                                                     <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)}</td>
                                                 </tr> */}
                                                 <tr>
-                                                    {appliedCoupon && <td>{Utils.getLanguageLabel("Coupon discount")} ({Utils.getLanguageLabel("Coupon Applied")} <span class="fw-700">{appliedCoupon.code}</span>)</td>}
+                                                    {appliedCoupon && <td>{Utils.getLanguageLabel("Coupon discount")} ({Utils.getLanguageLabel("Coupon Applied")} <span className="fw-700">{appliedCoupon.code}</span>)</td>}
 
                                                     {!appliedCoupon && <td>{Utils.getLanguageLabel("Coupon discount")}</td>}
-
                                                     <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_COUPON_DISCOUNT)}</td>
                                                 </tr>
                                                 <tr>
@@ -380,15 +450,10 @@ export default function CartPage(props) {
                                 {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">Some product are Out of stock</button></div>}
 
                                 {!hasOutOfStockProduct && <div className="text-center mt-30 d-flex justify-content-center">
-                                    <Link passHref href={{ pathname: '/checkout' }}>
-                                        <button className="green-btn process-checkout-btn mx-2 px-3 ">
-                                            {Utils.getLanguageLabel("Select delivery address")}
-                                            <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
-                                        </button>
-                                    </Link>
-                                    {teambuyOfferPrice > 0 && <Link passHref href={{ pathname: '/cart/share-cart' }}>
-                                        <button className="green-btn process-checkout-btn mx-2 px-3 " style={{ color: '#171726' }}>{Utils.getLanguageLabel("JOIN THE TEAM NOW & SAVE")} {Utils.convertToPriceFormat(teambuyOfferPrice)} {Utils.getLanguageLabel("More")}</button>
-                                    </Link>}
+                                    <button onClick={() => placeOrder()} className="green-btn process-checkout-btn mx-2 px-3 ">
+                                        {Utils.getLanguageLabel("Proceed to payment")}
+                                        <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
+                                    </button>
                                 </div>}
                             </div>
                         </div>

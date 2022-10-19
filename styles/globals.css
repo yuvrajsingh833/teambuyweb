@@ -234,3 +234,7 @@ a {
 .product-img {
   min-height: 120px;
 }
+
+.address-selected {
+  border: 2px solid #53b176;
+}

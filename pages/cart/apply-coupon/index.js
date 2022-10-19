@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Router from "next/router";
+import router from "next/router";
 
 import Loader from '../../../component/loader';
 import Feature from "../../../component/feature";
@@ -44,7 +44,7 @@ export default function ApplyCouponPage(props) {
     const applyCouponPage = (selectedCoupon) => {
         setAppliedCoupon(selectedCoupon)
         Utils.saveStateAsyncStorage(selectedCoupon, "appliedCoupon")
-        Router.push("/cart");
+        router.push("/cart");
     }
 
     if (isLoading) return <Loader />

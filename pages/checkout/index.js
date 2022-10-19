@@ -1,24 +1,29 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import router from "next/router";
 import React, { useEffect, useState } from 'react';
 import { Modal } from "react-bootstrap";
 import { useSelector } from 'react-redux';
+import { useSnackbar } from 'react-simple-snackbar';
 
 import Loader from '../../component/loader';
-
-import * as Utils from "../../lib/utils";
-
 import Feature from "../../component/feature";
 
+import * as Utils from "../../lib/utils";
 import * as Validations from "../../lib/validation";
+
 import * as MasterService from "../../services/master";
 import * as UserService from "../../services/user";
 
 export default function CheckoutPage(props) {
+    const selectedDeliveryAddress = Utils.getStateAsyncStorage("selectedDeliveryAddress")
+
     const userData = useSelector(state => state.userData)
     const user = userData?.userData
     global.user = userData?.userData
+
+    const [openSnackbar] = useSnackbar()
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,10 +33,9 @@ export default function CheckoutPage(props) {
     const [allCities, setAllCities] = useState([]);
 
     const [allAddresses, setAllAddresses] = useState([]);
-    const [selectedAddress, setSelectedAddress] = useState({});
+    const [selectedAddress, setSelectedAddress] = useState((selectedDeliveryAddress && Object.keys(selectedDeliveryAddress).length > 0) ? selectedDeliveryAddress : null);
 
     const [fullAddress, setFullAddress] = useState(null)
-    const [locationError, setLocationError] = useState(null)
 
     const [fullName, setFullName] = useState(user?.name);
     const [apt, setApt] = useState('');
@@ -53,7 +57,7 @@ export default function CheckoutPage(props) {
 
     const getLocation = () => {
         if (!navigator.geolocation) {
-            setLocationError(Utils.getLanguageLabel("Your browser doesn't support geolocation. Please update your browser."))
+            console.log(Utils.getLanguageLabel("Your browser doesn't support geolocation. Please update your browser."))
         } else {
             navigator.geolocation.getCurrentPosition((position) => {
                 MasterService.reverseGeoLocation({ lat: position?.coords?.latitude, long: position?.coords?.longitude }).then(response => {
@@ -77,7 +81,7 @@ export default function CheckoutPage(props) {
                     setAddress(tempAddress.join(", "))
                 }).catch(e => { console.log(`getLocation error : ${e}`) })
             }, () => {
-                setLocationError(Utils.getLanguageLabel("Please enable the geolocation on your browser."))
+                console.log(Utils.getLanguageLabel("Please enable the geolocation on your browser."))
             });
         }
     }
@@ -206,6 +210,15 @@ export default function CheckoutPage(props) {
         setShowAddressModal(true)
     }
 
+    const proceedToCheckout = () => {
+        if (selectedAddress && Object.keys(selectedAddress).length > 0) {
+            Utils.saveStateAsyncStorage(selectedAddress, "selectedDeliveryAddress")
+            router.push("/checkout/summary");
+        } else {
+            openSnackbar(Utils.getLanguageLabel("Please select a address first"))
+        }
+    }
+
     if (isLoading) return <Loader />
 
     return (
@@ -248,10 +261,12 @@ export default function CheckoutPage(props) {
 
                     <div className="row mt-10 address-block">
                         {allAddresses.map(item => {
-                            return <div key={`all_saved_address_${item.id}`} className="col-md-4 mb-20">
-                                <div className="white-box address-box selected">
+                            return <div onClick={() => { setSelectedAddress(item) }} key={`all_saved_address_${item.id}`} className="col-md-4 mb-20">
+                                <div className={`white-box address-box ${item.id == selectedAddress.id && 'address-selected'}`}>
                                     {item.is_primary == 1 && <span className="default-tag">{Utils.getLanguageLabel("Default")}</span>}
-                                    <span className="ad-select-icon"><Image alt='/img/sm-green-check.svg' height={40} width={40} layout='raw' src="/img/sm-green-check.svg" /></span>
+
+                                    {item.id == selectedAddress.id && <span className="ad-select-icon"><Image alt='/img/sm-green-check.svg' height={40} width={40} layout='raw' src="/img/sm-green-check.svg" /></span>}
+
                                     <div className="d-flex align-items-center">
                                         <div className="loaction-icon">
                                             <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="location" src="/img/location.png" />
@@ -268,12 +283,10 @@ export default function CheckoutPage(props) {
                     </div>
 
                     <div className="text-left mt-30">
-                        <Link passHref href={{ pathname: '/checkout' }}>
-                            <button className="green-btn process-checkout-btn">
-                                {Utils.getLanguageLabel("proceed to checkout")}
-                                <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
-                            </button>
-                        </Link>
+                        <button onClick={() => proceedToCheckout()} className="green-btn process-checkout-btn">
+                            {Utils.getLanguageLabel("proceed to checkout")}
+                            <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
+                        </button>
                     </div>
                 </div>
             </section>

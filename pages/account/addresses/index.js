@@ -33,7 +33,6 @@ export default function MyAddresses(props) {
     const [selectedAddress, setSelectedAddress] = useState({});
 
     const [fullAddress, setFullAddress] = useState(null)
-    const [locationError, setLocationError] = useState(null)
 
     const [fullName, setFullName] = useState(user?.name);
     const [apt, setApt] = useState('');
@@ -55,7 +54,7 @@ export default function MyAddresses(props) {
 
     const getLocation = () => {
         if (!navigator.geolocation) {
-            setLocationError(Utils.getLanguageLabel("Your browser doesn't support geolocation. Please update your browser."))
+            console.log(Utils.getLanguageLabel("Your browser doesn't support geolocation. Please update your browser."))
         } else {
             navigator.geolocation.getCurrentPosition((position) => {
                 MasterService.reverseGeoLocation({ lat: position?.coords?.latitude, long: position?.coords?.longitude }).then(response => {
@@ -79,7 +78,7 @@ export default function MyAddresses(props) {
                     setAddress(tempAddress.join(", "))
                 }).catch(e => { console.log(`getLocation error : ${e}`) })
             }, () => {
-                setLocationError(Utils.getLanguageLabel("Please enable the geolocation on your browser."))
+                console.log(Utils.getLanguageLabel("Please enable the geolocation on your browser."))
             });
         }
     }
@@ -229,7 +228,6 @@ export default function MyAddresses(props) {
         setEmail(user.email)
         setMobileNumber(user.mobile_number)
         setAddressType('Home')
-        setSelectedAddress({})
         setShowAddressModal(true)
     }
 
