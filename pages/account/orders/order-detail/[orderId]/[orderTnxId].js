@@ -4,16 +4,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from "react";
 
-import Feature from '../../../../component/feature';
-import Loader from '../../../../component/loader';
+import Feature from '../../../../../component/feature';
+import Loader from '../../../../../component/loader';
 
-import * as UserService from "../../../../services/user";
+import * as UserService from "../../../../../services/user";
 
-import * as Dates from "../../../../lib/dateFormatService";
-import * as Utils from "../../../../lib/utils";
+import * as Dates from "../../../../../lib/dateFormatService";
+import * as Utils from "../../../../../lib/utils";
 
-import AccountSideBar from "../../../../component/accountSidebar";
-import { Config } from '../../../../config/config';
+import AccountSideBar from "../../../../../component/accountSidebar";
+import { Config } from '../../../../../config/config';
 
 const OrderInformation = ({ orderInfo }) => {
 
@@ -192,14 +192,13 @@ export default function OrderDetail(props) {
                                 <div className="block-scroll-x">
                                     <div className="block-scroll-x-width">
                                         <div className="white-box d-flex pd-20 mb-20">
-                                            <div className="order-product-icon mt-10">
+                                            <div className="order-product-icon mt-10 d-flex ">
                                                 <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="product" src="/img/product-icon.png" />
                                             </div>
                                             <OrderInformation orderInfo={orderInfo} />
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div className="row mt-20 od-block">
                                     <div className="col-md-5">

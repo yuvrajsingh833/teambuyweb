@@ -126,35 +126,30 @@ export default function CheckoutOrderStatusDetail(props) {
                         <div className="success-icon">
                             <Image layout='raw' height={120} width={120} quality={100} alt='status-icon' src="/bgicon/fail.png" />
                         </div>
-                        <div className="sm-heading mt-40 text-center">"Oops! Order failed"</div>
+                        <div className="sm-heading mt-40 text-center">{Utils.getLanguageLabel("Oops! Order failed")}</div>
                         <div className="xs-heading mt-20">{paymentVerificationInfo.error_Message}</div>
                         <div className="mt-40 text-center">
                             <Link passHref href={{ pathname: '/checkout' }}>
-                                <a className="green-btn mnw-248"> BACK TO CHECKOUT</a>
+                                <a className="green-btn mnw-248">{Utils.getLanguageLabel("BACK TO CHECKOUT")}</a>
                             </Link>
                         </div>
-                    </div> :
-                        <div className="text-center cart-success-block">
-                            <div className="success-icon">
-                                <Image layout='raw' height={120} width={120} quality={100} alt='status-icon' src="/bgicon/success.png" />
-                            </div>
-                            <div className="sm-heading mt-40 text-center">Your order was placed <br />successfully!!</div>
-                            <div className="xs-heading mt-20">Order #{txnid}</div>
-                            <div className="xs-heading mt-10">Placed on  {paymentVerificationInfo.addedon.split(" ")[0]}</div>
-                            <div className="xs-heading mt-6"><span>Total: {Utils.convertToPriceFormat(paymentVerificationInfo.amt)}</span></div>
-                            <div className="xs-heading mt-30 text-uppercase">you will get confirmation in a while</div>
-                            <div className="mt-40 text-center">
-                                <Link passHref href={{
-                                    pathname: '/account/orders/order-detail//[orderTxnId]',
-                                    query: { orderTxnId: txnid }
-                                }}>
-                                    <a className="green-btn mnw-248"><span className="cube-scan"></span> TRACK ORDER</a>
-                                </Link>
-                            </div>
-                        </div>}
+                    </div> : <div className="text-center cart-success-block">
+                        <div className="success-icon">
+                            <Image layout='raw' height={120} width={120} quality={100} alt='status-icon' src="/bgicon/success.png" />
+                        </div>
+                        <div className="sm-heading mt-40 text-center">{Utils.getLanguageLabel("Your order was placed")} <br />{Utils.getLanguageLabel("successfully!!")}</div>
+                        <div className="xs-heading mt-20">{Utils.getLanguageLabel("Order")} #{txnid}</div>
+                        <div className="xs-heading mt-10">{Utils.getLanguageLabel("Placed on")}  {paymentVerificationInfo.addedon.split(" ")[0]}</div>
+                        <div className="xs-heading mt-6"><span>{Utils.getLanguageLabel("Total")}: {Utils.convertToPriceFormat(paymentVerificationInfo.amt)}</span></div>
+                        <div className="xs-heading mt-30 text-uppercase">{Utils.getLanguageLabel("you will get confirmation in a while")}</div>
+                        <div className="mt-40 text-center">
+                            <Link passHref href={{ pathname: '/account/orders' }}>
+                                <a className="green-btn mnw-248"><span className="cube-scan"></span>{Utils.getLanguageLabel("TRACK ORDER")}</a>
+                            </Link>
+                        </div>
+                    </div>}
                 </div>
             </section>
-
         </>
     )
 }
