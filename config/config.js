@@ -14,6 +14,7 @@ export const Config = {
 		promotionalCategoryBanner: 'promotional_category/',
 		promotionalDealBanner: 'promotional_deal/',
 		userAvatar: 'user_avatar/',
+		teamAvatar: 'team_avatar/',
 	},
 
 	PageSize: 30,

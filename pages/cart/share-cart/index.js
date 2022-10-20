@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,82 +8,55 @@ import { useSelector } from 'react-redux';
 import Loader from '../../../component/loader';
 
 import { Config } from '../../../config/config';
+import * as Enums from '../../../lib/enums';
 import * as Utils from "../../../lib/utils";
+import * as Validations from "../../../lib/validation";
 
-import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share';
-import { useRouter } from 'next/router';
 import AuthSideBar from "../../../component/authSidebar";
 import Feature from "../../../component/feature";
 import * as CheckoutService from "../../../services/checkout";
 import * as MasterService from "../../../services/master";
-import * as PaymentService from "../../../services/payment";
-import * as UserService from "../../../services/user";
+
+var $ = require("jquery");
+if (typeof window !== "undefined") {
+    window.$ = window.jQuery = require("jquery");
+}
+const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
+    ssr: false,
+});
 
 export default function ShareCartPage(props) {
-    const couponApplied = Utils.getStateAsyncStorage("appliedCoupon")
-
-    const router = useRouter();
+    const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
 
     const userData = useSelector(state => state.userData)
     global.user = userData?.userData
 
+    const [teamName, setTeamName] = useState(null);
+    const [teamNameError, setTeamNameError] = useState(null);
+
     const [showLogin, setShowLogin] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-    const [appliedCoupon, setAppliedCoupon] = useState((couponApplied && Object.keys(couponApplied).length > 0) ? couponApplied : null);
 
     const [cartItems, setCartItems] = useState([]);
-
-    const [GSTAmount, setGSTAmount] = useState(0);
-    const [subTotalAmount, setSubTotalAmount] = useState(0);
-    const [couponDiscount, setCouponDiscount] = useState(0);
-
-    const [hasOutOfStockProduct, setHasOutOfStockProduct] = useState(false);
+    const [teamAvatar, setTeamAvatar] = useState(null);
 
     const [teambuyOfferPrice, setTeambuyOfferPrice] = useState(0);
-
-    const [walletInfo, setWalletInfo] = useState({});
-
-    const [deliveryCharge, setDeliveryCharge] = useState(0);
-    const [minCartForFreeDelivery, setMinCartForFreeDelivery] = useState(0);
-    const [maxUsableWalletAmount, setMaxUsableWalletAmount] = useState(0);
-    const [maxUsableWalletPercent, setMaxUsableWalletPercent] = useState(0);
+    const [teambuyOfferDiscountLeader, setTeambuyOfferDiscountLeader] = useState(0);
+    const [teambuyOfferDiscountMember, setTeambuyOfferDiscountMember] = useState(0);
 
 
     const getAllCartItems = () => {
         setIsLoading(true)
         CheckoutService.getCart().then(response => {
-
-            try {
-                if (response.data.length > 0) {
-                    document.getElementById("cartCountImage").src = "/img/cart-active-icon.svg";
-                    document.getElementById("cartCountImage").srcset = "/img/cart-active-icon.svg 1x, /img/cart-active-icon.svg 2x";
-                    document.getElementById("cartCount").innerHTML = `${response.data.length}`;
-                } else {
-                    document.getElementById("cartCountImage").src = "/img/cart-icon.svg";
-                    document.getElementById("cartCountImage").srcset = "/img/cart-icon.svg 1x, /img/cart-icon.svg 2x";
-                    document.getElementById("cartCount").innerHTML = `0`;
-                }
-            } catch (error) { console.log("navIssue") }
-
-            let gst = 0;
-            let subTotal = 0;
             let teambuyOfferDiscount = 0;
 
             response.data.map(mapItems => {
-                if (!(mapItems.product_info.stock >= mapItems.product_info.reserve_stock && mapItems.product_info.stock != 0)) {
-                    setHasOutOfStockProduct(true)
-                }
-                gst = gst + (mapItems.product_info.gst_amount * mapItems.quantity)
-                subTotal = subTotal + (mapItems.product_info.price_without_gst * mapItems.quantity)
                 teambuyOfferDiscount = teambuyOfferDiscount + (mapItems.product_info.teambuy_offer_price * mapItems.quantity)
             })
 
-            setSubTotalAmount(subTotal)
             setTeambuyOfferPrice(teambuyOfferDiscount)
-            setGSTAmount(gst)
             setCartItems(response.data)
             setIsLoading(false)
-
         }).catch(e => {
             console.log(`getCart error : ${e}`)
             setCartItems([])
@@ -94,35 +68,19 @@ export default function ShareCartPage(props) {
 
         setIsLoading(true)
         setCartItems([]);
-        setGSTAmount(0);
-        setSubTotalAmount(0);
-        setCouponDiscount(0);
-        setWalletInfo({});
-        setDeliveryCharge(0);
-        setMinCartForFreeDelivery(0);
-        setMaxUsableWalletAmount(0);
-        setMaxUsableWalletPercent(0);
 
-        PaymentService.allWalletTransactions({ limit: Config.PageSize, page: 1 }).then(response => {
-            setWalletInfo(response.data.information)
-            MasterService.settings().then(settingResponse => {
-                (settingResponse.data).map(settingItem => {
-                    if (settingItem.key == "delivery_charge") {
-                        setDeliveryCharge(settingItem.value)
-                    }
-                    if (settingItem.key == "free_delivery_min_cart") {
-                        setMinCartForFreeDelivery(settingItem.value)
-                    }
-                    if (settingItem.key == "max_wallet_amount") {
-                        setMaxUsableWalletAmount(settingItem.value)
-                    }
-                    if (settingItem.key == "cart_wallet_applicable_percent") {
-                        setMaxUsableWalletPercent(settingItem.value)
-                    }
-                })
+        MasterService.settings().then(settingResponse => {
+            (settingResponse.data).map(settingItem => {
+                if (settingItem.key == "teambuy_offer_discount_leader") {
+                    setTeambuyOfferDiscountLeader(settingItem.value)
+                }
 
-            }).catch(e => { console.log(`settings error : ${e}`) })
-        }).catch(e => { console.log(`allWalletTransactions error : ${e}`) })
+                if (settingItem.key == "teambuy_offer_discount_member") {
+                    setTeambuyOfferDiscountMember(settingItem.value)
+                }
+            })
+
+        }).catch(e => { console.log(`settings error : ${e}`) })
 
         if (global?.user?.token?.length > 0) {
             getAllCartItems()
@@ -131,132 +89,74 @@ export default function ShareCartPage(props) {
         }
     }, [props])
 
-    const calculatePrice = () => {
-
-        /** Price before discount calculated */
-        let subTotal = subTotalAmount
-
-        /** GST Charge calculation */
-        let appliedGSTAmount = GSTAmount
-
-        /** Wallet discount calculation */
-
-        let appliedWalletAmount = walletInfo?.amount || 0
-
-        if (walletInfo && walletInfo?.amount > 0) {
-            let walletDiscountPercentAmount = (maxUsableWalletPercent / 100) * subTotal;
-            if (Number(walletDiscountPercentAmount) >= Number(maxUsableWalletAmount)) {
-                appliedWalletAmount = maxUsableWalletAmount
-                if (walletInfo.amount < appliedWalletAmount) {
-                    appliedWalletAmount = walletInfo.amount
-                }
-            } else {
-                appliedWalletAmount = walletDiscountPercentAmount.toFixed(2)
-                if (walletInfo.amount < appliedWalletAmount) {
-                    appliedWalletAmount = walletInfo.amount
-                }
-            }
-        }
-
-        /** Coupon discount calculation */
-        let appliedDiscountAmount = couponDiscount;
-
-        let totalAmount = subTotal + appliedGSTAmount;
-
-        // let discountAmount = 0
-        if (appliedCoupon) {
-            if (appliedCoupon.type == 'percent') {
-                appliedDiscountAmount = totalAmount * (appliedCoupon.discount / 100)
-                if (appliedDiscountAmount > appliedCoupon.max_discount_amount && appliedCoupon.max_discount_amount != 0) {
-                    appliedDiscountAmount = appliedCoupon.max_discount_amount
-                }
-            } else {
-                appliedDiscountAmount = appliedCoupon.discount
-            }
-        }
-
-        /**Calculate teambuy discount */
-        let appliedTeambuyDiscount = teambuyOfferPrice;
-
-        /** Delivery charge calculation */
-        let appliedDeliveryCharges = deliveryCharge
-        if (Number(subTotal) >= Number(minCartForFreeDelivery)) {
-            appliedDeliveryCharges = 0
-        }
-
-        /** Total payable price calculation */
-        let totalPrice = (Number(subTotal) + Number(appliedDeliveryCharges) + Number(appliedGSTAmount)) - (Number(appliedDiscountAmount) + Number(appliedWalletAmount))
-
-        return {
-            SUB_TOTAL: subTotal,
-
-            APPLICABLE_WALLET_DISCOUNT: appliedWalletAmount,
-            APPLICABLE_COUPON_DISCOUNT: appliedDiscountAmount,
-
-            APPLICABLE_DELIVERY_CHARGE: appliedDeliveryCharges,
-            APPLIED_GST: appliedGSTAmount,
-
-            APPLIED_TEAM_BUY_DISCOUNT: appliedTeambuyDiscount,
-
-            TOTAL: totalPrice
-        }
-    }
-
     const openLogin = () => {
         setShowLogin(true);
         setTimeout(() => { window.openLoginSideBar() }, 300)
     }
 
-    const setProductCartQuantity = (productId, quantity) => {
-        let postParams = { productID: productId, quantity: quantity, cartType: "individual" }
-        UserService.updateUserCart(postParams).then(response => {
-            getAllCartItems()
-        }).catch(e => {
-            console.log(`${productId} updateUserCart error : ${e}`)
-        })
+    const updateTeamAvatar = event => {
+        if (event.target.files && event.target.files[0]) {
+            const image = event.target.files[0];
+            const imageData = new FormData();
+            imageData.append("teamAvatar", image);
+
+            // setIsLoading(true)
+            // UserService.updateTeamAvatar(imageData).then(response => {
+            //     if (response.statusCode != 200) {
+            //         setIsLoading(false)
+            //         openSnackbar(response.message)
+            //     } else {
+            //         openSnackbar("Profile image updated successfully", 1000)
+            //         getUserInfo()
+            //     }
+            // }).catch(e => {
+            //     setIsLoading(false)
+            //     console.log(`updateUserProfileInfo error : ${e}`)
+            // })
+        }
+    };
+
+    const handleCreateTeam = () => {
+        let teamNameValidation = Validations.validateField(teamName, { emptyField: 'Team name cannot be empty' })
+        let error = {};
+
+        if (teamNameValidation.error) {
+            error['teamName'] = teamNameValidation.message
+        }
+        if (Object.keys(error).length == 0) {
+            doCreateTeam()
+        } else {
+            setTeamNameError(error.teamName)
+            return false;
+        }
     }
 
     const renderCart = () => {
         return cartItems.map((item, index) => {
             let productDetail = item.product_info;
 
-            return <div key={`cart_item_${item.id}_${index}`} className="white-box">
-                <div className="d-flex to-product-flex">
-                    <div className="product-img">
-                        <Image
-                            src={Utils.generateProductImage(productDetail)}
-                            alt={productDetail?.name}
-                            layout="raw"
-                            height={200}
-                            width={200}
-                            className={'common-product-image'}
-                            style={{ objectFit: 'contain' }}
-                        />
-                    </div>
-                    <div className="product-content">
-                        <div className="d-flex align-items-center">
-                            <div>
-                                <div className="xs-heading fw-500">{productDetail.name}</div>
-                                <div className="weight-count">{productDetail.size}</div>
-                                <div className="product-price ml-auto mt-0">{Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst)}</div>
-                                {productDetail.teambuy_offer_price > 0 && <div className="special-disc">Save {Utils.convertToPriceFormat(productDetail.teambuy_offer_price)} on group purchase</div>}
+            return <div key={`cart_item_${item.id}_${index}`} className="d-flex to-product-flex align-items-center">
+                <div className="to-product-count fw-700">{index + 1}.</div>
+                <div className="product-img">
+                    <Image src={Utils.generateProductImage(productDetail)} alt={productDetail?.name} layout="raw" height={200} width={200}
+                        className={'common-product-image'} style={{ objectFit: 'contain' }} />
+                </div>
+                <div className="product-content">
+                    <div className="d-flex align-items-center">
+                        <div>
+                            <div className="xs-heading fw-500 font-12">{productDetail.name}</div>
+                            <div className="weight-count">{productDetail.size}</div>
+                        </div>
+                        <div className="ml-auto">
+                            {productDetail.discount > 0 && <div className="product-price"><span
+                                className="cut-price">{Utils.convertToPriceFormat(productDetail.gst_amount +
+                                    productDetail.price_without_gst)}</span>
+                                {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst -
+                                    productDetail.discount) * item.quantity)}</div>}
 
-                                <div className="ml-auto px-10">
-                                    <div className="countItem md-countItem">
-                                        <span onClick={() => setProductCartQuantity(productDetail._id, Number(item.quantity - 1))} className="btn-minus">-</span>
-                                        <input value={item.quantity} className="count" onChange={(event) => { }} />
-                                        <span onClick={() => setProductCartQuantity(productDetail._id, Number(item.quantity + 1))} className="btn-plus">+</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {!(Number(productDetail.stock) >= Number(productDetail.reserve_stock) && Number(productDetail.stock) != 0) && <div className="ml-auto"><button type="button" className="cancel-btn gray-tag-small">Out of stock</button></div>}
-
-                            {(Number(productDetail.stock) >= Number(productDetail.reserve_stock) && Number(productDetail.stock) != 0) && <div className="ml-auto">
-                                {productDetail.discount > 0 && <div className="product-price font-19"><span className="cut-price">{Utils.convertToPriceFormat(productDetail.gst_amount + productDetail.price_without_gst)}</span> {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst - productDetail.discount) * item.quantity)}</div>}
-
-                                {productDetail.discount < 1 && <div className="product-price font-19">{Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst - productDetail.discount) * item.quantity)}</div>}
-                            </div>}
+                            {productDetail.discount < 1 && <div className="product-price">
+                                {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst -
+                                    productDetail.discount) * item.quantity)}</div>}
                         </div>
                     </div>
                 </div>
@@ -269,7 +169,7 @@ export default function ShareCartPage(props) {
     return (
         <>
             <Head>
-                <title>Cart | Teambuy</title>
+                <title>Share Cart With Friends & Family | Teambuy</title>
             </Head>
 
             <section className="breadcrumb-wrap">
@@ -286,7 +186,12 @@ export default function ShareCartPage(props) {
                                     <a>{Utils.getLanguageLabel("My account")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("Cart")}</li>
+                            <li className="breadcrumb-item">
+                                <Link passHref href={{ pathname: "/cart" }}>
+                                    <a>{Utils.getLanguageLabel("Cart")}</a>
+                                </Link>
+                            </li>
+                            <li className="breadcrumb-item active" aria-current="page">{Utils.getLanguageLabel("Share Cart")}</li>
                         </ol>
                     </nav>
                 </div>
@@ -296,144 +201,113 @@ export default function ShareCartPage(props) {
                 <div className="container">
                     <div className="row cart-block">
                         <div className="col-lg-6">
-                            <div className="white-box pd-0">
+                            <div className="sm-heading list-disc">{Utils.getLanguageLabel("Your cart items")}</div>
+                            <div className="white-box pd-0 mt-10">
                                 <div className="cart-main-box">
-                                    <div className="cart-main-scroll">
-                                        <div className="cart-main-width">
-                                            {renderCart()}
-                                        </div>
-                                    </div>
-
-                                    {teambuyOfferPrice > 0 && <hr className="custom-hr2" />}
-                                    {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block">
-                                        <div>
-                                            <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail Teambuy price and")}</div>
-                                            <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div>
-                                        </div>
-                                        <div className="ml-auto">
-                                            <FacebookShareButton
-                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
-                                                quote={`Hey, join the team and get a huge discount on the purchase`}
-                                                hashtag={'#teambuy'}
-                                            >
-                                                <FacebookIcon size={40} round />
-                                            </FacebookShareButton>
-                                            <WhatsappShareButton
-                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
-                                                title={`Hey, join the team and get a huge discount on the purchase`}
-                                                separator=":: "
-                                            >
-                                                <WhatsappIcon size={40} round />
-                                            </WhatsappShareButton>
-                                            <TwitterShareButton
-                                                url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}
-                                                title={`Hey, join the team and get a huge discount on the purchase`}
-                                            >
-                                                <TwitterIcon size={40} round />
-                                            </TwitterShareButton>
-                                            <LinkedinShareButton url={Config.BaseURL.web.replace(/\/$/, "") + router.asPath}>
-                                                <LinkedinIcon size={40} round />
-                                            </LinkedinShareButton>
-
-                                        </div>
-                                    </div>}
+                                    {renderCart()}
                                 </div>
-                                <div className="yellow-bg offer-discount-box">
-                                    <Link passHref href={{ pathname: '/cart/apply-coupon' }}>
-                                        <a>
-                                            <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/black-discount.svg" />
-                                            <span className="sm-heading">Avail offers & discounts</span>
-                                        </a>
-                                    </Link>
-                                </div>
-
-                                {appliedCoupon && <div className="yellow-bg offer-discount-box">
-                                    <span className="sm-heading fw-300">{Utils.getLanguageLabel("Applied")} <span className="fw-500">{appliedCoupon?.code}</span></span>
-                                    <a style={{ cursor: 'pointer' }} onClick={() => {
-                                        Utils.deleteStateAsyncStorage("appliedCoupon")
-                                        setAppliedCoupon(null)
-                                    }} className="coupon-cross"><Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/cross-icon.svg" /></a>
-                                </div>}
                             </div>
                         </div>
+
                         <div className="col-lg-6">
-                            <div className="white-box cart-table-block">
-                                <div className="cart-pd-20">
-                                    <div className="sm-heading fw-500">{Utils.getLanguageLabel("Bill Details")}</div>
-                                    <div className="cart-table">
-                                        <table className="w-100">
-                                            <tbody>
-                                                <tr>
-                                                    <td>{Utils.getLanguageLabel("Sub total")}</td>
-                                                    <td className="text-right">{Utils.convertToPriceFormat(calculatePrice().SUB_TOTAL)}</td>
-                                                </tr>
-                                                {/* <tr>
-                                                    <td>{Utils.getLanguageLabel("Team buy discount")}</td>
-                                                    <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)}</td>
-                                                </tr> */}
-                                                <tr>
-                                                    <td>{Utils.getLanguageLabel("Coupon discount")}</td>
-                                                    <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_COUPON_DISCOUNT)}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{Utils.getLanguageLabel("Wallet discount")}</td>
-                                                    <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_WALLET_DISCOUNT)}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{Utils.getLanguageLabel("Delivery Charge")}</td>
-                                                    <td className="red-text text-right">+{Utils.convertToPriceFormat(calculatePrice().APPLICABLE_DELIVERY_CHARGE)}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{Utils.getLanguageLabel("GST")}</td>
-                                                    <td className="red-text text-right">+{Utils.convertToPriceFormat(calculatePrice().APPLIED_GST)}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="fw-500">{Utils.getLanguageLabel("Total payable amount")}</td>
-                                                    <td className="fw-500 text-right">{Utils.convertToPriceFormat(calculatePrice().TOTAL)}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                            <div className="sm-heading list-disc">{Utils.getLanguageLabel("Share cart")}</div>
+                            <div className="white-box pd-0 mt-10">
+                                <div className="cart-main-box">
+                                    <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get teambuy discount of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat((teambuyOfferPrice))}</span>
+                                        <br /><br />
+
+                                        {Utils.getLanguageLabel("Get flat")} <span className="green-text  fw-700">{Utils.convertToPriceFormat((teambuyOfferPrice * (teambuyOfferDiscountLeader / 100)))}</span> {Utils.getLanguageLabel("discount when you place order with a team and")} <span className="green-text  fw-700">{Utils.convertToPriceFormat((teambuyOfferPrice * (teambuyOfferDiscountMember / 100)))}</span> {Utils.getLanguageLabel("when your team member place the order")}</div>
+                                    <div className="d-inline-flex align-items-center user-info-flex pl-10 mt-50">
+                                        <div className="user-img">
+                                            <Image
+                                                alt={teamAvatar ? (BASE_URL + teamAvatar) : '/img/default-user.png'}
+                                                height={100}
+                                                width={100}
+                                                layout="raw"
+                                                src={teamAvatar ? (BASE_URL + teamAvatar) : '/img/default-user.png'} />
+                                            <div className="upload-icon">
+                                                <input onChange={updateTeamAvatar} type="file" accept="image/*" />
+                                            </div>
+                                        </div>
+
+                                        <form className="custom-form" style={{ marginLeft: '20px' }}>
+                                            <div className="form-group pos-rel">
+                                                <input onChange={(event) => { setTeamName(event.target.value) }} type="text" className="form-control" value={teamName} placeholder={Utils.getLanguageLabel("Enter your team name")} />
+                                                <span className="form-icon user-icon"></span>
+                                            </div>
+                                            <span style={{ fontSize: '12px', color: '#D83734' }}>{teamNameError}</span>
+                                        </form>
+                                    </div>
+                                    <div className="mt-30">
+                                        <button onClick={() => { handleCreateTeam() }} type="button" className="green-btn">{Utils.getLanguageLabel("Create Your Team")}</button>
                                     </div>
                                 </div>
-
-                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
-                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT))}</span> on this order</span>
-                                </div>}
-
-                                {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">Some product are Out of stock</button></div>}
-
-                                {!hasOutOfStockProduct && <div className="text-center mt-30 d-flex justify-content-center">
-                                    <Link passHref href={{ pathname: '/checkout' }}>
-                                        <button className="green-btn process-checkout-btn mx-2 px-3 ">
-                                            {Utils.getLanguageLabel("proceed to checkout")}
-                                            <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
-                                        </button>
-                                    </Link>
-                                    {teambuyOfferPrice > 0 && <Link passHref href={{ pathname: '/cart/share-cart' }}>
-                                        <button className="green-btn process-checkout-btn mx-2 px-3 " style={{ color: '#171726' }}>{Utils.getLanguageLabel("JOIN THE TEAM NOW & SAVE")} {Utils.convertToPriceFormat(teambuyOfferPrice)} {Utils.getLanguageLabel("More")}</button>
-                                    </Link>}
-                                </div>}
                             </div>
                         </div>
                     </div>
                 </div>
             </section>}
 
-            {cartItems.length < 1 && <section className="cart-wrap">
-                <div className="empty-cart">
-                    <div className="ce-icon text-center">
-                        <Image layout='raw' style={{ objectFit: 'contain' }} height={140} width={140} quality={100} alt="empty-wishlist" src="/img/empty-cart.png" />
+            <section className="nearby-wrap ptb-30">
+                <div className="container">
+                    <div className="d-flex align-items-center heading-flex">
+                        <div className="sm-heading">{Utils.getLanguageLabel("You can select existing nearby team")}</div>
                     </div>
-                    <div className="sm-heading text-center mt-30">{Utils.getLanguageLabel("Your cart in empty!")}</div>
-                    <div className="xs-heading text-center font-12">{Utils.getLanguageLabel("Shop for some product in order")} <br />
-                        {Utils.getLanguageLabel("to purchase them")}</div>
-                    <div className="text-center mt-20">
-                        <Link passHref href={{ pathname: '/category' }}>
-                            <button className="green-btn">{Utils.getLanguageLabel("SHOp NOW")}</button>
-                        </Link>
-                    </div>
+
+                    <OwlCarousel
+                        className="seven-items-slider owl-carousel common-navs mt-20"
+                        loop={false}
+                        margin={12}
+                        nav={true}
+                        dots={false}
+                        responsiveClass={true}
+                        responsive={Enums.OwlCarouselSlider.sevenItemSlider}
+                    >
+                        <div className="item d-flex align-items-center nearby-box">
+                            <div className="circle-box">
+                                <img src="/img/nearby-icon1.png" />
+                            </div>
+                            <div className="xs-heading text-ellipsis">Sameer’s Team</div>
+                        </div>
+                        <div className="item d-flex align-items-center nearby-box">
+                            <div className="circle-box">
+                                <img src="/img/nearby-icon2.png" />
+                            </div>
+                            <div className="xs-heading text-ellipsis">Rajesh’s Team</div>
+                        </div>
+                        <div className="item d-flex align-items-center nearby-box">
+                            <div className="circle-box">
+                                <img src="/img/nearby-icon3.png" />
+                            </div>
+                            <div className="xs-heading text-ellipsis">Rahul’s Team</div>
+                        </div>
+                        <div className="item d-flex align-items-center nearby-box">
+                            <div className="circle-box">
+                                <img src="/img/nearby-icon4.png" />
+                            </div>
+                            <div className="xs-heading text-ellipsis">Jayesh’s Team</div>
+                        </div>
+                        <div className="item d-flex align-items-center nearby-box">
+                            <div className="circle-box">
+                                <img src="/img/nearby-icon1.png" />
+                            </div>
+                            <div className="xs-heading text-ellipsis">Sameer’s Team</div>
+                        </div>
+                        <div className="item d-flex align-items-center nearby-box">
+                            <div className="circle-box">
+                                <img src="/img/nearby-icon2.png" />
+                            </div>
+                            <div className="xs-heading text-ellipsis">Rajesh’s Team</div>
+                        </div>
+                        <div className="item d-flex align-items-center nearby-box">
+                            <div className="circle-box">
+                                <img src="/img/nearby-icon3.png" />
+                            </div>
+                            <div className="xs-heading text-ellipsis">Rahul’s Team</div>
+                        </div>
+                    </OwlCarousel>
                 </div>
-            </section>}
+            </section>
 
             {showLogin && <AuthSideBar />}
             <Feature />
