@@ -45,6 +45,19 @@ const API = {
   getAllCoupons: { url: 'get-coupon', endPoint: 'checkout' },
   checkCouponValidation: { url: 'check-coupon', endPoint: 'checkout' },
 
+  //Team urls
+  getNearbyTeams: { url: 'nearby-team', endPoint: 'team' },
+  uploadTeamImage: { url: 'update-team-image', endPoint: 'team' },
+  createTeam: { url: 'create-team', endPoint: 'team' },
+
+  //Payment urls
+  allPaymentTransactions: { url: 'all-transactions', endPoint: 'payment' },
+  allWalletTransactions: { url: 'wallet-transactions', endPoint: 'payment' },
+  createPayment: { url: 'create-payment', endPoint: 'payment' },
+  paymentGateway: { url: 'gateway', endPoint: 'payment' },
+  verifyPayment: { url: 'verify-payment', endPoint: 'payment' },
+  updatePayment: { url: 'update-payment', endPoint: 'payment' },
+
   //Notification urls
   allNotification: { url: 'all', endPoint: 'notification' },
   markNotificationRead: { url: 'mark-read', endPoint: 'notification' },
@@ -62,15 +75,6 @@ const API = {
   addProductReview: { url: 'product/add-review', endPoint: 'user' },
   getAllOrders: { url: 'order/all', endPoint: 'user' },
   getOrderDetail: { url: 'order/detail', endPoint: 'user' },
-
-
-  //Payment urls
-  allPaymentTransactions: { url: 'all-transactions', endPoint: 'payment' },
-  allWalletTransactions: { url: 'wallet-transactions', endPoint: 'payment' },
-  createPayment: { url: 'create-payment', endPoint: 'payment' },
-  paymentGateway: { url: 'gateway', endPoint: 'payment' },
-  verifyPayment: { url: 'verify-payment', endPoint: 'payment' },
-  updatePayment: { url: 'update-payment', endPoint: 'payment' },
 
 };
 export { WEB_BASE_URL, API_BASE_URL, API, FILE_SERVER_BASE_URL, ADMIN_BASE_URL }
