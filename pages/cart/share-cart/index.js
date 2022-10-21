@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useSnackbar } from 'react-simple-snackbar';
+import router from 'next/router'
 
 import Loader from '../../../component/loader';
 
@@ -16,6 +18,7 @@ import AuthSideBar from "../../../component/authSidebar";
 import Feature from "../../../component/feature";
 import * as CheckoutService from "../../../services/checkout";
 import * as MasterService from "../../../services/master";
+import * as TeamService from "../../../services/team";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -27,6 +30,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 
 export default function ShareCartPage(props) {
     const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
+    const [openSnackbar] = useSnackbar()
 
     const userData = useSelector(state => state.userData)
     global.user = userData?.userData
@@ -44,6 +48,39 @@ export default function ShareCartPage(props) {
     const [teambuyOfferDiscountLeader, setTeambuyOfferDiscountLeader] = useState(0);
     const [teambuyOfferDiscountMember, setTeambuyOfferDiscountMember] = useState(0);
 
+    const [fullAddress, setFullAddress] = useState(null)
+    const [address, setAddress] = useState('');
+
+    const getLocation = () => {
+        if (!navigator.geolocation) {
+            console.log(Utils.getLanguageLabel("Your browser doesn't support geolocation. Please update your browser."))
+        } else {
+            navigator.geolocation.getCurrentPosition((position) => {
+                MasterService.reverseGeoLocation({ lat: position?.coords?.latitude, long: position?.coords?.longitude }).then(response => {
+                    setFullAddress(response.data)
+                    let tempAddress = []
+                    response.data.additionalInformation.address_components.map(addressItem => {
+                        if (addressItem.types.includes('sublocality_level_1')) {
+                            tempAddress.push(addressItem.long_name)
+                        }
+                        if (addressItem.types.includes('locality')) {
+                            tempAddress.push(addressItem.long_name)
+                        }
+                        if (addressItem.types.includes('administrative_area_level_2')) {
+                            tempAddress.push(addressItem.long_name)
+                        }
+                        if (addressItem.types.includes('administrative_area_level_1')) {
+                            tempAddress.push(addressItem.long_name)
+                        }
+                    })
+
+                    setAddress(tempAddress.join(", "))
+                }).catch(e => { console.log(`getLocation error : ${e}`) })
+            }, () => {
+                console.log(Utils.getLanguageLabel("Please enable the geolocation on your browser."))
+            });
+        }
+    }
 
     const getAllCartItems = () => {
         setIsLoading(true)
@@ -67,6 +104,7 @@ export default function ShareCartPage(props) {
     useEffect(() => {
 
         setIsLoading(true)
+        getLocation()
         setCartItems([]);
 
         MasterService.settings().then(settingResponse => {
@@ -94,27 +132,47 @@ export default function ShareCartPage(props) {
         setTimeout(() => { window.openLoginSideBar() }, 300)
     }
 
-    const updateTeamAvatar = event => {
+    const uploadTeamImage = event => {
         if (event.target.files && event.target.files[0]) {
             const image = event.target.files[0];
             const imageData = new FormData();
             imageData.append("teamAvatar", image);
 
-            // setIsLoading(true)
-            // UserService.updateTeamAvatar(imageData).then(response => {
-            //     if (response.statusCode != 200) {
-            //         setIsLoading(false)
-            //         openSnackbar(response.message)
-            //     } else {
-            //         openSnackbar("Profile image updated successfully", 1000)
-            //         getUserInfo()
-            //     }
-            // }).catch(e => {
-            //     setIsLoading(false)
-            //     console.log(`updateUserProfileInfo error : ${e}`)
-            // })
+            TeamService.uploadTeamImage(imageData).then(response => {
+                if (response.statusCode != 200) {
+                    openSnackbar(response.message)
+                } else {
+                    openSnackbar("Team avatar image updated successfully", 1000)
+                    setTeamAvatar(response.data.newFileName)
+                }
+            }).catch(e => {
+                console.log(`updateUserProfileInfo error : ${e}`)
+            })
         }
     };
+
+    const doCreateTeam = () => {
+        let postParams = {
+            teamAvatar: teamAvatar,
+            teamName: teamName,
+            teamLocation: address,
+            teamPincode: fullAddress?.pinCode,
+            teamLeaderOff: (teambuyOfferPrice * (teambuyOfferDiscountLeader / 100)),
+            teamMemberOff: (teambuyOfferPrice * (teambuyOfferDiscountMember / 100))
+        }
+        setIsLoading(true)
+        TeamService.createTeam(postParams).then(response => {
+            openSnackbar("Team created successfully", 1000)
+            setIsLoading(false)
+            router.push({
+                pathname: "/cart/share-cart/share/[id]",
+                query: { id: response.data.teamCode }
+            })
+        }).catch(e => {
+            setIsLoading(false)
+            console.log(`updateUserProfileInfo error : ${e}`)
+        })
+    }
 
     const handleCreateTeam = () => {
         let teamNameValidation = Validations.validateField(teamName, { emptyField: 'Team name cannot be empty' })
@@ -226,7 +284,7 @@ export default function ShareCartPage(props) {
                                                 layout="raw"
                                                 src={teamAvatar ? (BASE_URL + teamAvatar) : '/img/default-user.png'} />
                                             <div className="upload-icon">
-                                                <input onChange={updateTeamAvatar} type="file" accept="image/*" />
+                                                <input onChange={uploadTeamImage} type="file" accept="image/*" />
                                             </div>
                                         </div>
 

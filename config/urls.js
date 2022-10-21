@@ -49,6 +49,7 @@ const API = {
   getNearbyTeams: { url: 'nearby-team', endPoint: 'team' },
   uploadTeamImage: { url: 'update-team-image', endPoint: 'team' },
   createTeam: { url: 'create-team', endPoint: 'team' },
+  teamInfo: { url: 'info', endPoint: 'team' },
 
   //Payment urls
   allPaymentTransactions: { url: 'all-transactions', endPoint: 'payment' },

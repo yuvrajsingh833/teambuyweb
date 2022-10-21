@@ -1,4 +1,3 @@
-import * as Utils from "../lib/utils";
 import { API } from "../config/urls";
 import * as HTTPRequest from "../lib/httpRequest";
 
@@ -27,8 +26,8 @@ const uploadTeamImage = async (teamAvatar) => {
     })
 }
 
-const createTeam = async ({ teamAvatar, teamName, teamLocation, teamPincode }) => {
-    let postParams = { teamAvatar, teamName, teamLocation, teamPincode }
+const createTeam = async ({ teamAvatar, teamName, teamLocation, teamPincode, teamLeaderOff, teamMemberOff }) => {
+    let postParams = { teamAvatar, teamName, teamLocation, teamPincode, teamLeaderOff, teamMemberOff }
 
     return new Promise(function (resolve, reject) {
         HTTPRequest.Post(API.createTeam.endPoint, API.createTeam.url, postParams)
@@ -40,4 +39,17 @@ const createTeam = async ({ teamAvatar, teamName, teamLocation, teamPincode }) =
     })
 }
 
-export { getNearbyTeams, uploadTeamImage, createTeam }
+const teamInfo = async ({ teamCode }) => {
+    let postParams = { teamCode }
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Post(API.teamInfo.endPoint, API.teamInfo.url, postParams)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+export { getNearbyTeams, uploadTeamImage, createTeam, teamInfo }
