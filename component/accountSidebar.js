@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as Utils from "../lib/utils";
-import { deleteCookie } from 'cookies-next';
 import { ConfirmModal } from './modal';
 
 export default function AccountSideBar(props) {
@@ -12,10 +11,10 @@ export default function AccountSideBar(props) {
 
     const makeUserLogout = () => {
         setShowModal(false)
-        deleteCookie("appData")
-        if (typeof window !== 'undefined') {
-            localStorage.setItem("appData", JSON.stringify({}));
-        }
+        Utils.deleteStateAsyncStorage("selectedDeliveryAddress")
+        Utils.deleteStateAsyncStorage("appliedCoupon")
+        Utils.deleteStateAsyncStorage("teamBuyCart")
+        Utils.deleteStateAsyncStorage("appData")
         window.location.reload()
     }
 

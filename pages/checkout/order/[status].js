@@ -47,6 +47,7 @@ export default function CheckoutOrderStatusDetail(props) {
                 setIsLoading(false)
                 Utils.deleteStateAsyncStorage("selectedDeliveryAddress")
                 Utils.deleteStateAsyncStorage("appliedCoupon")
+                Utils.deleteStateAsyncStorage("teamBuyCart")
             }).catch(e => {
                 console.log(`updatePayment error : ${e}`)
                 setIsLoading(false)
@@ -70,6 +71,7 @@ export default function CheckoutOrderStatusDetail(props) {
                     setIsLoading(false)
                     Utils.deleteStateAsyncStorage("selectedDeliveryAddress")
                     Utils.deleteStateAsyncStorage("appliedCoupon")
+                    Utils.deleteStateAsyncStorage("teamBuyCart")
                 }).catch(e => {
                     console.log(`updatePayment error : ${e}`)
                     setIsLoading(false)
