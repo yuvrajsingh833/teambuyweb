@@ -25,7 +25,8 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 
 export default function CheckoutOrderStatusDetail(props) {
-    const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
+    const BASE_URL_TEAM_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
+    const BASE_URL_USER_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.userAvatar}`
 
     const router = useRouter();
     const { id } = router.query
