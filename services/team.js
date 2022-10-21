@@ -52,4 +52,17 @@ const teamInfo = async ({ teamCode }) => {
     })
 }
 
-export { getNearbyTeams, uploadTeamImage, createTeam, teamInfo }
+const joinTeam = async ({ teamCode }) => {
+    let postParams = { teamCode }
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Post(API.joinTeam.endPoint, API.joinTeam.url, postParams)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+export { getNearbyTeams, uploadTeamImage, createTeam, teamInfo, joinTeam }

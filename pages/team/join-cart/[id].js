@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RWebShare } from "react-web-share"
+import { useSnackbar } from 'react-simple-snackbar';
 
 import Loader from '../../../component/loader'
 
@@ -26,8 +27,8 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 
 export default function CheckoutOrderStatusDetail(props) {
-    const BASE_URL_TEAM_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
     const BASE_URL_USER_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.userAvatar}`
+    const [openSnackbar] = useSnackbar()
 
     const router = useRouter();
     const { id } = router.query
@@ -48,7 +49,7 @@ export default function CheckoutOrderStatusDetail(props) {
             setIsLoading(false)
         }).catch(e => {
             setIsLoading(false)
-            console.log(`updateUserProfileInfo error : ${e}`)
+            console.log(`teamInfo error : ${e}`)
         })
     }
 
@@ -56,8 +57,17 @@ export default function CheckoutOrderStatusDetail(props) {
         fetchTeamInfo()
     }, [props])
 
-    const proceedToCheckout = () => {
-        Utils.saveStateAsyncStorage({ "discount": Number(teamInfo.detail.member_off_price), "type": "memberCart" }, "teamBuyCart")
+    const joinTheTeam = () => {
+        TeamService.joinTeam({ teamCode: id }).then(response => {
+            setIsLoading(false)
+            Utils.saveStateAsyncStorage({ "discount": Number(teamInfo.detail.member_off_price), "type": "memberCart", "teamCode": teamInfo.detail.team_code, "teamID": teamInfo.detail.id }, "teamBuyCart")
+            router.push({ pathname: '/checkout' })
+        }).catch(e => {
+            setIsLoading(false)
+            openSnackbar(e.message)
+            console.log(`joinTeam error : ${e}`)
+        })
+
     }
 
     if (isLoading) return <Loader />
@@ -159,9 +169,8 @@ export default function CheckoutOrderStatusDetail(props) {
             <section className="nearby-wrap ptb-30">
                 <div className="container">
                     <div className="d-flex align-items-center heading-flex">
-                        <button onClick={() => proceedToCheckout()} className="green-btn process-checkout-btn mx-2 px-3 ">
-                            {Utils.getLanguageLabel("Proceed to checkout")}
-                            <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
+                        <button onClick={() => joinTheTeam()} className="green-btn process-checkout-btn mx-2 px-3 ">
+                            {Utils.getLanguageLabel("Join the team")}
                         </button>
                     </div>
                 </div>

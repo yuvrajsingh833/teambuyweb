@@ -1,21 +1,21 @@
-import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share'
-import Head from 'next/head'
-import Image from 'next/image'
+import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share';
 import dynamic from "next/dynamic";
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { RWebShare } from "react-web-share"
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { RWebShare } from "react-web-share";
 
-import Loader from '../../../../component/loader'
+import Loader from '../../../../component/loader';
 
-import { Config } from '../../../../config/config'
+import { Config } from '../../../../config/config';
 
-import * as Utils from "../../../../lib/utils"
-import * as Dates from "../../../../lib/dateFormatService"
+import * as Dates from "../../../../lib/dateFormatService";
 import * as Enums from '../../../../lib/enums';
+import * as Utils from "../../../../lib/utils";
 
-import * as TeamService from "../../../../services/team"
+import * as TeamService from "../../../../services/team";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -26,7 +26,6 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 
 export default function ShareCartWithOtherPage(props) {
-    const BASE_URL_TEAM_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
     const BASE_URL_USER_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.userAvatar}`
 
     const router = useRouter();
@@ -49,7 +48,7 @@ export default function ShareCartWithOtherPage(props) {
             setIsLoading(false)
         }).catch(e => {
             setIsLoading(false)
-            console.log(`updateUserProfileInfo error : ${e}`)
+            console.log(`teamInfo error : ${e}`)
         })
     }
 

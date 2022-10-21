@@ -50,6 +50,7 @@ const API = {
   uploadTeamImage: { url: 'update-team-image', endPoint: 'team' },
   createTeam: { url: 'create-team', endPoint: 'team' },
   teamInfo: { url: 'info', endPoint: 'team' },
+  joinTeam: { url: 'join-team', endPoint: 'team' },
 
   //Payment urls
   allPaymentTransactions: { url: 'all-transactions', endPoint: 'payment' },
