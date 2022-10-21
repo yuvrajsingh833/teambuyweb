@@ -56,6 +56,10 @@
     margin-left: 10px;
     margin-right: 10px;
   }
+
+  .team-circle {
+    width: 90px !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -120,6 +124,19 @@
     flex: 6;
     margin-left: 10px;
     margin-right: 10px;
+  }
+  .team-circle {
+    height: 60px !important;
+    width: 60px !important;
+    border-radius: 50%;
+    border: 0px solid #91c49e;
+  }
+
+  .team-circle img {
+    height: 60px !important;
+    width: 60px !important;
+    border-radius: 50%;
+    object-fit: cover;
   }
 }
 @media (max-width: 600px) {

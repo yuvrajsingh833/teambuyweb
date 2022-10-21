@@ -105,8 +105,8 @@ export default function CheckoutOrderStatusDetail(props) {
                     >
                         {teamInfo?.members?.length > 0 && teamInfo?.members.map(teamMembers => {
                             return <div key={`team_member_${teamMembers.id}`} className="item d-flex align-items-center nearby-box">
-                                <div className="circle-box">
-                                    <img src="/img/nearby-icon1.png" />
+                                <div className="circle-box  team-circle">
+                                    <Image alt={`team_member_${teamMembers.id}`} src="/img/nearby-icon1.png" layout="raw" height={100} width={100} />
                                 </div>
                                 <div className="xs-heading text-ellipsis">Sameer’s Team</div>
                             </div>

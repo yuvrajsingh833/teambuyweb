@@ -44,6 +44,8 @@ export default function ShareCartPage(props) {
     const [cartItems, setCartItems] = useState([]);
     const [teamAvatar, setTeamAvatar] = useState(null);
 
+    const [nearbyTeams, setNearbyTeams] = useState([]);
+
     const [teambuyOfferPrice, setTeambuyOfferPrice] = useState(0);
     const [teambuyOfferDiscountLeader, setTeambuyOfferDiscountLeader] = useState(0);
     const [teambuyOfferDiscountMember, setTeambuyOfferDiscountMember] = useState(0);
@@ -101,6 +103,16 @@ export default function ShareCartPage(props) {
         })
     }
 
+    const getNearbyTeam = () => {
+        TeamService.getNearbyTeams({ teamPincode: null }).then(response => {
+            setNearbyTeams(response.data)
+            getAllCartItems()
+        }).catch(e => {
+            console.log(`getNearbyTeams error : ${e}`)
+            getAllCartItems()
+        })
+    }
+
     useEffect(() => {
 
         setIsLoading(true)
@@ -121,7 +133,7 @@ export default function ShareCartPage(props) {
         }).catch(e => { console.log(`settings error : ${e}`) })
 
         if (global?.user?.token?.length > 0) {
-            getAllCartItems()
+            getNearbyTeam()
         } else {
             openLogin()
         }
@@ -306,7 +318,7 @@ export default function ShareCartPage(props) {
                 </div>
             </section>}
 
-            <section className="nearby-wrap ptb-30">
+            {nearbyTeams.length > 0 && <section className="nearby-wrap ptb-30">
                 <div className="container">
                     <div className="d-flex align-items-center heading-flex">
                         <div className="sm-heading">{Utils.getLanguageLabel("You can select existing nearby team")}</div>
@@ -321,51 +333,23 @@ export default function ShareCartPage(props) {
                         responsiveClass={true}
                         responsive={Enums.OwlCarouselSlider.sevenItemSlider}
                     >
-                        <div className="item d-flex align-items-center nearby-box">
-                            <div className="circle-box">
-                                <img src="/img/nearby-icon1.png" />
-                            </div>
-                            <div className="xs-heading text-ellipsis">Sameer’s Team</div>
-                        </div>
-                        <div className="item d-flex align-items-center nearby-box">
-                            <div className="circle-box">
-                                <img src="/img/nearby-icon2.png" />
-                            </div>
-                            <div className="xs-heading text-ellipsis">Rajesh’s Team</div>
-                        </div>
-                        <div className="item d-flex align-items-center nearby-box">
-                            <div className="circle-box">
-                                <img src="/img/nearby-icon3.png" />
-                            </div>
-                            <div className="xs-heading text-ellipsis">Rahul’s Team</div>
-                        </div>
-                        <div className="item d-flex align-items-center nearby-box">
-                            <div className="circle-box">
-                                <img src="/img/nearby-icon4.png" />
-                            </div>
-                            <div className="xs-heading text-ellipsis">Jayesh’s Team</div>
-                        </div>
-                        <div className="item d-flex align-items-center nearby-box">
-                            <div className="circle-box">
-                                <img src="/img/nearby-icon1.png" />
-                            </div>
-                            <div className="xs-heading text-ellipsis">Sameer’s Team</div>
-                        </div>
-                        <div className="item d-flex align-items-center nearby-box">
-                            <div className="circle-box">
-                                <img src="/img/nearby-icon2.png" />
-                            </div>
-                            <div className="xs-heading text-ellipsis">Rajesh’s Team</div>
-                        </div>
-                        <div className="item d-flex align-items-center nearby-box">
-                            <div className="circle-box">
-                                <img src="/img/nearby-icon3.png" />
-                            </div>
-                            <div className="xs-heading text-ellipsis">Rahul’s Team</div>
-                        </div>
+                        {nearbyTeams.map(team => {
+                            return <Link key={`team_member_${team.id}`} passHref href={{
+                                pathname: "/team/join-cart/[id]",
+                                query: { id: team.team_code }
+                            }} >
+
+                                <a className="item d-flex align-items-center nearby-box">
+                                    <div className="circle-box team-circle">
+                                        <Image alt={team.team_name} src={BASE_URL + team.team_avatar} layout="raw" height={100} width={100} />
+                                    </div>
+                                    <div className="xs-heading text-ellipsis">{team.team_name}</div>
+                                </a>
+                            </Link>
+                        })}
                     </OwlCarousel>
                 </div>
-            </section>
+            </section>}
 
             {showLogin && <AuthSideBar />}
             <Feature />

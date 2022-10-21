@@ -91,7 +91,7 @@ export default function CheckoutOrderStatusDetail(props) {
                             <div className="sm-heading text-center">{Utils.getLanguageLabel("Share and Add team members")}</div>
                             <div className="ml-auto mt-1">
                                 <FacebookShareButton
-                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/cart/join-cart/${id})`}
+                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id})`}
                                     quote={`Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`}
                                     hashtag={'#teambuy'}
                                 >
@@ -99,7 +99,7 @@ export default function CheckoutOrderStatusDetail(props) {
                                 </FacebookShareButton>
                                 &nbsp;
                                 <WhatsappShareButton
-                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/cart/join-cart/${id})`}
+                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id})`}
                                     title={`Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`}
                                     separator=":: "
                                 >
@@ -107,19 +107,19 @@ export default function CheckoutOrderStatusDetail(props) {
                                 </WhatsappShareButton>
                                 &nbsp;
                                 <TwitterShareButton
-                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/cart/join-cart/${id})`}
+                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id})`}
                                     title={`Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`}
                                 >
                                     <TwitterIcon size={40} round />
                                 </TwitterShareButton>
                                 &nbsp;
-                                <LinkedinShareButton url={`${Config.BaseURL.web.replace(/\/$/, "")}/cart/join-cart/${id}`}>
+                                <LinkedinShareButton url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id}`}>
                                     <LinkedinIcon size={40} round />
                                 </LinkedinShareButton>
                                 <RWebShare
                                     data={{
                                         text: `Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`,
-                                        url: `${Config.BaseURL.web.replace(/\/$/, "")}/cart/join-cart/${id}`,
+                                        url: `${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id}`,
                                         title: `Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`
                                     }}
                                     onClick={() => console.log("shared successfully!")}

@@ -238,3 +238,22 @@ a {
 .address-selected {
   border: 2px solid #53b176;
 }
+
+.team-circle {
+  height: 70px !important;
+  width: 70px !important;
+  border-radius: 50%;
+  border: 0px solid #91c49e;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.team-circle img {
+  height: 70px !important;
+  width: 70px !important;
+  border-radius: 50%;
+  object-fit: none;
+}

@@ -1,6 +1,6 @@
 export const Config = {
 	BaseURL: {
-		web: 'https://v2.teambuy.co.in/',
+		web: 'http://localhost:3002/',
 		admin: 'https://teambuyadmin.csiworld.tech/',
 		fileServer: 'https://teambuyadmin.csiworld.tech/',
 		api: 'https://teambuyapi.csiworld.tech/v1/',

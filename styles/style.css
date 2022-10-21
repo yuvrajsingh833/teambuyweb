@@ -408,10 +408,6 @@ p {
   text-align: center;
   line-height: 70px;
 }
-.nearby-box .circle-box img {
-  width: auto !important;
-  display: inline-block;
-}
 .nearby-box .xs-heading {
   padding-left: 10px;
 }
