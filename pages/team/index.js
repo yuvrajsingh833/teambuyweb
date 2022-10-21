@@ -1,0 +1,76 @@
+import Head from 'next/head';
+import Image from 'next/image';
+import dynamic from "next/dynamic";
+import Link from 'next/link';
+import React, { useEffect, useState } from "react";
+
+import { Config } from '../../config/config';
+
+import * as Utils from '../../lib/utils';
+import * as CategoryService from "../../services/category";
+import * as TeamService from "../../services/team";
+
+var $ = require("jquery");
+if (typeof window !== "undefined") {
+    window.$ = window.jQuery = require("jquery");
+}
+const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
+    ssr: false,
+});
+
+export default function Category(props) {
+    const BASE_URL = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    const [nearbyTeams, setNearbyTeams] = useState([]);
+
+    const getNearbyTeam = () => {
+        TeamService.getNearbyTeams({ teamPincode: null }).then(response => {
+            setNearbyTeams(response.data)
+            setIsLoading(false)
+        }).catch(e => {
+            console.log(`getNearbyTeams error : ${e}`)
+            setIsLoading(false)
+        })
+    }
+
+    useEffect(() => {
+        setIsLoading(true)
+        getNearbyTeam()
+    }, [props])
+
+
+
+    return (
+        <>
+            <Head>
+                <title>Teams around you | Teambuy</title>
+            </Head>
+            <section className="category-wrap ptb-40">
+                <div className="container">
+                    <div className="align-items-center heading-flex ptb-40">
+                        <div className="sm-heading">{Utils.getLanguageLabel("Select existing nearby team")}</div>
+                        <div className="text-start xs-heading text-ellipsis fw-500">{Utils.getLanguageLabel("Join a team and got a discount on your purchase")}</div>
+                    </div>
+                    <div className="row category-list">
+                        {nearbyTeams.map(team => {
+                            return <Link key={`team_member_${team.id}`} passHref href={{
+                                pathname: "/team/join-cart/[id]",
+                                query: { id: team.team_code }
+                            }} >
+
+                                <a className="col-sm-4 col-6 item d-flex align-items-center nearby-box mb-20">
+                                    <div className="circle-box team-circle">
+                                        <Image alt={team.team_name} src={BASE_URL + team.team_avatar} layout="raw" height={100} width={100} />
+                                    </div>
+                                    <div className="xs-heading text-ellipsis">{team.team_name}</div>
+                                </a>
+                            </Link>
+                        })}
+                    </div>
+                </div>
+            </section>
+        </>
+    )
+}
