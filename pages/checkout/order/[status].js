@@ -129,7 +129,7 @@ export default function CheckoutOrderStatusDetail(props) {
                         <div className="sm-heading mt-40 text-center">{Utils.getLanguageLabel("Oops! Order failed")}</div>
                         <div className="xs-heading mt-20">{paymentVerificationInfo.error_Message}</div>
                         <div className="mt-40 text-center">
-                            <Link passHref href={{ pathname: '/checkout' }}>
+                            <Link passHref href={{ pathname: '/checkout/summary' }}>
                                 <a className="green-btn mnw-248">{Utils.getLanguageLabel("BACK TO CHECKOUT")}</a>
                             </Link>
                         </div>

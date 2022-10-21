@@ -255,5 +255,12 @@ a {
   height: 70px !important;
   width: 70px !important;
   border-radius: 50%;
-  object-fit: none;
+  object-fit: inherit;
+}
+.progress {
+  height: 2rem;
+}
+
+.progress-bar {
+  background-color: #53b176;
 }

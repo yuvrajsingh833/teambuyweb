@@ -22,6 +22,7 @@ import * as UserService from "../../../services/user";
 export default function CheckoutSummaryPage(props) {
     const couponApplied = Utils.getStateAsyncStorage("appliedCoupon")
     const selectedDeliveryAddress = Utils.getStateAsyncStorage("selectedDeliveryAddress")
+    const teamBuyCartInfo = Utils.getStateAsyncStorage("teamBuyCart")
 
     const appliedCoupon = (couponApplied && Object.keys(couponApplied).length > 0) ? couponApplied : null;
     const selectedAddress = (selectedDeliveryAddress && Object.keys(selectedDeliveryAddress).length > 0) ? selectedDeliveryAddress : null;
@@ -43,6 +44,7 @@ export default function CheckoutSummaryPage(props) {
     const [hasOutOfStockProduct, setHasOutOfStockProduct] = useState(false);
 
     const [teambuyOfferPrice, setTeambuyOfferPrice] = useState(0);
+    const [teambuyOffer, setTeambuyOffer] = useState((teamBuyCartInfo && Object.keys(teamBuyCartInfo).length > 0) ? teamBuyCartInfo : null);
 
     const [walletInfo, setWalletInfo] = useState({});
 
@@ -175,7 +177,10 @@ export default function CheckoutSummaryPage(props) {
         }
 
         /**Calculate teambuy discount */
-        let appliedTeambuyDiscount = teambuyOfferPrice;
+        let appliedTeambuyDiscount = 0;
+        if (teambuyOffer) {
+            appliedTeambuyDiscount = teambuyOffer.discount
+        }
 
         /** Delivery charge calculation */
         let appliedDeliveryCharges = deliveryCharge
@@ -184,7 +189,7 @@ export default function CheckoutSummaryPage(props) {
         }
 
         /** Total payable price calculation */
-        let totalPrice = (Number(subTotal) + Number(appliedDeliveryCharges) + Number(appliedGSTAmount)) - (Number(appliedDiscountAmount) + Number(appliedWalletAmount))
+        let totalPrice = (Number(subTotal) + Number(appliedDeliveryCharges) + Number(appliedGSTAmount)) - (Number(appliedDiscountAmount) + Number(appliedWalletAmount) + Number(appliedTeambuyDiscount))
 
         return {
             SUB_TOTAL: subTotal,
@@ -235,11 +240,11 @@ export default function CheckoutSummaryPage(props) {
             "orderAmount": (Number(calculatePrice().TOTAL).toFixed(2)),
             "couponID": appliedCoupon ? appliedCoupon.id : 0,
             "couponDiscount": calculatePrice().APPLICABLE_COUPON_DISCOUNT,
-            "teambuyDiscount": 0,
+            "teambuyDiscount": calculatePrice().APPLIED_TEAM_BUY_DISCOUNT,
             "addressID": selectedAddress.id,
             "paymentMode": paymentMode,
-            "teamID": 0,
-            "orderType": 'individual',
+            "teamID": teambuyOffer ? teambuyOffer.teamID : 0,
+            "orderType": teambuyOffer ? 'team' : 'individual',
             "preferredOrderDate": 0,
             "preferredOrderTime": 0,
             "deliveryCharges": calculatePrice().APPLICABLE_DELIVERY_CHARGE,
@@ -412,10 +417,10 @@ export default function CheckoutSummaryPage(props) {
                                                     <td>{Utils.getLanguageLabel("Sub total")}</td>
                                                     <td className="text-right">{Utils.convertToPriceFormat(calculatePrice().SUB_TOTAL)}</td>
                                                 </tr>
-                                                {/* <tr>
+                                                {teambuyOffer && <tr>
                                                     <td>{Utils.getLanguageLabel("Team buy discount")}</td>
                                                     <td className="green-text text-right">-{Utils.convertToPriceFormat(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)}</td>
-                                                </tr> */}
+                                                </tr>}
                                                 <tr>
                                                     {appliedCoupon && <td>{Utils.getLanguageLabel("Coupon discount")} ({Utils.getLanguageLabel("Coupon Applied")} <span className="fw-700">{appliedCoupon.code}</span>)</td>}
 
@@ -443,8 +448,8 @@ export default function CheckoutSummaryPage(props) {
                                     </div>
                                 </div>
 
-                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
-                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT))}</span> on this order</span>
+                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
+                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT))}</span> on this order</span>
                                 </div>}
 
                                 {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">Some product are Out of stock</button></div>}
