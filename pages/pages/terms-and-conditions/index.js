@@ -1,6 +1,7 @@
-import dynamic from "next/dynamic";
+
 import Link from "next/link";
 import Head from 'next/head';
+
 export default function TermsAndConditions() {
     return (
         <>
@@ -80,15 +81,7 @@ export default function TermsAndConditions() {
                                 person visiting, accessing, browsing through and/or using the
                                 Marketplace at any point in time.&nbsp; <br />
                                 <br /> Should you have need clarifications regarding the Terms
-                                of Use, please do write to us at at&nbsp;
-                                <a href="/cdn-cgi/l/email-protection#8fe6e1e9e0cfede3e6e1e4e6fba1ece0e2">
-                                    <span
-                                        class="__cf_email__"
-                                        data-cfemail="0c65626a634c58696d616e7975226f6361"
-                                    >
-                                        [email&#160;protected]
-                                    </span>
-                                </a>
+                                of Use, please do write to us at at <Link passHref href={"mailto:support@teambuy.co.in"}><a>support@teambuy.co.in</a></Link>
                             </p>
                             <p>
                                 <strong>&nbsp;</strong>
@@ -462,14 +455,7 @@ export default function TermsAndConditions() {
                                 the intellectual property(ies) of other entities. If you believe
                                 that your intellectual property rights have been violated/used
                                 in any manner which results in infringement, then please inform
-                                us at&nbsp;
-                                <a
-                                    href="/cdn-cgi/l/email-protection"
-                                    class="__cf_email__"
-                                    data-cfemail="0265706b6774636c61672c6d64646b616770425667636f60777b2c616d6f"
-                                >
-                                    [email&#160;protected]
-                                </a>
+                                us at <Link passHref href={"mailto:support@teambuy.co.in"}><a>support@teambuy.co.in</a></Link>
                                 <br /> <br /> We will evaluate the contents of your notice and
                                 will respond within a reasonable period of time. We may take
                                 such action as we deem appropriate in keeping with applicable
@@ -479,14 +465,7 @@ export default function TermsAndConditions() {
                                 and/or criminal liability.
                                 <br /> <br /> You agree to indemnify Teambuy for all claims
                                 brought by a third party(ies) against Teambuy arising out of or
-                                in connection with the submission of your email at&nbsp;
-                                <a
-                                    href="/cdn-cgi/l/email-protection"
-                                    class="__cf_email__"
-                                    data-cfemail="5a3d28333f2c3b34393f74353c3c33393f281a0e3f3b37382f2374393537"
-                                >
-                                    [email&#160;protected]
-                                </a>
+                                in connection with the submission of your email at <Link passHref href={"mailto:support@teambuy.co.in"}><a>support@teambuy.co.in</a></Link>
                             </p>
                             <p>
                                 <strong>&nbsp;</strong>
@@ -621,14 +600,7 @@ export default function TermsAndConditions() {
                                 that you periodically review our Privacy Policy as posted on the
                                 App/Web.
                                 <br /> <br /> Should you have any clarifications regarding this
-                                Privacy Policy, please do not hesitate to contact us at&nbsp;
-                                <a
-                                    href="/cdn-cgi/l/email-protection"
-                                    class="__cf_email__"
-                                    data-cfemail="6f060109002f3b0a0e020d1a16410c0002"
-                                >
-                                    [email&#160;protected]
-                                </a>
+                                Privacy Policy, please do not hesitate to contact us at <Link passHref href={"mailto:support@teambuy.co.in"}><a>support@teambuy.co.in</a></Link>
                             </p>
                             <p>
                                 <strong>&nbsp;</strong>
@@ -887,14 +859,7 @@ export default function TermsAndConditions() {
                                 sensitive data or information via email or telephone. If you
                                 receive any such request by email or telephone, please do not
                                 respond/divulge any sensitive data or information and forward
-                                the information relating to the same to&nbsp;
-                                <a
-                                    href="/cdn-cgi/l/email-protection"
-                                    class="__cf_email__"
-                                    data-cfemail="9cf5f2faf3dcc8f9fdf1fee9e5b2fff3f1"
-                                >
-                                    [email&#160;protected]
-                                </a>
+                                the information relating to the same to <Link passHref href={"mailto:support@teambuy.co.in"}><a>support@teambuy.co.in</a></Link>
                                 &nbsp;for necessary action.
                             </p>
                             <p>
@@ -920,712 +885,694 @@ export default function TermsAndConditions() {
                                 at the following number/email apart from the faster in app Chat
                                 option:&nbsp;&nbsp;&nbsp; <br /> <br /> Registered Toll Free
                                 Number for Customer care helpline: 1800-208-8888 &nbsp;
-                                <br /> Email:&nbsp;
-                                <strong>
-                                    <a
-                                        href="/cdn-cgi/l/email-protection"
-                                        class="__cf_email__"
-                                        data-cfemail="8de4e3ebe2cdf9e8ece0eff8f4e4e3"
-                                    >
-                                        [email&#160;protected]
-                                    </a>
-                                </strong>
-                                ;&nbsp;
-                                <a href="/cdn-cgi/l/email-protection#04777174746b7670447061656966717d2a676b2a6d6a">
-                                    <strong>
-                                        <span
-                                            class="__cf_email__"
-                                            data-cfemail="87f4f2f7f7e8f5f3c7f3e2e6eae5f2fea9e4e8a9eee9"
-                                        >
-                                            [email&#160;protected]
-                                        </span>
-                                    </strong>
-                                </a>{" "}
-                                <br />
-                            </p>
-                            <p>
-                                <strong>You agree &amp; confirm</strong>
-                            </p>
-                            <ul>
-                                <li>
-                                    That in the event any product delivery is delayed or is
-                                    returned from its destination on your account (e.g., providing
-                                    the wrong name or address or other incorrect/misleading
-                                    information), any additional costs incurred by the Company for
-                                    re-delivery of the product(s) shall be borne by you
-                                </li>
-                                <li>
-                                    We will not be held responsible for any delay or failure to
-                                    make delivery of your order if the delay or failure arises
-                                    from any cause which is beyond our reasonable control
-                                </li>
-                                <li>
-                                    You agree to use the services provided by the Company for
-                                    lawful purposes only, and comply with all applicable laws and
-                                    regulations while using/accessing and transacting on the
-                                    Marketplace
-                                </li>
-                                <li>
-                                    You will provide authentic and true information in all
-                                    instances where any information is requested of you. The
-                                    Company reserves the right to confirm and validate the
-                                    information and other details provided by you at any point of
-                                    time
-                                </li>
-                                <li>
-                                    If at any time, the information provided by you is found to be
-                                    false or inaccurate (wholly or partly), the Company shall have
-                                    the right in its sole discretion to reject registration,
-                                    cancel all orders, and debar you from using its services and
-                                    other affiliated services in the future without any prior
-                                    intimation whatsoever, and without any liability to you
-                                </li>
-                                <li>
-                                    You are accessing the services made available by the Company
-                                    and transacting at your sole risk and are using your best and
-                                    prudent judgement before entering any transaction through the
-                                    Marketplace
-                                </li>
-                                <li>
-                                    Before placing an order, you acknowledged to have checked and
-                                    reviewed the product description carefully and in sufficient
-                                    detail. By placing an order on the Marketplace, you agree to
-                                    be bound by the conditions of sale included in the
-                                    item&rsquo;s description without exception
-                                </li>
-                                <li>
-                                    Notwithstanding the right of the Company on cancellation of
-                                    the order, any Product in the order may be replaced by the
-                                    Company in case of unavailability or for other reasons outside
-                                    the control of the Company, subject to you may refuse to
-                                    accept such replacement/substitute product. For such
-                                    cancellations, the Company will initiate a refund, if any, on
-                                    the order/product, if any, made by you under the relevant
-                                    order within 72 hours
-                                </li>
-                            </ul>
-                            <p>
-                                <strong>&nbsp;</strong>
-                            </p>
-                            <p>
-                                <strong>GST effect on delivery&nbsp;</strong>
-                            </p>
-                            <ul>
-                                <li>
-                                    As our nation welcomes the &lsquo;One Nation, One
-                                    Tax&rsquo;&rsquo; initiative, effective from July 1st 2017,
-                                    we, at Teambuy, also welcome this change by making our
-                                    processes fully compliant with GST
-                                </li>
-                                <li>
-                                    Your orders will be fulfilled as usual and in line with the
-                                    GST guidelines
-                                </li>
-                                <li>
-                                    What are the changes you can expect at our end?: Since the
-                                    government has exempted certain goods from GST, you will
-                                    receive invoices for them separately. Which means that your
-                                    order will now be broken down into 3 components:
-                                </li>
-                                <li>
-                                    At the delivery, our field executive will hand over a delivery
-                                    statement, listing down all the items you have ordered
-                                </li>
-                                <li>
-                                    A Delivery Statement for you to check all the items
-                                    you&rsquo;ve ordered
-                                </li>
-                                <li>
-                                    A Tax Invoice showing all the items that have been taxed
-                                </li>
-                                <li>A Bill of Supply</li>
-                            </ul>
-                            <p>
-                                We assure you that you will receive all the GST benefits and
-                                lower priced items, as always from Teambuy. If you still have
-                                any questions, please feel free to reach out to us at our
-                                Customer Care helpline: 1800-208-8888
-                            </p>
-                            <p>
-                                <strong>&nbsp;</strong>
-                            </p>
-                            <p>
-                                <strong>Order limit &amp; minimum order value</strong>
-                            </p>
-                            <ul>
-                                <li>Customers are eligible to place upto 4 live orders</li>
-                                <li>
-                                    A customer cannot place another order if 4 of their orders are
-                                    still live
-                                </li>
-                                <li>
-                                    Live order refers to all those orders which are not delivered
-                                </li>
-                                <li>
-                                    Drop shipment orders are split into two separate orders, basis
-                                    the merchants
-                                </li>
-                                <li>Internal orders are also counted as an order</li>
-                                <li>
-                                    There is no minimum order value to place an order with
-                                    Teambuy. Every store has its own delivery charges. The
-                                    delivery charges are mentioned on the app and web at the
-                                    checkout page
-                                </li>
-                            </ul>
-                            <p>
-                                <strong>Order cancellation</strong>
-                            </p>
-                            <ul>
-                                <li>
-                                    As a user, you may cancel an order placed by you before the
-                                    order enters the &ldquo;billed&rdquo; stage. For any permitted
-                                    cancellations, we will initiate a refund, if any, made by you
-                                    under the relevant order within approximately 48-72 hours.
-                                </li>
-                                <li>
-                                    Orders may be cancelled by the Company in any of the following
-                                    cases: (a) if it is suspected that a customer has undertaken a
-                                    fraudulent transaction, or (b) if it is suspected that a
-                                    customer has undertaken a transaction which does not conform
-                                    to or violates these Terms of Use/User Agreement, or (c) in
-                                    case of unavailability of product(s), or (d) for any reason
-                                    outside the control of the Company, including causes for
-                                    delivery-related logistical difficulties. For such
-                                    cancellations, the Company will initiate a refund, if any,
-                                    made by you under the relevant order within 72 hours.
-                                </li>
-                                <li>
-                                    Further, while precautions are taken to ensure accuracy of
-                                    product specifications, the details of a product as reflected
-                                    on the Marketplace may be inaccurate due to technical issues,
-                                    typographical errors or incorrect product information provided
-                                    to the Company by third-party sellers and in such an event,
-                                    you shall be notified as soon as such error comes to the
-                                    notice of the Company. In such an event, the Company reserves
-                                    the right to cancel your order and grant credit/coupon for the
-                                    value of the returned product. Such credit shall be available
-                                    for use against a subsequent invoice for transactions on the
-                                    Marketplace.
-                                </li>
-                                <li>
-                                    We maintain a list of all fraudulent transactions and
-                                    non-complying users, and reserve the right to deny access to
-                                    such users at any time or cancel any orders placed by them in
-                                    future.
-                                </li>
-                            </ul>
-                            <p>
-                                <strong>Returns &amp; refunds</strong>
-                            </p>
-                            <ul>
-                                <li>
-                                    The Marketplace entitles all users who have purchased a
-                                    product on the Marketplace to return a product or request
-                                    replacement after it has been delivered only if there is an
-                                    issue with the product. If you no longer need the item, bought
-                                    it by mistake or have changed your mind, you may only return
-                                    the product at the time of delivery. We will not be able to
-                                    accept return requests for such cases after delivery.
-                                </li>
-                                <li>
-                                    If your product has been accepted for return/replacement,
-                                    please keep the product in the original packaging. In
-                                    addition, the product must be unused and unwashed, with all
-                                    tags intact.
-                                </li>
-                                <li>
-                                    A few products may not be eligible for return and will be
-                                    marked &ldquo;Non-returnable&rdquo; on the product description
-                                    page.
-                                </li>
-                                <li>
-                                    We do our best to make sure you do not face the same issue
-                                    again and improve our services. As a result, we pass on
-                                    feedback to our merchants who provide the products. For us to
-                                    do this, it is mandatory for you to share images of the items
-                                    with which you are facing an issue. Subject to acceptance from
-                                    the third-party seller of the product, the Company may take
-                                    back the returned product and grant a credit/refund in lieu of
-                                    the value of the returned product. Such credit shall be
-                                    available for use against a subsequent invoice for
-                                    transactions on the Marketplace.
-                                </li>
-                                <li>
-                                    The timeline to raise a complaint depends on the category in
-                                    which the product falls into: Consumable Perishables &ndash;
-                                    meats, seafood, frozen food and FnV, dairy category including
-                                    milk, eggs and bread, etc. (7 days); Consumable
-                                    Non-perishables &ndash; groceries, etc. (7 days); General
-                                    Merchandise &ndash; Electronics, home furnishings, fashion,
-                                    etc. (7 days); Freebie missing issue (7 days); Entire wrong
-                                    order and MDND (7 days); and Other issues &ndash; insect,
-                                    fungus or foreign material, expired products, etc. (no
-                                    restriction).
-                                </li>
-                                <li>
-                                    In case of any complaints related to items purchased from the
-                                    Duty-free sale, the complaint TAT is the following: consumable
-                                    perishables (3 days), consumable non-perishable consumables (7
-                                    days), and general merchandise including household and
-                                    lifestyle items, etc. (15 days). Please note, all perfumes and
-                                    personal care items are non-returnable and non-refundable.
-                                    Please check them at your doorstep while receiving the order,
-                                    as we will not be able to accept any complaints for those
-                                    items after delivery.&nbsp;
-                                </li>
-                                <li>
-                                    The refund timeline depends on the mode of payment used. It is
-                                    the following for each mode: teambuy wallet (24&ndash;48
-                                    hours), Payzapp and G-pay (5&ndash;7 working days), IMPS
-                                    (24&ndash;48 hours), Bank - CC/DC/NB (5&ndash;7 working days),
-                                    and external wallet (24&ndash;48 hours).
-                                </li>
-                                <li>
-                                    You may request a refund/replacement for Electronics and
-                                    Cookware products within 7 days of delivery in case there is a
-                                    quality issue. This request will only be considered if all
-                                    original tags and packaging are intact. It is also requested
-                                    that a user should check if the product seal is intact (i.e.,
-                                    not broken) while accepting the order to avoid any kind of
-                                    damage-related complaints after delivery.
-                                </li>
-                                <li>
-                                    Further, it is clarified that for electronic and cookware
-                                    products, no returns shall be accepted post 7 days of delivery
-                                    and the user should get in touch with the Brand/Manufacturer
-                                    with the original invoice given at the time of delivery from
-                                    Teambuy.
-                                </li>
-                                <li>
-                                    A few items listed may or may not carry a seller warranty. For
-                                    these, Teambuy will provide a basic return policy.
-                                </li>
-                                <li>
-                                    Refunds, if any, shall be made at the same issuing bank
-                                    through which the Product was purchased. For cash on delivery
-                                    transactions, the User has the option to receive the refund as
-                                    teambuy cash in the teambuy wallet or the refund can be
-                                    credited in any bank account via NEFT (for which the User
-                                    shall have to share the bank details).
-                                </li>
-                                <li>
-                                    For payments made through electronic means such as debit card,
-                                    credit card, net banking, wallet, etc., the refund shall be
-                                    made using the same payment mode
-                                </li>
-                                <li>All refunds shall be made in Indian Rupees only</li>
-                            </ul>
-                            <p>
-                                <strong>Grofers cashback</strong>
-                            </p>
-                            <p>
-                                These terms and conditions relating to eligibility for Cashback
-                                shall be in addition to and not in substitution of or derogation
-                                to the terms and conditions governing the use/access of
+                                <br /> Email: <strong><Link passHref href={"mailto:support@teambuy.co.in"}><a>support@teambuy.co.in</a></Link></strong>
+
+                            </a>{" "}
+                            <br />
+                        </p>
+                        <p>
+                            <strong>You agree &amp; confirm</strong>
+                        </p>
+                        <ul>
+                            <li>
+                                That in the event any product delivery is delayed or is
+                                returned from its destination on your account (e.g., providing
+                                the wrong name or address or other incorrect/misleading
+                                information), any additional costs incurred by the Company for
+                                re-delivery of the product(s) shall be borne by you
+                            </li>
+                            <li>
+                                We will not be held responsible for any delay or failure to
+                                make delivery of your order if the delay or failure arises
+                                from any cause which is beyond our reasonable control
+                            </li>
+                            <li>
+                                You agree to use the services provided by the Company for
+                                lawful purposes only, and comply with all applicable laws and
+                                regulations while using/accessing and transacting on the
                                 Marketplace
-                            </p>
+                            </li>
+                            <li>
+                                You will provide authentic and true information in all
+                                instances where any information is requested of you. The
+                                Company reserves the right to confirm and validate the
+                                information and other details provided by you at any point of
+                                time
+                            </li>
+                            <li>
+                                If at any time, the information provided by you is found to be
+                                false or inaccurate (wholly or partly), the Company shall have
+                                the right in its sole discretion to reject registration,
+                                cancel all orders, and debar you from using its services and
+                                other affiliated services in the future without any prior
+                                intimation whatsoever, and without any liability to you
+                            </li>
+                            <li>
+                                You are accessing the services made available by the Company
+                                and transacting at your sole risk and are using your best and
+                                prudent judgement before entering any transaction through the
+                                Marketplace
+                            </li>
+                            <li>
+                                Before placing an order, you acknowledged to have checked and
+                                reviewed the product description carefully and in sufficient
+                                detail. By placing an order on the Marketplace, you agree to
+                                be bound by the conditions of sale included in the
+                                item&rsquo;s description without exception
+                            </li>
+                            <li>
+                                Notwithstanding the right of the Company on cancellation of
+                                the order, any Product in the order may be replaced by the
+                                Company in case of unavailability or for other reasons outside
+                                the control of the Company, subject to you may refuse to
+                                accept such replacement/substitute product. For such
+                                cancellations, the Company will initiate a refund, if any, on
+                                the order/product, if any, made by you under the relevant
+                                order within 72 hours
+                            </li>
+                        </ul>
+                        <p>
+                            <strong>&nbsp;</strong>
+                        </p>
+                        <p>
+                            <strong>GST effect on delivery&nbsp;</strong>
+                        </p>
+                        <ul>
+                            <li>
+                                As our nation welcomes the &lsquo;One Nation, One
+                                Tax&rsquo;&rsquo; initiative, effective from July 1st 2017,
+                                we, at Teambuy, also welcome this change by making our
+                                processes fully compliant with GST
+                            </li>
+                            <li>
+                                Your orders will be fulfilled as usual and in line with the
+                                GST guidelines
+                            </li>
+                            <li>
+                                What are the changes you can expect at our end?: Since the
+                                government has exempted certain goods from GST, you will
+                                receive invoices for them separately. Which means that your
+                                order will now be broken down into 3 components:
+                            </li>
+                            <li>
+                                At the delivery, our field executive will hand over a delivery
+                                statement, listing down all the items you have ordered
+                            </li>
+                            <li>
+                                A Delivery Statement for you to check all the items
+                                you&rsquo;ve ordered
+                            </li>
+                            <li>
+                                A Tax Invoice showing all the items that have been taxed
+                            </li>
+                            <li>A Bill of Supply</li>
+                        </ul>
+                        <p>
+                            We assure you that you will receive all the GST benefits and
+                            lower priced items, as always from Teambuy. If you still have
+                            any questions, please feel free to reach out to us at our
+                            Customer Care helpline: 1800-208-8888
+                        </p>
+                        <p>
+                            <strong>&nbsp;</strong>
+                        </p>
+                        <p>
+                            <strong>Order limit &amp; minimum order value</strong>
+                        </p>
+                        <ul>
+                            <li>Customers are eligible to place upto 4 live orders</li>
+                            <li>
+                                A customer cannot place another order if 4 of their orders are
+                                still live
+                            </li>
+                            <li>
+                                Live order refers to all those orders which are not delivered
+                            </li>
+                            <li>
+                                Drop shipment orders are split into two separate orders, basis
+                                the merchants
+                            </li>
+                            <li>Internal orders are also counted as an order</li>
+                            <li>
+                                There is no minimum order value to place an order with
+                                Teambuy. Every store has its own delivery charges. The
+                                delivery charges are mentioned on the app and web at the
+                                checkout page
+                            </li>
+                        </ul>
+                        <p>
+                            <strong>Order cancellation</strong>
+                        </p>
+                        <ul>
+                            <li>
+                                As a user, you may cancel an order placed by you before the
+                                order enters the &ldquo;billed&rdquo; stage. For any permitted
+                                cancellations, we will initiate a refund, if any, made by you
+                                under the relevant order within approximately 48-72 hours.
+                            </li>
+                            <li>
+                                Orders may be cancelled by the Company in any of the following
+                                cases: (a) if it is suspected that a customer has undertaken a
+                                fraudulent transaction, or (b) if it is suspected that a
+                                customer has undertaken a transaction which does not conform
+                                to or violates these Terms of Use/User Agreement, or (c) in
+                                case of unavailability of product(s), or (d) for any reason
+                                outside the control of the Company, including causes for
+                                delivery-related logistical difficulties. For such
+                                cancellations, the Company will initiate a refund, if any,
+                                made by you under the relevant order within 72 hours.
+                            </li>
+                            <li>
+                                Further, while precautions are taken to ensure accuracy of
+                                product specifications, the details of a product as reflected
+                                on the Marketplace may be inaccurate due to technical issues,
+                                typographical errors or incorrect product information provided
+                                to the Company by third-party sellers and in such an event,
+                                you shall be notified as soon as such error comes to the
+                                notice of the Company. In such an event, the Company reserves
+                                the right to cancel your order and grant credit/coupon for the
+                                value of the returned product. Such credit shall be available
+                                for use against a subsequent invoice for transactions on the
+                                Marketplace.
+                            </li>
+                            <li>
+                                We maintain a list of all fraudulent transactions and
+                                non-complying users, and reserve the right to deny access to
+                                such users at any time or cancel any orders placed by them in
+                                future.
+                            </li>
+                        </ul>
+                        <p>
+                            <strong>Returns &amp; refunds</strong>
+                        </p>
+                        <ul>
+                            <li>
+                                The Marketplace entitles all users who have purchased a
+                                product on the Marketplace to return a product or request
+                                replacement after it has been delivered only if there is an
+                                issue with the product. If you no longer need the item, bought
+                                it by mistake or have changed your mind, you may only return
+                                the product at the time of delivery. We will not be able to
+                                accept return requests for such cases after delivery.
+                            </li>
+                            <li>
+                                If your product has been accepted for return/replacement,
+                                please keep the product in the original packaging. In
+                                addition, the product must be unused and unwashed, with all
+                                tags intact.
+                            </li>
+                            <li>
+                                A few products may not be eligible for return and will be
+                                marked &ldquo;Non-returnable&rdquo; on the product description
+                                page.
+                            </li>
+                            <li>
+                                We do our best to make sure you do not face the same issue
+                                again and improve our services. As a result, we pass on
+                                feedback to our merchants who provide the products. For us to
+                                do this, it is mandatory for you to share images of the items
+                                with which you are facing an issue. Subject to acceptance from
+                                the third-party seller of the product, the Company may take
+                                back the returned product and grant a credit/refund in lieu of
+                                the value of the returned product. Such credit shall be
+                                available for use against a subsequent invoice for
+                                transactions on the Marketplace.
+                            </li>
+                            <li>
+                                The timeline to raise a complaint depends on the category in
+                                which the product falls into: Consumable Perishables &ndash;
+                                meats, seafood, frozen food and FnV, dairy category including
+                                milk, eggs and bread, etc. (7 days); Consumable
+                                Non-perishables &ndash; groceries, etc. (7 days); General
+                                Merchandise &ndash; Electronics, home furnishings, fashion,
+                                etc. (7 days); Freebie missing issue (7 days); Entire wrong
+                                order and MDND (7 days); and Other issues &ndash; insect,
+                                fungus or foreign material, expired products, etc. (no
+                                restriction).
+                            </li>
+                            <li>
+                                In case of any complaints related to items purchased from the
+                                Duty-free sale, the complaint TAT is the following: consumable
+                                perishables (3 days), consumable non-perishable consumables (7
+                                days), and general merchandise including household and
+                                lifestyle items, etc. (15 days). Please note, all perfumes and
+                                personal care items are non-returnable and non-refundable.
+                                Please check them at your doorstep while receiving the order,
+                                as we will not be able to accept any complaints for those
+                                items after delivery.&nbsp;
+                            </li>
+                            <li>
+                                The refund timeline depends on the mode of payment used. It is
+                                the following for each mode: teambuy wallet (24&ndash;48
+                                hours), Payzapp and G-pay (5&ndash;7 working days), IMPS
+                                (24&ndash;48 hours), Bank - CC/DC/NB (5&ndash;7 working days),
+                                and external wallet (24&ndash;48 hours).
+                            </li>
+                            <li>
+                                You may request a refund/replacement for Electronics and
+                                Cookware products within 7 days of delivery in case there is a
+                                quality issue. This request will only be considered if all
+                                original tags and packaging are intact. It is also requested
+                                that a user should check if the product seal is intact (i.e.,
+                                not broken) while accepting the order to avoid any kind of
+                                damage-related complaints after delivery.
+                            </li>
+                            <li>
+                                Further, it is clarified that for electronic and cookware
+                                products, no returns shall be accepted post 7 days of delivery
+                                and the user should get in touch with the Brand/Manufacturer
+                                with the original invoice given at the time of delivery from
+                                Teambuy.
+                            </li>
+                            <li>
+                                A few items listed may or may not carry a seller warranty. For
+                                these, Teambuy will provide a basic return policy.
+                            </li>
+                            <li>
+                                Refunds, if any, shall be made at the same issuing bank
+                                through which the Product was purchased. For cash on delivery
+                                transactions, the User has the option to receive the refund as
+                                teambuy cash in the teambuy wallet or the refund can be
+                                credited in any bank account via NEFT (for which the User
+                                shall have to share the bank details).
+                            </li>
+                            <li>
+                                For payments made through electronic means such as debit card,
+                                credit card, net banking, wallet, etc., the refund shall be
+                                made using the same payment mode
+                            </li>
+                            <li>All refunds shall be made in Indian Rupees only</li>
+                        </ul>
+                        <p>
+                            <strong>Grofers cashback</strong>
+                        </p>
+                        <p>
+                            These terms and conditions relating to eligibility for Cashback
+                            shall be in addition to and not in substitution of or derogation
+                            to the terms and conditions governing the use/access of
+                            Marketplace
+                        </p>
+                        <ol>
+                            <li>
+                                A user shall be entitled to cashback on a specific
+                                purchase/order as indicated at the time of checkout of the
+                                final order on the Marketplace
+                            </li>
+                            <li>
+                                No Cashback shall be available for orders which are canceled.
+                                Any Cashback offered may be recovered by the Company, without
+                                notice to the user, in such cases. Any Cashback offered for
+                                orders for which a refund claim is made, whether in part or in
+                                full, shall be adjusted to remove Cashback attributable to the
+                                extent of the order refunded. This condition shall apply
+                                strictly and notwithstanding the display of cashback on any
+                                specific item(s) listed on the Application as an item specific
+                                cashback
+                            </li>
+                            <li>
+                                Cashback shall mean the grant of credit for the amount of
+                                eligible cashback, shall be added to the users
+                                &lsquo;Promotional/Cashback&rsquo; section of his/her
+                                &lsquo;Grofers Wallet&rsquo; account, and shall in no event
+                                imply that the cashback shall be credited to a user&rsquo;s
+                                bank account or card account or refunded in cash at any time.
+                                Grofers Wallet is powered by Citruspay and use thereof is
+                                subject to additional terms and conditions.
+                            </li>
+                            <li>
+                                Cashback offers cannot be clubbed with any other offers and
+                                cannot be assigned/ transferred to any other person
+                            </li>
+                            <li>
+                                The Company reserves the right to, without liability or
+                                prejudice to any of its other rights, at any time, without
+                                previous notice and from time to time, withdraw/suspend /
+                                amend/cancel the Cashback offers, and the terms applicable
+                                thereto
+                            </li>
+                            <li>
+                                Cashback will reflect in a user&rsquo;s teambuy wallet within
+                                6-12 hours; however, for some coupons it can take 7 working
+                                days from the delivery of the order for the cashback to
+                                reflect. Cashback credit available is usable only on the
+                                Application and no other platform, website, store or
+                                otherwise. Promotional cashback credited can be subjected to
+                                expire at the discretion of The Company. Cashback will expire
+                                after a minimum duration of 60 days from last order unless
+                                specified or added through a separate campaign, which can be
+                                subject to a shorter expiry time
+                            </li>
+                            <li>
+                                Users shall not hold the Company or its group entities, or
+                                affiliates, their respective directors, officers, employees,
+                                agents, responsible for or liable for, any actions, claims,
+                                demands, losses, damages, costs, charges and expenses which a
+                                user claims to have suffered, sustained or incurred, or claims
+                                to suffer, sustain or incur, by way of and/or on account of
+                                any purchase made through the Application, whether with or
+                                without Cashback
+                            </li>
+                            <li>
+                                The Company does not in any manner endorse or support or
+                                promote, in any specific manner, the purchase of products or
+                                undertaking of transactions inter alia which are subject to
+                                Cashbacks
+                            </li>
+                            <li>
+                                Cashbacks are only available on versions 2.5 and above.&nbsp;
+                            </li>
+                            <li>
+                                Cashback and discount codes are not applicable on ghee, edible
+                                oil, baby food products and any cashback amount used from
+                                Grofers Wallet while placing the order
+                            </li>
+                            <li>
+                                GROFERS20 is valid only for new users. 20% cashback on your
+                                first order. Maximum cashback is ₹250 . Minimum Order Value of
+                                ₹500. Cashback will be credited to your Orange Cash
+                            </li>
+                        </ol>
+                        <p>
+                            <strong>&nbsp;</strong>
+                        </p>
+                        <p>
+                            <strong>Smart Bachat Club Membership (SBC)</strong>
+                        </p>
+                        <p>
+                            SBC membership will be activated within 6 hours of order
+                            placement. After it is activated, you can shop at SBC prices.
+                        </p>
+                        <ol>
+                            <li>
+                                To be an SBC member, users just have to add the membership to
+                                the cart. The membership will last until the duration of the
+                                plan. Users can purchase another plan before the end of the
+                                current plan to continue shopping at SBC prices
+                            </li>
+                            <li>
+                                Currently, the most popular products and brands are available
+                                for users to enjoy shopping at lower prices.&nbsp; We are
+                                constantly adding more products to SBC
+                            </li>
+                            <li>
+                                Membership once delivered cannot be cancelled. No refund will
+                                be initiated against such a request
+                            </li>
+                            <li>
+                                SBC membership plans are are liable to change at the
+                                Company&rsquo;s discretion. In case of any update in the
+                                membership fee, you don&rsquo;t have to pay anything extra for
+                                your ongoing plan. However, plan renewals will only happen at
+                                updated prices
+                            </li>
+                            <li>
+                                Users can club other offers that are available on the teambuy
+                                platform from time to time, such as teambuy cashback, wallet
+                                offers, bank offers, etc., with their orders during an SBC
+                                membership period. Some coupons and offers may have certain
+                                restrictions. Please refer to the offer T&amp;Cs
+                            </li>
+                            <li>
+                                Users can choose to pay for SBC membership with their teambuy
+                                cash balance. However, users can&rsquo;t pay for this
+                                membership with Sodexo meal cards
+                            </li>
+                            <li>
+                                SBC members do not have to pay surge charges or delivery
+                                charges
+                            </li>
+                            <li>
+                                There is no limit to the number of orders that users can place
+                                on the teambuy platform during the membership period
+                            </li>
+                            <li>
+                                To get an invoice for SBC membership, please contact our
+                                customer service team
+                            </li>
+                            <li>
+                                An SBC membership plan once delivered cannot be cancelled;
+                                however, you can cancel a live order till it is packed. The
+                                refund against the entire order will be credited to the
+                                original mode of payment
+                            </li>
+                            <li>
+                                SBC membership at teambuy only allows end consumers to place
+                                an order at prices available for SBC Members. Without
+                                prejudice, the Company reserves all its rights to cancel
+                                order(s) against the rules for SBC members
+                            </li>
+                            <li>
+                                SBC membership can be bought for a period of 1 month (31
+                                days). Membership expires at midnight on the last day of your
+                                membership period
+                            </li>
+                        </ol>
+                        <p>
+                            <strong>UPI</strong>
+                        </p>
+                        <p>
+                            Unified Payments Interface (UPI) is an instant real-time payment
+                            system developed by National Payments Corporation of India
+                            facilitating inter-bank transactions. The interface is regulated
+                            by the Reserve Bank of India and works by instantly transferring
+                            funds between two bank accounts on a mobile platform
+                        </p>
+                        <ol>
+                            <li>
+                                UPI is built over Immediate Payment Service (IMPS) for
+                                transferring funds
+                            </li>
+                            <li>
+                                UPI would appear as a separate tab on the Payment Options page
+                                on your android application
+                            </li>
+                            <li>
+                                Once you click on the UPI option, it will scan your device to
+                                find out the UPI apps on your phone
+                            </li>
+                            <li>
+                                You can choose one of the apps to pay for the order and
+                                complete the transaction
+                            </li>
+                        </ol>
+                        <p>
+                            Refund against the transaction (if any) would be reflected in
+                            your respective account within 5-7 working days post initiation
+                        </p>
+                        <p>
+                            <strong>Sodexo&nbsp;</strong>
+                        </p>
+                        <ol>
+                            <li>
+                                Sodexo meal cards are acceptable on online payments only on
+                                Android devices
+                            </li>
+                            <li>
+                                Refund against any Sodexo meal card transaction will be
+                                credited within 5 to 7 working days
+                            </li>
+                            <li>
+                                Sodexo vouchers were only accepted until 30th June 2018. (Not
+                                functional now)
+                            </li>
+                        </ol>
+                        <p>
+                            <strong>Lowest price guaranteed&nbsp;</strong>
+                        </p>
+                        <p>
+                            As of August 2021, Every Day Low Price is no more a prominent
+                            feature of teambuy. We continue to be highly competitive in our
+                            pricing and aim to provide the very best of groceries and other
+                            daily essentials for our customers; however, we are no longer
+                            offering a guarantee of lowest price.&nbsp;
+                        </p>
+                        <p>
+                            <strong>&nbsp;</strong>
+                        </p>
+                        <p>
+                            <strong>Free coin store</strong>
+                        </p>
+                        <ul>
+                            <li>
+                                Free Store on teambuy is a referral program that lets our
+                                current users share teambuy with their friends in order to get
+                                &lsquo;Grofers Coins&rsquo;, which can be redeemed by getting
+                                free items from the &nbsp;&lsquo;Free Store&rsquo; page. The
+                                referred friends will receive the scratch card on successful
+                                sign up through the link received from the Referrer (Current
+                                Grofers User). Redeeming the scratch card will give their
+                                friends up to ₹250 cashback. Referrer will get &lsquo;Grofers
+                                Coins&rsquo; on the delivery of their friend&rsquo;s (Referee)
+                                first order
+                            </li>
+                            <li>
+                                The referrer has to verify which Referee has placed an order
+                                and whether their order has been delivered or not. On
+                                successful order delivery of Referee, the coins earned will be
+                                reflected on the Free Store of Referrer
+                            </li>
+                            <li>
+                                The referee has to sign up using the link that Referrer has
+                                shared with them. During the sign-up process, the Referee has
+                                to apply the Referral Code. After successful sign-up, the
+                                Referee will get a scratch card. Redeeming the scratch card
+                                will give up to ₹250 cashback to the Referee &nbsp;
+                            </li>
+                            <li>
+                                If a free item is added to the cart and it goes out of stock,
+                                the item will be removed from the cart and coins will be
+                                loaded back as soon as the user visits the free store again
+                            </li>
+                            <li>The minimum order value is ₹500</li>
+                            <li>
+                                The Free Store is available for Android users all over India.
+                                It is visible on the homepage and navigation bar on the left
+                            </li>
+                            <li>
+                                The Referral program is live for all cities where
+                                &lsquo;Grofers&rsquo; is operational in India. &nbsp;Up to 20
+                                items will be available, which can be redeemed through
+                                &lsquo;Grofers Coins&rsquo;
+                            </li>
+                            <li>
+                                The referee will be credited up to ₹250 as cashback on
+                                successful sign up (from the link that he has received from
+                                Referrer). It is mandatory for the Referee to apply the
+                                referral code in the sign-up process
+                            </li>
+                            <li>
+                                Referrers can redeem free items through coins by making a cart
+                                of more than ₹500 &nbsp;(excluding delivery charges). Referrer
+                                will get &lsquo;Grofers Coins&rsquo; after first order
+                                delivery of the Referee
+                            </li>
+                            <li>
+                                The referee has to check out a cart of more than ₹500 with
+                                free delivery. Only after the delivery of the first order of
+                                Referee, the Referrer will get &lsquo;Grofers Coins&rsquo;
+                            </li>
+                            <li>
+                                Grofers coin(s) can be earned a maximum of upto 20 and will be
+                                valid for 2 months from the date credited
+                            </li>
+                        </ul>
+                        <p>
+                            <strong>&nbsp;</strong>
+                        </p>
+                        <p>
+                            <strong>
+                                Orders delivered directly by our manufacturer-partners
+                            </strong>
+                        </p>
+                        <ul>
+                            <li>
+                                You may request for a refund/replacement within 7 days of
+                                delivery, for items/products which get delivered in 5-7 days
+                                (look for the tag on product images) with all original tags
+                                &amp; packaging intact in case of any quality issues. It is
+                                also requested that a user should check if the product seal is
+                                intact (i.e. not broken) while accepting the order to avoid
+                                any kind of damage related complaints post-delivery
+                            </li>
+                            <li>
+                                Further, it is clarified that for items/products which get
+                                delivered in 5-7 days (look for the tag on product images), no
+                                returns shall be accepted post 7 days of delivery and the user
+                                should get in touch with the Brand/Manufacturer with original
+                                invoice given at the time of delivery from our
+                                Manufacturer-partners
+                            </li>
+                            <li>
+                                The customer cannot return a partial order/ open package at
+                                the doorstep (Doorstep return policy is not applicable for
+                                this case)
+                            </li>
+                            <li>
+                                The refund will be initiated to the customer once their
+                                reverse pickup order has been marked as delivered post
+                                returning it to the delivery executive
+                            </li>
+                            <li>
+                                DS Return Policy: If you want to return a product, please keep
+                                the product in the original packaging. In addition, the
+                                product must be unused and unwashed, with all tags intact
+                            </li>
+                            <li>
+                                Non-returnable products information visible in the product
+                                info/description section on the website/app: A few products
+                                may not be eligible for return and will be marked
+                                &ldquo;Non-returnable&rdquo;
+                            </li>
+                        </ul>
+                        <p>
+                            <strong>&nbsp;</strong>
+                        </p>
+                        <p>
+                            <strong>terms &amp; conditions</strong>
+                        </p>
+                        <ul>
+                            <li>
+                                Specific Terms with respect to purchase of Cigarettes and
+                                Other Tobacco/Smoking Products User agrees and undertakes
+                                that:
+                            </li>
                             <ol>
                                 <li>
-                                    A user shall be entitled to cashback on a specific
-                                    purchase/order as indicated at the time of checkout of the
-                                    final order on the Marketplace
+                                    He/she is at least eighteen (18) / twenty one (21) years of
+                                    age or above and
                                 </li>
                                 <li>
-                                    No Cashback shall be available for orders which are canceled.
-                                    Any Cashback offered may be recovered by the Company, without
-                                    notice to the user, in such cases. Any Cashback offered for
-                                    orders for which a refund claim is made, whether in part or in
-                                    full, shall be adjusted to remove Cashback attributable to the
-                                    extent of the order refunded. This condition shall apply
-                                    strictly and notwithstanding the display of cashback on any
-                                    specific item(s) listed on the Application as an item specific
-                                    cashback
-                                </li>
-                                <li>
-                                    Cashback shall mean the grant of credit for the amount of
-                                    eligible cashback, shall be added to the users
-                                    &lsquo;Promotional/Cashback&rsquo; section of his/her
-                                    &lsquo;Grofers Wallet&rsquo; account, and shall in no event
-                                    imply that the cashback shall be credited to a user&rsquo;s
-                                    bank account or card account or refunded in cash at any time.
-                                    Grofers Wallet is powered by Citruspay and use thereof is
-                                    subject to additional terms and conditions.
-                                </li>
-                                <li>
-                                    Cashback offers cannot be clubbed with any other offers and
-                                    cannot be assigned/ transferred to any other person
-                                </li>
-                                <li>
-                                    The Company reserves the right to, without liability or
-                                    prejudice to any of its other rights, at any time, without
-                                    previous notice and from time to time, withdraw/suspend /
-                                    amend/cancel the Cashback offers, and the terms applicable
-                                    thereto
-                                </li>
-                                <li>
-                                    Cashback will reflect in a user&rsquo;s teambuy wallet within
-                                    6-12 hours; however, for some coupons it can take 7 working
-                                    days from the delivery of the order for the cashback to
-                                    reflect. Cashback credit available is usable only on the
-                                    Application and no other platform, website, store or
-                                    otherwise. Promotional cashback credited can be subjected to
-                                    expire at the discretion of The Company. Cashback will expire
-                                    after a minimum duration of 60 days from last order unless
-                                    specified or added through a separate campaign, which can be
-                                    subject to a shorter expiry time
-                                </li>
-                                <li>
-                                    Users shall not hold the Company or its group entities, or
-                                    affiliates, their respective directors, officers, employees,
-                                    agents, responsible for or liable for, any actions, claims,
-                                    demands, losses, damages, costs, charges and expenses which a
-                                    user claims to have suffered, sustained or incurred, or claims
-                                    to suffer, sustain or incur, by way of and/or on account of
-                                    any purchase made through the Application, whether with or
-                                    without Cashback
-                                </li>
-                                <li>
-                                    The Company does not in any manner endorse or support or
-                                    promote, in any specific manner, the purchase of products or
-                                    undertaking of transactions inter alia which are subject to
-                                    Cashbacks
-                                </li>
-                                <li>
-                                    Cashbacks are only available on versions 2.5 and above.&nbsp;
-                                </li>
-                                <li>
-                                    Cashback and discount codes are not applicable on ghee, edible
-                                    oil, baby food products and any cashback amount used from
-                                    Grofers Wallet while placing the order
-                                </li>
-                                <li>
-                                    GROFERS20 is valid only for new users. 20% cashback on your
-                                    first order. Maximum cashback is ₹250 . Minimum Order Value of
-                                    ₹500. Cashback will be credited to your Orange Cash
-                                </li>
-                            </ol>
-                            <p>
-                                <strong>&nbsp;</strong>
-                            </p>
-                            <p>
-                                <strong>Smart Bachat Club Membership (SBC)</strong>
-                            </p>
-                            <p>
-                                SBC membership will be activated within 6 hours of order
-                                placement. After it is activated, you can shop at SBC prices.
-                            </p>
-                            <ol>
-                                <li>
-                                    To be an SBC member, users just have to add the membership to
-                                    the cart. The membership will last until the duration of the
-                                    plan. Users can purchase another plan before the end of the
-                                    current plan to continue shopping at SBC prices
-                                </li>
-                                <li>
-                                    Currently, the most popular products and brands are available
-                                    for users to enjoy shopping at lower prices.&nbsp; We are
-                                    constantly adding more products to SBC
-                                </li>
-                                <li>
-                                    Membership once delivered cannot be cancelled. No refund will
-                                    be initiated against such a request
-                                </li>
-                                <li>
-                                    SBC membership plans are are liable to change at the
-                                    Company&rsquo;s discretion. In case of any update in the
-                                    membership fee, you don&rsquo;t have to pay anything extra for
-                                    your ongoing plan. However, plan renewals will only happen at
-                                    updated prices
-                                </li>
-                                <li>
-                                    Users can club other offers that are available on the teambuy
-                                    platform from time to time, such as teambuy cashback, wallet
-                                    offers, bank offers, etc., with their orders during an SBC
-                                    membership period. Some coupons and offers may have certain
-                                    restrictions. Please refer to the offer T&amp;Cs
-                                </li>
-                                <li>
-                                    Users can choose to pay for SBC membership with their teambuy
-                                    cash balance. However, users can&rsquo;t pay for this
-                                    membership with Sodexo meal cards
-                                </li>
-                                <li>
-                                    SBC members do not have to pay surge charges or delivery
-                                    charges
-                                </li>
-                                <li>
-                                    There is no limit to the number of orders that users can place
-                                    on the teambuy platform during the membership period
-                                </li>
-                                <li>
-                                    To get an invoice for SBC membership, please contact our
-                                    customer service team
-                                </li>
-                                <li>
-                                    An SBC membership plan once delivered cannot be cancelled;
-                                    however, you can cancel a live order till it is packed. The
-                                    refund against the entire order will be credited to the
-                                    original mode of payment
-                                </li>
-                                <li>
-                                    SBC membership at teambuy only allows end consumers to place
-                                    an order at prices available for SBC Members. Without
-                                    prejudice, the Company reserves all its rights to cancel
-                                    order(s) against the rules for SBC members
-                                </li>
-                                <li>
-                                    SBC membership can be bought for a period of 1 month (31
-                                    days). Membership expires at midnight on the last day of your
-                                    membership period
-                                </li>
-                            </ol>
-                            <p>
-                                <strong>UPI</strong>
-                            </p>
-                            <p>
-                                Unified Payments Interface (UPI) is an instant real-time payment
-                                system developed by National Payments Corporation of India
-                                facilitating inter-bank transactions. The interface is regulated
-                                by the Reserve Bank of India and works by instantly transferring
-                                funds between two bank accounts on a mobile platform
-                            </p>
-                            <ol>
-                                <li>
-                                    UPI is built over Immediate Payment Service (IMPS) for
-                                    transferring funds
-                                </li>
-                                <li>
-                                    UPI would appear as a separate tab on the Payment Options page
-                                    on your android application
-                                </li>
-                                <li>
-                                    Once you click on the UPI option, it will scan your device to
-                                    find out the UPI apps on your phone
-                                </li>
-                                <li>
-                                    You can choose one of the apps to pay for the order and
-                                    complete the transaction
-                                </li>
-                            </ol>
-                            <p>
-                                Refund against the transaction (if any) would be reflected in
-                                your respective account within 5-7 working days post initiation
-                            </p>
-                            <p>
-                                <strong>Sodexo&nbsp;</strong>
-                            </p>
-                            <ol>
-                                <li>
-                                    Sodexo meal cards are acceptable on online payments only on
-                                    Android devices
-                                </li>
-                                <li>
-                                    Refund against any Sodexo meal card transaction will be
-                                    credited within 5 to 7 working days
-                                </li>
-                                <li>
-                                    Sodexo vouchers were only accepted until 30th June 2018. (Not
-                                    functional now)
-                                </li>
-                            </ol>
-                            <p>
-                                <strong>Lowest price guaranteed&nbsp;</strong>
-                            </p>
-                            <p>
-                                As of August 2021, Every Day Low Price is no more a prominent
-                                feature of teambuy. We continue to be highly competitive in our
-                                pricing and aim to provide the very best of groceries and other
-                                daily essentials for our customers; however, we are no longer
-                                offering a guarantee of lowest price.&nbsp;
-                            </p>
-                            <p>
-                                <strong>&nbsp;</strong>
-                            </p>
-                            <p>
-                                <strong>Free coin store</strong>
-                            </p>
-                            <ul>
-                                <li>
-                                    Free Store on teambuy is a referral program that lets our
-                                    current users share teambuy with their friends in order to get
-                                    &lsquo;Grofers Coins&rsquo;, which can be redeemed by getting
-                                    free items from the &nbsp;&lsquo;Free Store&rsquo; page. The
-                                    referred friends will receive the scratch card on successful
-                                    sign up through the link received from the Referrer (Current
-                                    Grofers User). Redeeming the scratch card will give their
-                                    friends up to ₹250 cashback. Referrer will get &lsquo;Grofers
-                                    Coins&rsquo; on the delivery of their friend&rsquo;s (Referee)
-                                    first order
-                                </li>
-                                <li>
-                                    The referrer has to verify which Referee has placed an order
-                                    and whether their order has been delivered or not. On
-                                    successful order delivery of Referee, the coins earned will be
-                                    reflected on the Free Store of Referrer
-                                </li>
-                                <li>
-                                    The referee has to sign up using the link that Referrer has
-                                    shared with them. During the sign-up process, the Referee has
-                                    to apply the Referral Code. After successful sign-up, the
-                                    Referee will get a scratch card. Redeeming the scratch card
-                                    will give up to ₹250 cashback to the Referee &nbsp;
-                                </li>
-                                <li>
-                                    If a free item is added to the cart and it goes out of stock,
-                                    the item will be removed from the cart and coins will be
-                                    loaded back as soon as the user visits the free store again
-                                </li>
-                                <li>The minimum order value is ₹500</li>
-                                <li>
-                                    The Free Store is available for Android users all over India.
-                                    It is visible on the homepage and navigation bar on the left
-                                </li>
-                                <li>
-                                    The Referral program is live for all cities where
-                                    &lsquo;Grofers&rsquo; is operational in India. &nbsp;Up to 20
-                                    items will be available, which can be redeemed through
-                                    &lsquo;Grofers Coins&rsquo;
-                                </li>
-                                <li>
-                                    The referee will be credited up to ₹250 as cashback on
-                                    successful sign up (from the link that he has received from
-                                    Referrer). It is mandatory for the Referee to apply the
-                                    referral code in the sign-up process
-                                </li>
-                                <li>
-                                    Referrers can redeem free items through coins by making a cart
-                                    of more than ₹500 &nbsp;(excluding delivery charges). Referrer
-                                    will get &lsquo;Grofers Coins&rsquo; after first order
-                                    delivery of the Referee
-                                </li>
-                                <li>
-                                    The referee has to check out a cart of more than ₹500 with
-                                    free delivery. Only after the delivery of the first order of
-                                    Referee, the Referrer will get &lsquo;Grofers Coins&rsquo;
-                                </li>
-                                <li>
-                                    Grofers coin(s) can be earned a maximum of upto 20 and will be
-                                    valid for 2 months from the date credited
-                                </li>
-                            </ul>
-                            <p>
-                                <strong>&nbsp;</strong>
-                            </p>
-                            <p>
-                                <strong>
-                                    Orders delivered directly by our manufacturer-partners
-                                </strong>
-                            </p>
-                            <ul>
-                                <li>
-                                    You may request for a refund/replacement within 7 days of
-                                    delivery, for items/products which get delivered in 5-7 days
-                                    (look for the tag on product images) with all original tags
-                                    &amp; packaging intact in case of any quality issues. It is
-                                    also requested that a user should check if the product seal is
-                                    intact (i.e. not broken) while accepting the order to avoid
-                                    any kind of damage related complaints post-delivery
-                                </li>
-                                <li>
-                                    Further, it is clarified that for items/products which get
-                                    delivered in 5-7 days (look for the tag on product images), no
-                                    returns shall be accepted post 7 days of delivery and the user
-                                    should get in touch with the Brand/Manufacturer with original
-                                    invoice given at the time of delivery from our
-                                    Manufacturer-partners
-                                </li>
-                                <li>
-                                    The customer cannot return a partial order/ open package at
-                                    the doorstep (Doorstep return policy is not applicable for
-                                    this case)
-                                </li>
-                                <li>
-                                    The refund will be initiated to the customer once their
-                                    reverse pickup order has been marked as delivered post
-                                    returning it to the delivery executive
-                                </li>
-                                <li>
-                                    DS Return Policy: If you want to return a product, please keep
-                                    the product in the original packaging. In addition, the
-                                    product must be unused and unwashed, with all tags intact
-                                </li>
-                                <li>
-                                    Non-returnable products information visible in the product
-                                    info/description section on the website/app: A few products
-                                    may not be eligible for return and will be marked
-                                    &ldquo;Non-returnable&rdquo;
-                                </li>
-                            </ul>
-                            <p>
-                                <strong>&nbsp;</strong>
-                            </p>
-                            <p>
-                                <strong>terms &amp; conditions</strong>
-                            </p>
-                            <ul>
-                                <li>
-                                    Specific Terms with respect to purchase of Cigarettes and
-                                    Other Tobacco/Smoking Products User agrees and undertakes
-                                    that:
-                                </li>
-                                <ol>
-                                    <li>
-                                        He/she is at least eighteen (18) / twenty one (21) years of
-                                        age or above and
-                                    </li>
-                                    <li>
-                                        He/she lives outside the radius of hundred (100) yards from
-                                        an educational institution.
-                                    </li>
-                                </ol>
-                                <li>
-                                    User will not use the Marketplace to purchase cigarettes and
-                                    other tobacco products if he/she is below the age of 18/21
-                                    years and lives within the radius of hundred (100) yards from
+                                    He/she lives outside the radius of hundred (100) yards from
                                     an educational institution.
                                 </li>
+                            </ol>
+                            <li>
+                                User will not use the Marketplace to purchase cigarettes and
+                                other tobacco products if he/she is below the age of 18/21
+                                years and lives within the radius of hundred (100) yards from
+                                an educational institution.
+                            </li>
+                            <li>
+                                User are required to provide a copy of government
+                                identification document containing photograph and date of
+                                birth at the time of placement of Order(s) for the Cigarettes
+                                and Other Tobacco/Smoking Products on the Marketplace.
+                            </li>
+                            <li>User shall not place Order for loose cigarettes.</li>
+                            <li>
+                                The Delivery Agent may request User to provide a government
+                                identification document at the time of delivery of cigarettes
+                                and/other tobacco/smoking products.
+                            </li>
+                            <li>If the User:</li>
+                            <ol>
+                                <li>is below the age of 18/21 years</li>
                                 <li>
-                                    User are required to provide a copy of government
-                                    identification document containing photograph and date of
-                                    birth at the time of placement of Order(s) for the Cigarettes
-                                    and Other Tobacco/Smoking Products on the Marketplace.
-                                </li>
-                                <li>User shall not place Order for loose cigarettes.</li>
-                                <li>
-                                    The Delivery Agent may request User to provide a government
-                                    identification document at the time of delivery of cigarettes
-                                    and/other tobacco/smoking products.
-                                </li>
-                                <li>If the User:</li>
-                                <ol>
-                                    <li>is below the age of 18/21 years</li>
-                                    <li>
-                                        government identification document either does not belong to
-                                        User or appears to be fake
-                                    </li>
-                                    <li>
-                                        lives within the radius of hundred (100) yards from an
-                                        educational institution.
-                                    </li>
-                                </ol>
-                                <li>
-                                    Then the Delivery Agent reserves the right to cancel the Order
-                                    and the User would not be entitled to receive any refund any
-                                    amount paid towards such cancelled Order, including the
-                                    Delivery Charges and the payment gateway charges.
+                                    government identification document either does not belong to
+                                    User or appears to be fake
                                 </li>
                                 <li>
-                                    The delivery of cigarettes and/other tobacco/smoking products
-                                    is subject to availability of delivery slots and stocks at the
-                                    store.
+                                    lives within the radius of hundred (100) yards from an
+                                    educational institution.
                                 </li>
-                            </ul>
-                            <p>&nbsp;</p>
-                        </div>
+                            </ol>
+                            <li>
+                                Then the Delivery Agent reserves the right to cancel the Order
+                                and the User would not be entitled to receive any refund any
+                                amount paid towards such cancelled Order, including the
+                                Delivery Charges and the payment gateway charges.
+                            </li>
+                            <li>
+                                The delivery of cigarettes and/other tobacco/smoking products
+                                is subject to availability of delivery slots and stocks at the
+                                store.
+                            </li>
+                        </ul>
+                        <p>&nbsp;</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
         </>
     )
 }
