@@ -12,9 +12,11 @@ import * as MasterService from "../services/master";
 
 import * as Enums from '../lib/enums';
 import * as Utils from "../lib/utils";
+import { Config } from '../config/config';
 
 import PromotionalOffers from "../component/promotionalOffers";
 import AuthSideBar from "../component/authSidebar";
+import ProductOfferCard from "../component/productOfferCard";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -25,6 +27,10 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 
 export default function Home(props) {
+
+  const BASE_URL_TEAM_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.teamAvatar}`
+  const BASE_URL_CURATED_DEALS = `${Config.BaseURL.fileServer}${Config.FilePath.curatedDeals}`
+  const BASE_URL_DEALS_OF_THE_DAY = `${Config.BaseURL.fileServer}${Config.FilePath.dealsOfTheDay}`
 
   const [isLoading, setIsLoading] = useState(true);
   const [showLogin, setShowLogin] = useState(false)
@@ -68,12 +74,22 @@ export default function Home(props) {
       })
   }
 
-  const renderFeaturedCategoryProducts = (data) => {
+  const renderFeaturedCategoryProducts = (data, keyString = 'product_item_') => {
     if (data)
       return data.map(item => {
-        return <div key={`product_item_${item._id}`}
+        return <div key={`${keyString}${item._id}`}
           className="item">
           <ProductCard item={item} showLogin={(value) => { openLogin() }} />
+        </div>
+      })
+  }
+
+  const renderTeamBuyOfferProducts = (data) => {
+    if (data)
+      return data.map(item => {
+        return <div key={`teambuy_offer_card_${item._id}`}
+          className="item">
+          <ProductOfferCard item={item} showLogin={(value) => { openLogin() }} />
         </div>
       })
   }
@@ -83,6 +99,31 @@ export default function Home(props) {
   return (
     <>
       {dashboardData?.promotionalOffers?.length > 0 && <PromotionalOffers bannerData={dashboardData?.promotionalOffers} />}
+
+      {dashboardData?.previousPurchaseItems?.length > 0 && <section className="purchases-wrap">
+        <div className="container">
+          <div className="d-flex align-items-center heading-flex">
+            <div className="sm-heading">{Utils.getLanguageLabel("Your previous purchases")}</div>
+            <div className="ml-auto">
+              <Link passHref href={{ pathname: '/account/orders' }}>
+                <a style={{ cursor: 'pointer' }} className="green-link">{Utils.getLanguageLabel("View All")}</a>
+              </Link>
+            </div>
+          </div>
+
+          <OwlCarousel
+            className="seven-items-slider owl-carousel common-navs mt-20"
+            loop={false}
+            margin={12}
+            nav={true}
+            dots={false}
+            responsiveClass={true}
+            responsive={Enums.OwlCarouselSlider.sevenItemSlider}
+          >
+            {renderFeaturedCategoryProducts(dashboardData.previousPurchaseItems, 'previous_purchase_')}
+          </OwlCarousel>
+        </div>
+      </section>}
 
       <section className="category-wrap ptb-30">
         <div className="container">
@@ -96,6 +137,101 @@ export default function Home(props) {
           </div>
         </div>
       </section>
+
+      {dashboardData?.popularProducts?.length > 0 && <section className="purchases-wrap">
+        <div className="container">
+          <div className="d-flex align-items-center heading-flex">
+            <div className="sm-heading">{Utils.getLanguageLabel("Popular products")}</div>
+            <div className="ml-auto">
+              <Link passHref href={{ pathname: '/account/orders' }}>
+                <a style={{ cursor: 'pointer' }} className="green-link">{Utils.getLanguageLabel("View All")}</a>
+              </Link>
+            </div>
+          </div>
+
+          <OwlCarousel
+            className="seven-items-slider owl-carousel common-navs mt-20"
+            loop={false}
+            margin={12}
+            nav={true}
+            dots={false}
+            responsiveClass={true}
+            responsive={Enums.OwlCarouselSlider.sevenItemSlider}
+          >
+            {renderFeaturedCategoryProducts(dashboardData.popularProducts, 'popular_products_')}
+          </OwlCarousel>
+        </div>
+      </section>}
+
+      {dashboardData?.nearbyTeam?.length > 0 && <section className="nearby-wrap ptb-30">
+        <div className="container">
+          <div className="d-flex align-items-center heading-flex">
+            <div className="sm-heading">{Utils.getLanguageLabel("Teams around you")}</div>
+            <div className="ml-auto">
+              <Link passHref href={{ pathname: '/team' }}>
+                <a style={{ cursor: 'pointer' }} className="green-link">{Utils.getLanguageLabel("View All")}</a>
+              </Link>
+            </div>
+          </div>
+
+          <OwlCarousel
+            className="seven-items-slider owl-carousel common-navs mt-20"
+            loop={false}
+            margin={12}
+            nav={true}
+            dots={false}
+            responsiveClass={true}
+            responsive={Enums.OwlCarouselSlider.sevenItemSlider}
+          >
+            {dashboardData?.nearbyTeam.map(team => {
+              return <Link key={`team_member_${team.id}`} passHref href={{
+                pathname: "/team/join-cart/[id]",
+                query: { id: team.team_code }
+              }} >
+
+                <a className="item d-flex align-items-center nearby-box">
+                  <div className="circle-box team-circle">
+                    <Image alt={team.team_name} src={BASE_URL_TEAM_AVATAR + team.team_avatar} layout="raw" height={100} width={100} />
+                  </div>
+                  <div className="xs-heading text-ellipsis">{team.team_name}</div>
+                </a>
+              </Link>
+            })}
+          </OwlCarousel>
+        </div>
+      </section>}
+
+      {dashboardData?.curatedDeals?.length > 0 && <section className="deals-wrap  ptb-30">
+        <div className="container">
+          <div className="heading-flex">
+            <div className="sm-heading">{Utils.getLanguageLabel("Curated deals for you")}</div>
+          </div>
+          <OwlCarousel
+            className="five-items-slider owl-carousel common-navs mt-20"
+            loop={false}
+            margin={12}
+            nav={true}
+            dots={false}
+            responsiveClass={true}
+            responsive={Enums.OwlCarouselSlider.fiveItemSlider}
+          >
+            {dashboardData.curatedDeals.map(item => {
+              return <div key={`crated_deals_${item.id}`} className="item">
+                <div className="curated-deal-box">
+                  <Image
+                    src={BASE_URL_CURATED_DEALS + item.banner}
+                    alt={item?.heading}
+                    layout="raw"
+                    height={200 * 2}
+                    width={254 * 2}
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+              </div>
+            })}
+          </OwlCarousel>
+        </div>
+      </section>}
 
       {featuredCategories?.map(featuredCategory => {
         if (featuredCategory.products.length > 0) {
@@ -112,7 +248,7 @@ export default function Home(props) {
                         query: { id: featuredCategory.categoryID, name: Utils.convertToSlug(featuredCategory.heading) },
                       }}
                     >
-                      <a className="green-link">{Utils.getLanguageLabel("View All")}</a>
+                      <a style={{ cursor: 'pointer' }} className="green-link">{Utils.getLanguageLabel("View All")}</a>
                     </Link>
                   </div>
                 </div>
@@ -131,6 +267,59 @@ export default function Home(props) {
             </section>)
         }
       })}
+
+      {dashboardData?.teambuyOffers?.length > 0 && <section className="teambuy-offer-wrap ptb-30">
+        <div className="container">
+          <div className="d-flex align-items-center heading-flex">
+            <div className="sm-heading">{Utils.getLanguageLabel("Teambuy offers")}</div>
+          </div>
+
+          <OwlCarousel
+            className="teambuy-offer-slider owl-carousel common-navs mt-20"
+            loop={false}
+            margin={12}
+            nav={true}
+            dots={false}
+            responsiveClass={true}
+            responsive={Enums.OwlCarouselSlider.offerSlider}
+          >
+            {renderTeamBuyOfferProducts(dashboardData.teambuyOffers)}
+          </OwlCarousel>
+        </div>
+      </section>}
+
+
+      {dashboardData?.dealsOfTheDay?.length > 0 && <section className="deal-the-day-wrap">
+        <div className="container">
+          <div className="d-flex align-items-center heading-flex">
+            <div className="sm-heading">{Utils.getLanguageLabel("Deals of the day")}</div>
+          </div>
+          <OwlCarousel
+            className="five-items-slider owl-carousel common-navs mt-20"
+            loop={false}
+            margin={12}
+            nav={true}
+            dots={false}
+            responsiveClass={true}
+            responsive={Enums.OwlCarouselSlider.EightItemSlider}
+          >
+            {dashboardData.dealsOfTheDay.map(item => {
+              return <div key={`crated_deals_${item.id}`} className="item">
+                <div className="deal-of-the-day-box">
+                  <Image
+                    src={BASE_URL_DEALS_OF_THE_DAY + item.banner}
+                    alt={item?.heading}
+                    layout="raw"
+                    height={180 * 2}
+                    width={150 * 2}
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+              </div>
+            })}
+          </OwlCarousel>
+        </div>
+      </section>}
 
       <section className="teambuy-app-wrap">
         <div className="container">
