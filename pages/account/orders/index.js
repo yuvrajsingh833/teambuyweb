@@ -231,7 +231,7 @@ export default function MyOrders(props) {
                                                 subtitle="Place a new order."
                                             />}
                                         {allOrders.map(item => {
-                                            return <div key={`all_orders_${item.id}`} className="white-box d-flex pd-20 mb-20">
+                                            return <div key={`all_orders_${item.id}`} className="white-box d-flex pd-20 mb-20 align-items-center">
                                                 <div className="order-product-icon mt-10">
                                                     <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="product" src="/img/product-icon.png" />
                                                 </div>

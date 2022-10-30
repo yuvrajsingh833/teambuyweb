@@ -148,8 +148,8 @@ export default function OrderDetail(props) {
     return (
         <>
             <Head>
-                <title>Orders #{orderTxnId} | Teambuy</title>
-                <meta name="description" content={`Orders #${orderTxnId}| Teambuy`} />
+                <title>Orders #{orderInfo.order_txn_id} | Teambuy</title>
+                <meta name="description" content={`Orders #${orderInfo.order_txn_id}| Teambuy`} />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
@@ -172,7 +172,7 @@ export default function OrderDetail(props) {
                                     <a>{Utils.getLanguageLabel("My Orders")}</a>
                                 </Link>
                             </li>
-                            <li className="breadcrumb-item active" aria-current="page">{orderTxnId}</li>
+                            <li className="breadcrumb-item active" aria-current="page">{orderInfo.order_txn_id}</li>
                         </ol>
                     </nav>
                 </div>
@@ -209,14 +209,14 @@ export default function OrderDetail(props) {
                                             return <div key={`bill_order_items_${productDetail._id}_${index}`} className="white-box pd-0 mt-10">
                                                 <div className="cart-main-box pd-15">
                                                     <div className="d-flex to-product-flex align-items-center">
-                                                        <div className="to-product-count font-15 fw-500">{index + 1}.</div>
+                                                        <div className="to-product-count font-15 fw-500">{index + 1}. </div>
                                                         <div className="product-img mb-0">
                                                             <Image
                                                                 src={Utils.generateProductImage(productDetail)}
                                                                 alt={productDetail?.name}
                                                                 layout="raw"
-                                                                height={200}
-                                                                width={200}
+                                                                height={180}
+                                                                width={180}
                                                                 className={'common-product-image'}
                                                                 style={{ objectFit: 'contain' }}
                                                             />
@@ -244,12 +244,14 @@ export default function OrderDetail(props) {
                                                 <tbody>
                                                     <tr>
                                                         <td>{Utils.getLanguageLabel("Sub total")}</td>
-                                                        <td className="text-right">{Utils.convertToPriceFormat(orderInfo.total_price + orderInfo.coupon_discount + orderInfo.wallet_amount - orderInfo.delivery_charges)}</td>
+                                                        <td className="text-right">{Utils.convertToPriceFormat((orderInfo.total_price + orderInfo.coupon_discount + orderInfo.wallet_amount + orderInfo.teambuy_discount) - orderInfo.delivery_charges)}</td>
                                                     </tr>
-                                                    <tr>
+
+                                                    {Number(orderInfo.teambuy_discount) > 0 && <tr>
                                                         <td>{Utils.getLanguageLabel("Team buy discount")}</td>
                                                         <td className="green-text text-right">-{Utils.convertToPriceFormat(orderInfo.teambuy_discount)}</td>
-                                                    </tr>
+                                                    </tr>}
+
                                                     <tr>
                                                         <td>{Utils.getLanguageLabel("Coupon discount")}</td>
                                                         <td className="green-text text-right">-{Utils.convertToPriceFormat(orderInfo.coupon_discount)}</td>
