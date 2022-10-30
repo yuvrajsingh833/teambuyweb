@@ -14,6 +14,19 @@ const getNearbyTeams = async ({ teamPincode }) => {
     })
 }
 
+const getMyTeams = async ({ teamPincode }) => {
+    let postParams = { teamPincode }
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Post(API.getMyTeams.endPoint, API.getMyTeams.url, postParams)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
 const uploadTeamImage = async (teamAvatar) => {
 
     return new Promise(function (resolve, reject) {
@@ -65,4 +78,4 @@ const joinTeam = async ({ teamCode }) => {
     })
 }
 
-export { getNearbyTeams, uploadTeamImage, createTeam, teamInfo, joinTeam }
+export { getMyTeams, getNearbyTeams, uploadTeamImage, createTeam, teamInfo, joinTeam }

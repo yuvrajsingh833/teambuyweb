@@ -46,6 +46,7 @@ const API = {
   checkCouponValidation: { url: 'check-coupon', endPoint: 'checkout' },
 
   //Team urls
+  getMyTeams: { url: 'my-team', endPoint: 'team' },
   getNearbyTeams: { url: 'nearby-team', endPoint: 'team' },
   uploadTeamImage: { url: 'update-team-image', endPoint: 'team' },
   createTeam: { url: 'create-team', endPoint: 'team' },

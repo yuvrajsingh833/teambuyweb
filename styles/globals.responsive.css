@@ -36,6 +36,10 @@
     margin-left: 4px;
     margin-right: 4px;
   }
+
+  .nav-breaker {
+    margin-top: 90px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -162,6 +166,10 @@
     height: 200px;
     width: 225px;
   }
+
+  .nav-breaker {
+    margin-top: 125px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -233,6 +241,10 @@
     height: 140px;
     width: 170px;
   }
+
+  .nav-breaker {
+    margin-top: 110px !important;
+  }
 }
 
 @media (max-width: 420px) {
@@ -295,5 +307,63 @@
     border-top: solid 0px #cccc !important;
     top: 50px !important;
     box-shadow: 0 0px 0px rgb(0 0 0 / 15%);
+  }
+}
+
+@media (max-width: 375px) {
+  .curated-deal-box {
+    height: 110px;
+    width: 145px;
+  }
+
+  .logo-nav-small {
+    flex: 1;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .location-nav {
+    flex: 2;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .search-block-nav {
+    flex: 6;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .account-wishlist-nav {
+    flex: 1;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .cart-block-nav {
+    flex: 1;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .cart-box {
+    padding: 7px 10px;
+  }
+
+  .search-block-nav {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .account-wishlist-nav {
+    flex: 3;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .cart-block-nav {
+    flex: 3.2;
+    margin-left: 4px;
+    margin-right: 4px;
   }
 }

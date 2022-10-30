@@ -241,14 +241,14 @@ export default function CheckoutSummaryPage(props) {
             "couponID": appliedCoupon ? appliedCoupon.id : 0,
             "couponDiscount": calculatePrice().APPLICABLE_COUPON_DISCOUNT,
             "teambuyDiscount": calculatePrice().APPLIED_TEAM_BUY_DISCOUNT,
+            "deliveryCharges": calculatePrice().APPLICABLE_DELIVERY_CHARGE,
+            "walletAmount": calculatePrice().APPLICABLE_WALLET_DISCOUNT,
             "addressID": selectedAddress.id,
             "paymentMode": paymentMode,
             "teamID": teambuyOffer ? teambuyOffer.teamID : 0,
             "orderType": teambuyOffer ? 'team' : 'individual',
             "preferredOrderDate": 0,
             "preferredOrderTime": 0,
-            "deliveryCharges": calculatePrice().APPLICABLE_DELIVERY_CHARGE,
-            "walletAmount": calculatePrice().APPLICABLE_WALLET_DISCOUNT
         }
 
         setIsLoading(true)
@@ -288,12 +288,11 @@ export default function CheckoutSummaryPage(props) {
                 postParams['txnId'] = postParams.txnID;
                 postParams['status'] = 'pending';
                 postParams['error_message'] = 'NO ERROR';
-                postParams['paymentMode'] = 'cod';
+                postParams['paymentMode'] = paymentMode;
                 postParams['hasError'] = false;
                 postParams['transaction_amount'] = postParams.amount.toString();
                 postParams['amt'] = postParams.amount.toString();
                 postParams['addedon'] = Dates.momentDateFormat(new Date(), 'YYYY-MM-DD HH:mm:ss');
-
                 router.push({
                     pathname: '/checkout/order/[status]',
                     query: {
@@ -448,11 +447,23 @@ export default function CheckoutSummaryPage(props) {
                                     </div>
                                 </div>
 
-                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
-                                    <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT))}</span> on this order</span>
+                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 pt-10 b-radius-0 mt-50">
+                                    <span className="sm-heading">{Utils.getLanguageLabel("You saved")} <span className="green-text fw-700">{Utils.convertToPriceFormat(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT))}</span> {Utils.getLanguageLabel("on this order")}</span>
                                 </div>}
 
-                                {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">Some product are Out of stock</button></div>}
+                                {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">{Utils.getLanguageLabel("Some product are Out of stock")}</button></div>}
+
+                                <div className="cart-pd-20 mt-20">
+                                    <div className="sm-heading text-start">{Utils.getLanguageLabel("Choose payment mode")}</div>
+                                    <div className="custom-radio mt-10">
+                                        <input type="radio" id="online" name="payment_mode_radio" onChange={() => setPaymentMode('online')} checked={paymentMode == 'online' ? true : false} />
+                                        <label htmlFor="online">{Utils.getLanguageLabel("Online")}</label>
+                                    </div>
+                                    <div className="custom-radio">
+                                        <input type="radio" id="cod" name="payment_mode_radio" onChange={() => setPaymentMode('cod')} checked={paymentMode == 'cod' ? true : false} />
+                                        <label htmlFor="cod">{Utils.getLanguageLabel("Cash on Delivery")}</label>
+                                    </div>
+                                </div>
 
                                 {!hasOutOfStockProduct && <div className="text-center mt-30 d-flex justify-content-center">
                                     <button onClick={() => placeOrder()} className="green-btn process-checkout-btn mx-2 px-3 ">

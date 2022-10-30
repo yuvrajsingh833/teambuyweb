@@ -32,6 +32,7 @@ export default function CheckoutOrderStatusDetail(props) {
 
     useEffect(() => {
         fetchOrderInfo()
+
         if (mode == "cod") {
             setVerificationInfo(JSON.parse(additionalPaymentData))
             PaymentService.updatePayment({

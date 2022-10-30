@@ -1,22 +1,21 @@
 import dynamic from "next/dynamic";
-import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'next-share'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { RWebShare } from "react-web-share"
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { useSnackbar } from 'react-simple-snackbar';
+import { useSelector } from 'react-redux';
 
-import Loader from '../../../component/loader'
+import Loader from '../../../component/loader';
 
-import { Config } from '../../../config/config'
+import { Config } from '../../../config/config';
 
-import * as Utils from "../../../lib/utils"
-import * as Dates from "../../../lib/dateFormatService"
+import * as Dates from "../../../lib/dateFormatService";
 import * as Enums from '../../../lib/enums';
+import * as Utils from "../../../lib/utils";
 
-import * as TeamService from "../../../services/team"
+import * as TeamService from "../../../services/team";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -27,6 +26,9 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 
 export default function CheckoutOrderStatusDetail(props) {
+    const userData = useSelector(state => state.userData)
+    const user = userData?.userData
+
     const BASE_URL_USER_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.userAvatar}`
     const [openSnackbar] = useSnackbar()
 
@@ -39,7 +41,6 @@ export default function CheckoutOrderStatusDetail(props) {
     const fetchTeamInfo = () => {
         TeamService.teamInfo({ teamCode: id }).then(response => {
             let teamInfo = response.data.detail
-
             let timeStamp = Dates.getUTCTimestamp(new Date())
             let startTime = timeStamp - Number(teamInfo.created_at)
             let endTime = Number(teamInfo.expires_at) - Number(teamInfo.created_at)
@@ -67,7 +68,6 @@ export default function CheckoutOrderStatusDetail(props) {
             openSnackbar(e.message)
             console.log(`joinTeam error : ${e}`)
         })
-
     }
 
     if (isLoading) return <Loader />
@@ -130,7 +130,7 @@ export default function CheckoutOrderStatusDetail(props) {
                 <div className="container">
                     <div className="progress">
                         <div className="progress-bar" role="progressbar" aria-valuenow={100 - timeDifferencePercent} aria-valuemin="0" aria-valuemax="100" style={{ width: `${100 - timeDifferencePercent}%` }}>
-                            <span className="sr-only">{Utils.getLanguageLabel("Team expires")} {Dates.calculateRemainingTime(teamInfo.detail.expires_at)}</span>
+                            <span className="sr-only">{Utils.getLanguageLabel("Team will expire")} {Dates.calculateRemainingTime(teamInfo.detail.expires_at)}</span>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@ export default function CheckoutOrderStatusDetail(props) {
                         {teamInfo?.members?.length > 0 && teamInfo?.members.map(teamMembers => {
                             return <div key={`team_member_${teamMembers.id}`} className="item d-flex align-items-center nearby-box">
                                 <div className="circle-box  team-circle">
-                                    <Image alt={`${teamMembers.id}_${teamMembers.user_detail.name}`} src={BASE_URL_USER_AVATAR + teamMembers.user_detail.avatar} layout="raw" height={100} width={100} />
+                                    <Image alt={`${teamMembers.id}_${teamMembers.user_detail.name}`} src={(teamMembers.user_detail.avatar != undefined && teamMembers.user_detail.avatar != null && teamMembers.user_detail.avatar != "null") ? BASE_URL_USER_AVATAR + teamMembers.user_detail.avatar : '/img/default-user.png'} layout="raw" height={100} width={100} />
                                 </div>
                                 <div>
                                     <div className="xs-heading text-ellipsis fw-500">{teamMembers.user_detail.name}</div>
@@ -166,7 +166,7 @@ export default function CheckoutOrderStatusDetail(props) {
                     </OwlCarousel>
                 </div>
             </section>
-            <section className="nearby-wrap ptb-30">
+            {user.id != teamInfo.detail.created_by && <section className="nearby-wrap ptb-30">
                 <div className="container">
                     <div className="d-flex align-items-center heading-flex">
                         <button onClick={() => joinTheTeam()} className="green-btn process-checkout-btn mx-2 px-3 ">
@@ -174,7 +174,7 @@ export default function CheckoutOrderStatusDetail(props) {
                         </button>
                     </div>
                 </div>
-            </section>
+            </section>}
         </>
     )
 }

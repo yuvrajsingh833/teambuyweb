@@ -24,11 +24,18 @@ export default function Category(props) {
     const [isLoading, setIsLoading] = useState(true);
 
     const [nearbyTeams, setNearbyTeams] = useState([]);
+    const [myTeams, setMyTeams] = useState([]);
 
     const getNearbyTeam = () => {
-        TeamService.getNearbyTeams({ teamPincode: null }).then(response => {
-            setNearbyTeams(response.data)
-            setIsLoading(false)
+        TeamService.getNearbyTeams({ teamPincode: null }).then(nearByTeamResponse => {
+            setNearbyTeams(nearByTeamResponse.data)
+            TeamService.getMyTeams({ teamPincode: null }).then(response => {
+                setMyTeams(response.data)
+                setIsLoading(false)
+            }).catch(e => {
+                console.log(`getNearbyTeams error : ${e}`)
+                setIsLoading(false)
+            })
         }).catch(e => {
             console.log(`getNearbyTeams error : ${e}`)
             setIsLoading(false)
@@ -41,15 +48,14 @@ export default function Category(props) {
     }, [props])
 
 
-
     return (
         <>
             <Head>
                 <title>Teams around you | Teambuy</title>
             </Head>
-            <section className="category-wrap ptb-40">
+            <section className="category-wrap">
                 <div className="container">
-                    <div className="align-items-center heading-flex ptb-40">
+                    <div className="align-items-center heading-flex ptb-10">
                         <div className="sm-heading">{Utils.getLanguageLabel("Select existing nearby team")}</div>
                         <div className="text-start xs-heading text-ellipsis fw-500">{Utils.getLanguageLabel("Join a team and got a discount on your purchase")}</div>
                     </div>
@@ -71,6 +77,30 @@ export default function Category(props) {
                     </div>
                 </div>
             </section>
+
+            {myTeams && myTeams.length > 0 && <section className="category-wrap ptb-40">
+                <div className="container">
+                    <div className="align-items-center heading-flex ptb-40">
+                        <div className="sm-heading">{Utils.getLanguageLabel("My teams")}</div>
+                    </div>
+                    <div className="row category-list">
+                        {myTeams.map(team => {
+                            return <Link key={`team_member_${team.id}`} passHref href={{
+                                pathname: "/team/join-cart/[id]",
+                                query: { id: team.team_code }
+                            }} >
+
+                                <a className="col-sm-4 col-6 item d-flex align-items-center nearby-box mb-20">
+                                    <div className="circle-box team-circle">
+                                        <Image alt={team.team_name} src={BASE_URL + team.team_avatar} layout="raw" height={100} width={100} />
+                                    </div>
+                                    <div className="xs-heading text-ellipsis">{team.team_name}</div>
+                                </a>
+                            </Link>
+                        })}
+                    </div>
+                </div>
+            </section>}
         </>
     )
 }
