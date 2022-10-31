@@ -1,6 +1,6 @@
 
-import Link from "next/link";
 import Head from 'next/head';
+import Link from "next/link";
 
 export default function TermsAndConditions() {
     return (
@@ -13,6 +13,7 @@ export default function TermsAndConditions() {
                     <nav className="custom-breadcrumb" aria-label="breadcrumb">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><Link href="/"><a>Home</a></Link></li>
+                            <li className="breadcrumb-item">Policy</li>
                             <li className="breadcrumb-item active" aria-current="page">Terms & Conditions</li>
                         </ol>
                     </nav>
@@ -1235,19 +1236,6 @@ export default function TermsAndConditions() {
                                     promote, in any specific manner, the purchase of products or
                                     undertaking of transactions inter alia which are subject to
                                     Cashbacks
-                                </li>
-                                <li>
-                                    Cashbacks are only available on versions 2.5 and above.&nbsp;
-                                </li>
-                                <li>
-                                    Cashback and discount codes are not applicable on ghee, edible
-                                    oil, baby food products and any cashback amount used from
-                                    Grofers Wallet while placing the order
-                                </li>
-                                <li>
-                                    GROFERS20 is valid only for new users. 20% cashback on your
-                                    first order. Maximum cashback is ₹250 . Minimum Order Value of
-                                    ₹500. Cashback will be credited to your Orange Cash
                                 </li>
                             </ol>
                             <p>

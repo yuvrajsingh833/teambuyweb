@@ -68,8 +68,12 @@ export default function Footer(props) {
                         <div className="col-md-2">
                             <div className="f-title">{Utils.getLanguageLabel("Company")}</div>
                             <ul className="f-menu">
-                                <li><a >{Utils.getLanguageLabel("Who We Are")}</a></li>
-                                <li><a >{Utils.getLanguageLabel("Blog")}</a></li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/about-us" }}>
+                                        <a>{Utils.getLanguageLabel("Who We Are")}</a>
+                                    </Link>
+                                </li>
+
                                 <li>
                                     <Link passHref href={{ pathname: "/pages/career" }}>
                                         <a className="black-text font-poppins">{Utils.getLanguageLabel("Careers")}</a>
@@ -90,19 +94,31 @@ export default function Footer(props) {
                         <div className="col-md-2">
                             <div className="f-title">{Utils.getLanguageLabel("For Consumers")}</div>
                             <ul className="f-menu">
-                                <li><Link passHref href="/pages/privacy-policy"><a >{Utils.getLanguageLabel("Privacy")}</a></Link></li>
-                                <li><Link passHref href="/pages/terms-and-conditions"><a >{Utils.getLanguageLabel("Terms")}</a></Link></li>
+                                <li>
+                                    <Link passHref href="/pages/privacy-policy">
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Privacy")}</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link passHref href="/pages/terms-and-conditions">
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Terms")}</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/cancellation-policy" }}>
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Cancellation Policy")}</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link passHref href={{ pathname: "/pages/refund-policy" }}>
+                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Refund Policy")}</a>
+                                    </Link>
+                                </li>
                                 <li>
                                     <Link passHref href={{ pathname: "/pages/faqs" }}>
                                         <a className="black-text font-poppins">{Utils.getLanguageLabel("FAQs")}</a>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link passHref href={{ pathname: "/pages/security" }}>
-                                        <a className="black-text font-poppins">{Utils.getLanguageLabel("Security")}</a>
-                                    </Link>
-                                </li>
-                                <li><a >Mobile</a></li>
                             </ul>
                         </div>
                         <div className="col-md-3">

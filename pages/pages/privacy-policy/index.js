@@ -1,6 +1,5 @@
-import dynamic from "next/dynamic";
-import Link from "next/link";
 import Head from 'next/head';
+import Link from "next/link";
 export default function PrivacyPolicy() {
     return (
         <>
@@ -12,6 +11,7 @@ export default function PrivacyPolicy() {
                     <nav className="custom-breadcrumb" aria-label="breadcrumb">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><Link href="/"><a>Home</a></Link></li>
+                            <li className="breadcrumb-item">Policy</li>
                             <li className="breadcrumb-item active" aria-current="page">Privacy Policy</li>
                         </ol>
                     </nav>
