@@ -13,6 +13,28 @@ const allCategory = async () => {
     })
 }
 
+const getDealsOfTheDay = async ({ dealID }) => {
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.getDealsOfTheDay.endPoint, API.getDealsOfTheDay.url + '/' + dealID, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+const getCuratedDeals = async ({ dealID }) => {
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.getCuratedDeals.endPoint, API.getCuratedDeals.url + '/' + dealID, null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
 const subCategory = async ({ categoryID }) => {
     return new Promise(function (resolve, reject) {
         HTTPRequest.Get(API.subCategory.endPoint, API.subCategory.url + '/' + categoryID, null)
@@ -24,4 +46,4 @@ const subCategory = async ({ categoryID }) => {
     })
 }
 
-export { allCategory, subCategory }
+export { allCategory, getDealsOfTheDay, getCuratedDeals, subCategory }

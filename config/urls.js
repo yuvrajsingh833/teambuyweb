@@ -30,9 +30,12 @@ const API = {
   search: { url: '', endPoint: 'search' },
   faqs: { url: '', endPoint: 'faqs' },
   subscribeNewsletter: { url: '', endPoint: 'subscribe-newsletter' },
+  getAppDownloadLink: { url: '', endPoint: 'app-download-link' },
 
   //Category urls
   allCategory: { url: 'all', endPoint: 'category' },
+  getDealsOfTheDay: { url: 'deal-of-the-day', endPoint: 'category' },
+  getCuratedDeals: { url: 'curated-deals', endPoint: 'category' },
   subCategory: { url: 'sub', endPoint: 'category' },
 
   //Product urls

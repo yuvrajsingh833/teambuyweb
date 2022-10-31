@@ -66,7 +66,7 @@ export default function SearchPage(props) {
             setIsLoading(false)
             setIsLoadingMore(false)
         }).catch(e => {
-            console.log(`allProductByCategory error : ${e}`)
+            console.log(`search error : ${e}`)
             setIsLoading(false)
             setIsLoadingMore(false)
         })

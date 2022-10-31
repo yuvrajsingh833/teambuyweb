@@ -26,6 +26,32 @@ const cities = async ({ state }) => {
     })
 }
 
+const reverseGeoLocation = async ({ lat, long }) => {
+    let queryString = { lat, long };
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.reverseGeoLocation.endPoint, API.reverseGeoLocation.url + '?' + Utils.JSONToQueryString(queryString), null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
+const calculateDistance = async ({ origins, destinations }) => {
+    let queryString = { origins, destinations };
+
+    return new Promise(function (resolve, reject) {
+        HTTPRequest.Get(API.calculateDistance.endPoint, API.calculateDistance.url + '?' + Utils.JSONToQueryString(queryString), null)
+            .then(result => {
+                resolve(result)
+            }).catch(e => {
+                reject(e)
+            })
+    })
+}
+
 const settings = async () => {
 
     return new Promise(function (resolve, reject) {
@@ -138,11 +164,11 @@ const subscribeNewsletter = async ({ email }) => {
     })
 }
 
-const reverseGeoLocation = async ({ lat, long }) => {
-    let queryString = { lat, long };
+const getAppDownloadLink = async ({ email, mobileNumber }) => {
+    let postParams = { email, mobileNumber }
 
     return new Promise(function (resolve, reject) {
-        HTTPRequest.Get(API.reverseGeoLocation.endPoint, API.reverseGeoLocation.url + '?' + Utils.JSONToQueryString(queryString), null)
+        HTTPRequest.Post(API.getAppDownloadLink.endPoint, API.getAppDownloadLink.url, postParams)
             .then(result => {
                 resolve(result)
             }).catch(e => {
@@ -151,17 +177,4 @@ const reverseGeoLocation = async ({ lat, long }) => {
     })
 }
 
-const calculateDistance = async ({ origins, destinations }) => {
-    let queryString = { origins, destinations };
-
-    return new Promise(function (resolve, reject) {
-        HTTPRequest.Get(API.calculateDistance.endPoint, API.calculateDistance.url + '?' + Utils.JSONToQueryString(queryString), null)
-            .then(result => {
-                resolve(result)
-            }).catch(e => {
-                reject(e)
-            })
-    })
-}
-
-export { states, cities, settings, languages, languagesLabel, deliveryPinCode, dashboard, search, searchSuggestion, faqs, subscribeNewsletter, reverseGeoLocation, calculateDistance }
+export { states, cities, reverseGeoLocation, calculateDistance, settings, languages, languagesLabel, deliveryPinCode, dashboard, search, searchSuggestion, faqs, subscribeNewsletter, getAppDownloadLink }
