@@ -101,29 +101,40 @@ export default function ShareCartWithOtherPage(props) {
                 </div>
             </section>
 
-            <section className="cart-wrap mt-40">
+            {/* {(100 - timeDifferencePercent) < 0 && <section className="cart-wrap">
                 <div className="container">
                     <div className="text-center cart-success-block">
-                        <div className="success-icon">
+                        <div className="sm-heading mt-6">{Utils.getLanguageLabel("Team expired")}</div>
+                    </div>
+                </div>
+            </section>}
+
+            <section className="cart-wrap">
+                <div className="container">
+                    <div className="text-center cart-success-block">
+                        <div className="progress">
+                            <div className="progress-bar" role="progressbar" aria-valuenow={100 - timeDifferencePercent} aria-valuemin="0" aria-valuemax="100" style={{ width: `${100 - timeDifferencePercent}%` }}>
+                                <span className="sr-only">{Utils.getLanguageLabel("Team expires")} {Dates.calculateRemainingTime(teamInfo.detail.expires_at)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> */}
+
+
+            <section className="cart-wrap">
+                <div className="container">
+                    <div className="text-center cart-success-block">
+                        <div className="sm-heading text-center">{Utils.getLanguageLabel("Share and Add team members")}</div>
+                        <div className="success-icon mt-40">
                             <Image layout='raw' height={120} width={120} quality={100} alt='status-icon' src="/bgicon/confirm.png" />
                         </div>
                         <div className="sm-heading mt-40 text-center">{Utils.getLanguageLabel("Congratulations!! Your team has been created successfully")}</div>
 
-                        <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get teambuy discount of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(Number(teamInfo.detail.member_off_price) + Number(teamInfo.detail.leader_off_price))}</span>
-                        </div>
                         <div className="xs-heading mt-6">
-                            {Utils.getLanguageLabel("Get flat")} <span className="green-text  fw-700">{Utils.convertToPriceFormat(teamInfo.detail.leader_off_price)}</span> {Utils.getLanguageLabel("discount when you place order with a team and")}<br /> <span className="green-text  fw-700">{Utils.convertToPriceFormat(teamInfo.detail.member_off_price)}</span> {Utils.getLanguageLabel("when your team member place the order")}</div>
+                            {Utils.getLanguageLabel("Get flat")} <span className="green-text  fw-700">{Utils.convertToPriceFormat(teamInfo.detail.leader_off_price)}</span> {Utils.getLanguageLabel("discount when you place order with a team and")} <span className="green-text  fw-700">{Utils.convertToPriceFormat(teamInfo.detail.member_off_price)}</span> {Utils.getLanguageLabel("when your team member place the order")}</div>
                         <div className="mt-10 text-center">
-                            <div className="sm-heading text-center">{Utils.getLanguageLabel("Share and Add team members")}</div>
                             <div className="ml-auto mt-1">
-                                <FacebookShareButton
-                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id})`}
-                                    quote={`Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`}
-                                    hashtag={'#teambuy'}
-                                >
-                                    <FacebookIcon size={40} round />
-                                </FacebookShareButton>
-                                &nbsp;
                                 <WhatsappShareButton
                                     url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id})`}
                                     title={`Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`}
@@ -131,17 +142,6 @@ export default function ShareCartWithOtherPage(props) {
                                 >
                                     <WhatsappIcon size={40} round />
                                 </WhatsappShareButton>
-                                &nbsp;
-                                <TwitterShareButton
-                                    url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id})`}
-                                    title={`Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`}
-                                >
-                                    <TwitterIcon size={40} round />
-                                </TwitterShareButton>
-                                &nbsp;
-                                <LinkedinShareButton url={`${Config.BaseURL.web.replace(/\/$/, "")}/team/join-cart/${id}`}>
-                                    <LinkedinIcon size={40} round />
-                                </LinkedinShareButton>
                                 <RWebShare
                                     data={{
                                         text: `Hey, join the team "${teamInfo.detail.team_name}" and get a discount of ${Utils.convertToPriceFormat(teamInfo.detail.member_off_price)} on the purchase`,
@@ -163,7 +163,7 @@ export default function ShareCartWithOtherPage(props) {
                 </div>
             </section>
 
-            {(100 - timeDifferencePercent) > 0 && <section className="cart-wrap">
+            {/* {(100 - timeDifferencePercent) > 0 && <section className="cart-wrap">
                 <div className="container">
                     <div className="text-center cart-success-block">
                         {(teamInfo.members.length - 1) >= Number(teamInfo.detail.team_min_member) ?
@@ -173,29 +173,9 @@ export default function ShareCartWithOtherPage(props) {
                         }
                     </div>
                 </div>
-            </section>}
+            </section>} */}
 
-            {(100 - timeDifferencePercent) < 0 && <section className="cart-wrap">
-                <div className="container">
-                    <div className="text-center cart-success-block">
-                        <div className="sm-heading mt-6">{Utils.getLanguageLabel("Team expired")}</div>
-                    </div>
-                </div>
-            </section>}
-
-            <section className="cart-wrap">
-                <div className="container">
-                    <div className="text-center cart-success-block">
-                        <div className="progress">
-                            <div className="progress-bar" role="progressbar" aria-valuenow={100 - timeDifferencePercent} aria-valuemin="0" aria-valuemax="100" style={{ width: `${100 - timeDifferencePercent}%` }}>
-                                <span className="sr-only">{Utils.getLanguageLabel("Team expires")} {Dates.calculateRemainingTime(teamInfo.detail.expires_at)}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="cart-wrap mt-40">
+            {/* <section className="cart-wrap mt-40">
                 <div className="container">
                     <div className="text-center cart-success-block">
                         <div className="d-flex align-items-center heading-flex">
@@ -225,7 +205,7 @@ export default function ShareCartWithOtherPage(props) {
                         </OwlCarousel>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             <section className="cart-wrap ptb-40">
                 <div className="container">

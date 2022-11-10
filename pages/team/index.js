@@ -9,6 +9,7 @@ import { Config } from '../../config/config';
 import * as Utils from '../../lib/utils';
 import * as CategoryService from "../../services/category";
 import * as TeamService from "../../services/team";
+import Feature from '../../component/feature';
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -53,6 +54,15 @@ export default function Category(props) {
             <Head>
                 <title>Teams around you | Teambuy</title>
             </Head>
+            <section className="category-wrap teams-banner">
+                <div className="container d-flex align-items-center justify-content-start">
+                    <div className=" heading-flex ptb-40">
+                        <div className="team-heading">{Utils.getLanguageLabel("Shop ")}<span style={{ color: '#FB6A09' }}>{Utils.getLanguageLabel("Together")}</span></div>
+                        <div className="team-heading">{Utils.getLanguageLabel("Save ")}<span style={{ color: '#FB6A09' }}>{Utils.getLanguageLabel("Together")}</span></div>
+                    </div>
+                </div>
+            </section>
+
             <section className="category-wrap">
                 <div className="container">
                     <div className="align-items-center heading-flex ptb-10">
@@ -78,10 +88,11 @@ export default function Category(props) {
                 </div>
             </section>
 
-            {myTeams && myTeams.length > 0 && <section className="category-wrap ptb-40">
+            {myTeams && myTeams.length > 0 && <section className="category-wrap ptb-10">
                 <div className="container">
                     <div className="align-items-center heading-flex ptb-40">
                         <div className="sm-heading">{Utils.getLanguageLabel("My teams")}</div>
+                        <div className="text-start xs-heading text-ellipsis fw-500">{Utils.getLanguageLabel("Your existing teams")}</div>
                     </div>
                     <div className="row category-list">
                         {myTeams.map(team => {
@@ -101,6 +112,7 @@ export default function Category(props) {
                     </div>
                 </div>
             </section>}
+            <Feature />
         </>
     )
 }

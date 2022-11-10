@@ -227,7 +227,7 @@ a {
 }
 
 .progress-bar {
-  background-color: #53b176;
+  background-color: #ffcf40;
 }
 
 .nav-breaker {
@@ -272,4 +272,17 @@ a {
 .deal-of-the-day-box {
   height: 180px;
   width: 150px;
+}
+.teams-banner {
+  background: url(/img/teams-banner.png);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: cover;
+  height: 300px;
+}
+.team-heading {
+  font-weight: 400;
+  font-size: 58px;
+  line-height: 68px;
+  color: #53b176;
 }

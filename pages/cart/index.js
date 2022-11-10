@@ -299,18 +299,7 @@ export default function CartPage(props) {
                                         </div>
                                     </div>
 
-                                    {teambuyOfferPrice > 0 && <hr className="custom-hr2" />}
-                                    {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block">
-                                        <div>
-                                            <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail")}<br />{Utils.getLanguageLabel(" Teambuy price and")}
-                                                <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div></div>
-                                        </div>
-                                        <div className="ml-auto">
-                                            <Link passHref href={{ pathname: '/cart/share-cart' }}>
-                                                <button className="sm-green-btn share-btn">Share with friends <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/share.svg" /></button>
-                                            </Link>
-                                        </div>
-                                    </div>}
+
                                 </div>
                                 <div className="yellow-bg offer-discount-box">
                                     <Link passHref href={{ pathname: '/cart/apply-coupon' }}>
@@ -373,22 +362,39 @@ export default function CartPage(props) {
                                     </div>
                                 </div>
 
-                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0 mt-50">
+                                {(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLIED_TEAM_BUY_DISCOUNT)) > 0 && <div className="yellow-bg offer-discount-box plr-20 ptb-10 b-radius-0">
                                     <span className="sm-heading">You saved <span className="green-text fw-700">{Utils.convertToPriceFormat(Number(calculatePrice().APPLICABLE_COUPON_DISCOUNT) + Number(calculatePrice().APPLICABLE_WALLET_DISCOUNT))}</span> on this order</span>
                                 </div>}
 
                                 {hasOutOfStockProduct && <div className="process-checkout-btn text-center mt-30"><button type="button" className="cancel-btn gray-tag-small">Some product are Out of stock</button></div>}
 
-                                {!hasOutOfStockProduct && <div className="text-center mt-30 d-flex justify-content-center">
-                                    <Link passHref href={{ pathname: '/checkout' }}>
-                                        <button className="green-btn process-checkout-btn mx-2 px-3 ">
-                                            {Utils.getLanguageLabel("Select delivery address")}
-                                            <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
-                                        </button>
-                                    </Link>
-                                    {teambuyOfferPrice > 0 && <Link passHref href={{ pathname: '/cart/share-cart' }}>
-                                        <button className="green-btn process-checkout-btn mx-2 px-3 " style={{ color: '#171726' }}>{Utils.getLanguageLabel("JOIN THE TEAM NOW & SAVE")} {Utils.convertToPriceFormat(teambuyOfferPrice)} {Utils.getLanguageLabel("More")}</button>
-                                    </Link>}
+
+
+                                {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block px-2 mt-20">
+                                    <div>
+                                        <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail")}<br />{Utils.getLanguageLabel(" Teambuy price and")}
+                                            <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div></div>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Link passHref href={{ pathname: '/cart/share-cart' }}>
+                                            <button className="green-btn process-checkout-btn mx-2 px-3 share-btn">Share with friends <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/share.svg" /></button>
+                                        </Link>
+                                    </div>
+                                </div>}
+
+                                <hr className="custom-hr2" />
+                                {!hasOutOfStockProduct && <div className="d-flex align-items-center share-friend-block px-2">
+                                    <div>
+                                        <div className="sm-heading">{Utils.getLanguageLabel("Don't want to buy in team")}</div>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Link passHref href={{ pathname: '/checkout' }}>
+                                            <button className="green-btn process-checkout-btn mx-2 px-3 ">
+                                                {Utils.getLanguageLabel("Proceed to buy individually")}
+                                                <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
+                                            </button>
+                                        </Link>
+                                    </div>
                                 </div>}
                             </div>
                         </div>

@@ -88,9 +88,28 @@
   .team-circle {
     width: 90px !important;
   }
+
+  .teams-banner {
+    height: 300px;
+  }
+  .team-heading {
+    font-weight: 400;
+    font-size: 45px;
+    line-height: 45px;
+    color: #53b176;
+  }
 }
 
 @media (max-width: 768px) {
+  .teams-banner {
+    height: 245px;
+  }
+  .team-heading {
+    font-weight: 400;
+    font-size: 45px;
+    line-height: 45px;
+    color: #53b176;
+  }
   .search-box {
     position: absolute;
     border-top: solid 0px #cccc !important;
@@ -176,6 +195,20 @@
   .cart-main-width {
     width: 100% !important;
   }
+  .had-area-desc-error,
+  .had-area-name {
+    display: block !important;
+    line-height: 12px;
+  }
+  .teams-banner {
+    height: 215px;
+  }
+  .team-heading {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 30px;
+    color: #53b176;
+  }
 }
 
 @media (max-width: 575px) {
@@ -210,7 +243,7 @@
   }
 
   .location-nav {
-    flex: 2;
+    flex: 3;
     margin-left: 14px;
     margin-right: 4px;
   }
@@ -222,13 +255,13 @@
   }
 
   .account-wishlist-nav {
-    flex: 1.5;
+    flex: 1.8;
     margin-left: 4px;
     margin-right: 4px;
   }
 
   .cart-block-nav {
-    flex: 1.7;
+    flex: 1.9;
     margin-left: 4px;
     margin-right: 4px;
   }
@@ -255,7 +288,7 @@
   }
 
   .location-nav {
-    flex: 2;
+    flex: 3;
     margin-left: 4px;
     margin-right: 4px;
   }
@@ -296,7 +329,7 @@
   .cart-block-nav {
     flex: 2.2;
     margin-left: 4px;
-    margin-right: 4px;
+    margin-right: 0px;
   }
 
   .search-box {
@@ -308,11 +341,61 @@
     top: 50px !important;
     box-shadow: 0 0px 0px rgb(0 0 0 / 15%);
   }
+
+  .teams-banner {
+    height: 175px;
+    background-position: left;
+  }
+  .team-heading {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 35px;
+    color: #53b176;
+  }
 }
 
+@media (max-width: 390px) {
+  .curated-deal-box {
+    height: 125px;
+    width: 155px;
+  }
+
+  .location-nav {
+    flex: 5;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .search-block-nav {
+    flex: 6;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .account-wishlist-nav {
+    flex: 1.5;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .cart-block-nav {
+    flex: 1.4;
+    margin-left: 4px;
+    margin-right: 0px;
+  }
+
+  .cart-box {
+    padding: 7px 10px;
+  }
+
+  .search-block-nav {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
 @media (max-width: 375px) {
   .curated-deal-box {
-    height: 110px;
+    height: 120px;
     width: 145px;
   }
 
@@ -323,7 +406,7 @@
   }
 
   .location-nav {
-    flex: 2;
+    flex: 4.9;
     margin-left: 4px;
     margin-right: 4px;
   }
@@ -343,7 +426,7 @@
   .cart-block-nav {
     flex: 1;
     margin-left: 4px;
-    margin-right: 4px;
+    margin-right: 0px;
   }
 
   .cart-box {

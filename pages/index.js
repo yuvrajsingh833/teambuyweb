@@ -223,7 +223,7 @@ export default function Home(props) {
 
 								<a className="item d-flex align-items-center nearby-box">
 									<div className="circle-box team-circle">
-										<Image alt={team.team_name} src={BASE_URL_TEAM_AVATAR + team.team_avatar} layout="raw" height={100} width={100} />
+										<Image alt={team.team_name} src={BASE_URL_TEAM_AVATAR + team.team_avatar} quality="100" layout="raw" height={100 * 2} width={100 * 2} />
 									</div>
 									<div className="xs-heading text-ellipsis">{team.team_name}</div>
 								</a>
@@ -259,6 +259,7 @@ export default function Home(props) {
 												src={BASE_URL_CURATED_DEALS + item.banner}
 												alt={item?.heading}
 												layout="raw"
+												quality={100}
 												height={200 * 2}
 												width={254 * 2}
 												style={{ objectFit: 'contain' }}
@@ -354,6 +355,7 @@ export default function Home(props) {
 												src={BASE_URL_DEALS_OF_THE_DAY + item.banner}
 												alt={item?.heading}
 												layout="raw"
+												quality={100}
 												height={180 * 2}
 												width={150 * 2}
 												style={{ objectFit: 'contain' }}
