@@ -182,7 +182,8 @@ export default function ShareCartPage(props) {
             })
         }).catch(e => {
             setIsLoading(false)
-            console.log(`updateUserProfileInfo error : ${e}`)
+            openSnackbar(e.message, 1000)
+            console.log(`createTeam error : ${e}`)
         })
     }
 
