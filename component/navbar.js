@@ -110,7 +110,6 @@ export default function Navbar(props) {
                             </div>
 
                             <div className="header-address d-flex align-items-center location-nav">
-                                {console.log("locationError", locationError)}
                                 {locationError ? <div className="had-area-desc had-area-desc-error">{locationError}</div> : <>
                                     <div className="had-icon">
                                         <Image layout='raw' style={{ objectFit: 'contain' }} height={20} width={20} src="/img/location.svg" alt="location-icon" />
