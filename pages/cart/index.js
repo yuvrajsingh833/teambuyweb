@@ -292,6 +292,33 @@ export default function CartPage(props) {
                     <div className="row cart-block">
                         <div className="col-lg-6">
                             <div className="white-box pd-0">
+
+                                {teambuyOfferPrice > 0 && <div className="d-flex align-items-center share-friend-block px-2 mt-20">
+                                    <div>
+                                        <div className="xs-heading font-12">{Utils.getLanguageLabel("Create or Join team with friends & family to avail")}<br />{Utils.getLanguageLabel(" Teambuy price and")}
+                                            <div className="sm-heading mt-6">{Utils.getLanguageLabel("Get instant cashback of ")}<span className="green-text  fw-700">{Utils.convertToPriceFormat(teambuyOfferPrice)}</span></div></div>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Link passHref href={{ pathname: '/cart/share-cart' }}>
+                                            <button className="green-btn process-checkout-btn mx-2 px-3 share-btn">Share with friends <Image alt="payment-icon" height={20} width={20} layout="raw" src="/img/share.svg" /></button>
+                                        </Link>
+                                    </div>
+                                </div>}
+
+                                <hr className="custom-hr2" />
+                                {!hasOutOfStockProduct && <div className="d-flex align-items-center share-friend-block px-2">
+                                    <div>
+                                        <div className="sm-heading">{Utils.getLanguageLabel("Don't want to buy in team")}</div>
+                                    </div>
+                                    <div className="ml-auto">
+                                        <Link passHref href={{ pathname: '/checkout' }}>
+                                            <button className="green-btn process-checkout-btn mx-2 px-3 ">
+                                                {Utils.getLanguageLabel("Proceed to buy individually")}
+                                                <Image height={15} width={15} layout="raw" src="/img/white-right-arrow.svg" alt="img/white-right-arrow.svg" />
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>}
                                 <div className="cart-main-box">
                                     <div className="cart-main-scroll">
                                         <div className="cart-main-width">
