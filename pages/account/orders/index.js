@@ -53,12 +53,12 @@ const OrderInformation = ({ orderInfo }) => {
 
     return <div className="order-product-info">
         <div className="row">
-            <div className="col-4 align-self-center">
+            <div className="col-xl-4 col-lg-6 col-12 align-self-center">
                 <div className="xs-heading fw-500">{Utils.getLanguageLabel("Order")} #{orderInfo.order_txn_id}</div>
                 <div className="xs-heading font-12">{Utils.getLanguageLabel("Placed on")} <span className="fw-500">{Dates.localDate(orderInfo.created_at)}</span></div>
                 <div className="xs-heading font-12">{Utils.getLanguageLabel("Items")}: <span className="fw-500">{orderInfo.orderItems.length}</span>&nbsp;&nbsp;&nbsp; {Utils.getLanguageLabel("Total")}: <span className="fw-500">{Utils.convertToPriceFormat(orderInfo.total_price)}</span></div>
             </div>
-            <div className="col-4 align-self-center">
+            <div className="col-xl-4 col-lg-6 col-12 align-self-center for-desktop">
                 {isExpanded ?
                     isCancelled == true ?
                         <ul className="op-delivery-process">
@@ -103,7 +103,8 @@ const OrderInformation = ({ orderInfo }) => {
                         </ul> : null
                 }
             </div>
-            <div className="col-4 text-center align-self-center">
+            <div className="col-xl-4 col-lg-6 col-12 text-center align-self-center">
+                <div className='for-mobile for-tab mt-20' />
                 <Link
                     passHref
                     href={{
@@ -115,7 +116,7 @@ const OrderInformation = ({ orderInfo }) => {
                         <button className="green-btn">{isDelivered ? Utils.getLanguageLabel("VIEW ORDER") : Utils.getLanguageLabel("TRACK ORDER")}</button>
                     </a>
                 </Link>
-                <a style={isExpanded ? { cursor: 'pointer', transform: `rotate(180deg)` } : { cursor: 'pointer' }} onClick={() => setIsExpanded(!isExpanded)} className="order-down-arrow"></a>
+                <a style={isExpanded ? { cursor: 'pointer', transform: `rotate(180deg)` } : { cursor: 'pointer' }} onClick={() => setIsExpanded(!isExpanded)} className="order-down-arrow for-desktop"></a>
             </div>
         </div>
     </div>

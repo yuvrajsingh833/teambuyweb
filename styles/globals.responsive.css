@@ -1,4 +1,7 @@
 @media (max-width: 1199px) {
+  .block-scroll-x-width {
+    width: 100% !important;
+  }
   .search-box {
     position: relative;
     z-index: 0;

@@ -1,9 +1,9 @@
-import Image from 'next/image'
+import bodyParser from "body-parser"
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import bodyParser from "body-parser"
 import util from "util"
 const getBody = util.promisify(bodyParser.urlencoded());
 
@@ -11,7 +11,6 @@ import Loader from '../../../component/loader'
 
 import * as Utils from "../../../lib/utils"
 import * as PaymentService from "../../../services/payment"
-import * as UserService from "../../../services/user"
 
 export default function CheckoutOrderStatusDetail(props) {
     const router = useRouter();
@@ -19,20 +18,8 @@ export default function CheckoutOrderStatusDetail(props) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [paymentVerificationInfo, setVerificationInfo] = useState({})
-    const [orderInformation, setOrderInformation] = useState(null)
-
-    const fetchOrderInfo = () => {
-        UserService.getOrderDetail({ orderTXNID: txnid }).then(response => {
-            setOrderInformation(response.data)
-        }).catch(e => {
-            console.log(`updatePayment error : ${e}`)
-            setOrderInformation({})
-        })
-    }
 
     useEffect(() => {
-        fetchOrderInfo()
-
         if (mode == "cod") {
             setVerificationInfo(JSON.parse(additionalPaymentData))
             PaymentService.updatePayment({

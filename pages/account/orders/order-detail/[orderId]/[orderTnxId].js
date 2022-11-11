@@ -51,26 +51,37 @@ const OrderInformation = ({ orderInfo }) => {
 
     return <div className="order-product-info">
         <div className="row">
-            <div className="col-3 align-self-center">
+            <div className="col-xl-3 col-lg-12 col-md-12">
+                <div className="row">
+                    <div className="col-md-10">
+                        <div className="sm-heading list-disc mt-20">{Utils.getLanguageLabel("Order detail")}</div>
+                    </div>
+                </div>
                 <div className="xs-heading fw-500">{Utils.getLanguageLabel("Order")} #{orderInfo.order_txn_id}</div>
                 <div className="xs-heading font-12">{Utils.getLanguageLabel("Placed on")} <span className="fw-500">{Dates.localDate(orderInfo.created_at)}</span></div>
                 <div className="xs-heading font-12">{Utils.getLanguageLabel("Items")}: <span className="fw-500">{orderInfo.orderItems.length}</span>&nbsp;&nbsp;&nbsp; {Utils.getLanguageLabel("Total")}: <span className="fw-500">{Utils.convertToPriceFormat(orderInfo.total_price)}</span></div>
             </div>
-            <div className="col-5 align-self-center">
+
+            <div className="col-xl-5 col-lg-6 col-md-12">
                 <div className="row">
                     <div className="col-md-10">
-                        <div className="sm-heading list-disc">{Utils.getLanguageLabel("Delivery address")}</div>
-                        <div className="mt-10 pl-15">
-                            <div className="xs-heading">{orderInfo?.orderDeliveryAddress[0]?.full_name}
-                                {/* <span className="fw-300">(Home address)</span> */}
-                            </div>
-                            <div className="xs-content mt-1">{orderInfo?.orderDeliveryAddress[0]?.apt}, {orderInfo?.orderDeliveryAddress[0]?.formatted_address} ,{orderInfo?.orderDeliveryAddress[0]?.pincode}</div>
-                            <div className="xs-content mt-1">+91 {orderInfo?.orderDeliveryAddress[0]?.mobile_number}</div>
-                        </div>
+                        <div className="sm-heading list-disc mt-20">{Utils.getLanguageLabel("Delivery address")}</div>
                     </div>
                 </div>
+                <div className="xs-heading">{orderInfo?.orderDeliveryAddress[0]?.full_name}
+                    {/* <span className="fw-300">(Home address)</span> */}
+                </div>
+                <div className="xs-content mt-1">{orderInfo?.orderDeliveryAddress[0]?.apt}, {orderInfo?.orderDeliveryAddress[0]?.formatted_address} ,{orderInfo?.orderDeliveryAddress[0]?.pincode}</div>
+                <div className="xs-content mt-1">+91 {orderInfo?.orderDeliveryAddress[0]?.mobile_number}</div>
+
             </div>
-            <div className="col-4 text-center align-self-center">
+
+            <div className="col-xl-4 col-lg-6 col-md-12">
+                <div className="row">
+                    <div className="col-md-10">
+                        <div className="sm-heading list-disc mt-20">{Utils.getLanguageLabel("Delivery status")}</div>
+                    </div>
+                </div>
                 {isCancelled == true ?
                     <ul className="op-delivery-process">
                         <li className={isPlaced ? "" : "pending"}>
@@ -192,9 +203,6 @@ export default function OrderDetail(props) {
                                 <div className="block-scroll-x">
                                     <div className="block-scroll-x-width">
                                         <div className="white-box d-flex pd-20 mb-20">
-                                            <div className="order-product-icon mt-10 d-flex ">
-                                                <Image layout='raw' style={{ objectFit: 'contain' }} height={45} width={45} alt="product" src="/img/product-icon.png" />
-                                            </div>
                                             <OrderInformation orderInfo={orderInfo} />
                                         </div>
                                     </div>
