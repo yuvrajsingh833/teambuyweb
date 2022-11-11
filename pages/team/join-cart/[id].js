@@ -16,6 +16,7 @@ import * as Enums from '../../../lib/enums';
 import * as Utils from "../../../lib/utils";
 
 import * as TeamService from "../../../services/team";
+import AuthSideBar from "../../../component/authSidebar";
 
 var $ = require("jquery");
 if (typeof window !== "undefined") {
@@ -27,7 +28,7 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 
 export default function CheckoutOrderStatusDetail(props) {
     const userData = useSelector(state => state.userData)
-    const user = userData?.userData
+    const user = userData?.userData || {}
 
     const BASE_URL_USER_AVATAR = `${Config.BaseURL.fileServer}${Config.FilePath.userAvatar}`
     const [openSnackbar] = useSnackbar()
@@ -37,9 +38,10 @@ export default function CheckoutOrderStatusDetail(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [teamInfo, setTeamInfo] = useState({});
     const [timeDifferencePercent, setTimeDifferencePercent] = useState(0)
+    const [showLogin, setShowLogin] = useState(false)
 
     const fetchTeamInfo = () => {
-        TeamService.teamInfo({ teamCode: id }).then(response => {
+        id && TeamService.teamInfo({ teamCode: id }).then(response => {
             let teamInfo = response.data.detail
             let timeStamp = Dates.getUTCTimestamp(new Date())
             let startTime = timeStamp - Number(teamInfo.created_at)
@@ -58,16 +60,26 @@ export default function CheckoutOrderStatusDetail(props) {
         fetchTeamInfo()
     }, [props])
 
+
+    const openLogin = () => {
+        setShowLogin(true);
+        setTimeout(() => { window.openLoginSideBar() }, 300)
+    }
+
     const joinTheTeam = () => {
-        TeamService.joinTeam({ teamCode: id }).then(response => {
-            setIsLoading(false)
-            Utils.saveStateAsyncStorage({ "discount": Number(teamInfo.detail.member_off_price), "type": "memberCart", "teamCode": teamInfo.detail.team_code, "teamID": teamInfo.detail.id }, "teamBuyCart")
-            router.push({ pathname: '/checkout' })
-        }).catch(e => {
-            setIsLoading(false)
-            openSnackbar(e.message)
-            console.log(`joinTeam error : ${e}`)
-        })
+        if (user.id) {
+            TeamService.joinTeam({ teamCode: id }).then(response => {
+                setIsLoading(false)
+                Utils.saveStateAsyncStorage({ "discount": Number(teamInfo?.detail?.member_off_price), "type": "memberCart", "teamCode": teamInfo?.detail?.team_code, "teamID": teamInfo?.detail?.id }, "teamBuyCart")
+                router.push({ pathname: '/checkout' })
+            }).catch(e => {
+                setIsLoading(false)
+                openSnackbar(e.message)
+                console.log(`joinTeam error : ${e}`)
+            })
+        } else {
+            openLogin()
+        }
     }
 
     if (isLoading) return <Loader />
@@ -112,29 +124,31 @@ export default function CheckoutOrderStatusDetail(props) {
 
             {(100 - timeDifferencePercent) > 0 && <section className="nearby-wrap mt-30">
                 <div className="container">
-                    {(teamInfo.members.length - 1) >= Number(teamInfo.detail.team_min_member) ?
+                    {(teamInfo?.members?.length - 1) >= Number(teamInfo?.detail?.team_min_member) ?
                         <div className="sm-heading mt-6">{Utils.getLanguageLabel("Minimum members joined the team, but still member can join")}</div> :
-                        <div className="sm-heading mt-6">{Number(teamInfo.detail.team_min_member - (teamInfo.members.length - 1))} {Utils.getLanguageLabel("member yet to join, but still you can place your order to avail discount of")} <span className="green-text  fw-700">{Utils.convertToPriceFormat(teamInfo.detail.leader_off_price)}</span>
+                        <div className="sm-heading mt-6">{Number(teamInfo?.detail?.team_min_member - (teamInfo?.members?.length - 1))} {Utils.getLanguageLabel("member yet to join, but still you can place your order to avail discount of")} <span className="green-text  fw-700">{Utils.convertToPriceFormat(teamInfo?.detail?.leader_off_price)}</span>
                         </div>
                     }
                 </div>
             </section>}
 
-            {(100 - timeDifferencePercent) < 0 && <section className="nearby-wrap mt-30">
-                <div className="container">
-                    <div className="sm-heading mt-6">{Utils.getLanguageLabel("Team expired")}</div>
-                </div>
-            </section>}
-
-            <section className="nearby-wrap ptb-30">
+            {(100 - timeDifferencePercent) < 0 ? <section className="nearby-wrap ptb-30">
                 <div className="container">
                     <div className="progress">
-                        <div className="progress-bar" role="progressbar" aria-valuenow={100 - timeDifferencePercent} aria-valuemin="0" aria-valuemax="100" style={{ width: `${100 - timeDifferencePercent}%` }}>
-                            <span className="sr-only">{Utils.getLanguageLabel("Team will expire")} {Dates.calculateRemainingTime(teamInfo.detail.expires_at)}</span>
+                        <div className="progress-bar progress-bar-error" role="progressbar" aria-valuenow={100} aria-valuemin="0" aria-valuemax="100" style={{ width: `${100}%` }}>
+                            <span className="sr-only">{Utils.getLanguageLabel("Team expired")} </span>
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> : <section className="nearby-wrap ptb-30">
+                <div className="container">
+                    <div className="progress">
+                        <div className="progress-bar" role="progressbar" aria-valuenow={100 - timeDifferencePercent} aria-valuemin="0" aria-valuemax="100" style={{ width: `${100 - timeDifferencePercent}%` }}>
+                            <span className="sr-only">{Utils.getLanguageLabel("Team will expire")} {Dates.calculateRemainingTime(teamInfo?.detail?.expires_at)}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>}
 
             <section className="nearby-wrap ptb-30">
                 <div className="container">
@@ -166,15 +180,18 @@ export default function CheckoutOrderStatusDetail(props) {
                     </OwlCarousel>
                 </div>
             </section>
-            {user.id != teamInfo.detail.created_by && <section className="nearby-wrap ptb-30">
+
+            {user.id != teamInfo?.detail?.created_by && <section className="nearby-wrap ptb-30">
                 <div className="container">
                     <div className="d-flex align-items-center heading-flex">
                         <button onClick={() => joinTheTeam()} className="green-btn process-checkout-btn mx-2 px-3 ">
-                            {Utils.getLanguageLabel("Join the team")}
+                            {Utils.getLanguageLabel((100 - timeDifferencePercent) < 0 ? "team Expired" : "Join the team")}
                         </button>
                     </div>
                 </div>
             </section>}
+
+            {showLogin && <AuthSideBar />}
         </>
     )
 }

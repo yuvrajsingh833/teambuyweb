@@ -230,6 +230,10 @@ a {
   background-color: #ffcf40;
 }
 
+.progress-bar-error {
+  background-color: #ce3c0f;
+}
+
 .nav-breaker {
   margin-top: 75px;
 }
