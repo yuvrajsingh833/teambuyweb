@@ -40,6 +40,8 @@ export default function CheckoutOrderStatusDetail(props) {
     const [timeDifferencePercent, setTimeDifferencePercent] = useState(0)
     const [showLogin, setShowLogin] = useState(false)
 
+    const [cartItems, setCartItems] = useState([]);
+
     const fetchTeamInfo = () => {
         id && TeamService.teamInfo({ teamCode: id }).then(response => {
             let teamInfo = response.data.detail
@@ -47,7 +49,7 @@ export default function CheckoutOrderStatusDetail(props) {
             let startTime = timeStamp - Number(teamInfo.created_at)
             let endTime = Number(teamInfo.expires_at) - Number(teamInfo.created_at)
             setTimeDifferencePercent((startTime / endTime) * 100)
-
+            setCartItems(response?.data?.cart || [])
             setTeamInfo(response.data)
             setIsLoading(false)
         }).catch(e => {
@@ -81,6 +83,45 @@ export default function CheckoutOrderStatusDetail(props) {
             openLogin()
         }
     }
+
+    const renderCart = () => {
+        return cartItems.map((item, index) => {
+            let productDetail = item.product_info;
+
+            return <div key={`cart_item_${item.id}_${index}`} className="px-2 pd-0 mt-10 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 desktop-margin-right">
+                <div className="cart-main-box white-box">
+
+                    <div className="d-flex to-product-flex align-items-center">
+                        <div className="to-product-count fw-700">{index + 1}.</div>
+                        <div className="product-img">
+                            <Image src={Utils.generateProductImage(productDetail)} alt={productDetail?.name} layout="raw" height={200} width={200}
+                                className={'common-product-image'} style={{ objectFit: 'contain' }} />
+                        </div>
+                        <div className="product-content">
+                            <div className="d-flex align-items-center">
+                                <div>
+                                    <div className="xs-heading fw-500 font-12">{productDetail.name}</div>
+                                    <div className="weight-count">{productDetail.size}</div>
+                                </div>
+                                <div className="ml-auto">
+                                    {productDetail.discount > 0 && <div className="product-price"><span
+                                        className="cut-price">{Utils.convertToPriceFormat(productDetail.gst_amount +
+                                            productDetail.price_without_gst)}</span>
+                                        {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst -
+                                            productDetail.discount) * item.quantity)}</div>}
+
+                                    {productDetail.discount < 1 && <div className="product-price">
+                                        {Utils.convertToPriceFormat((productDetail.gst_amount + productDetail.price_without_gst -
+                                            productDetail.discount) * item.quantity)}</div>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        })
+    }
+
 
     if (isLoading) return <Loader />
 
@@ -178,6 +219,18 @@ export default function CheckoutOrderStatusDetail(props) {
                         })}
 
                     </OwlCarousel>
+                </div>
+            </section>
+
+            <section className="nearby-wrap ptb-30">
+                <div className="container">
+                    <div className="d-flex align-items-center heading-flex">
+                        <div className="sm-heading">{Utils.getLanguageLabel("Cart items")}</div>
+                    </div>
+
+                    <div className="row px-4">
+                        {renderCart()}
+                    </div>
                 </div>
             </section>
 
