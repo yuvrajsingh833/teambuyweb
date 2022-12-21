@@ -2,7 +2,7 @@ export const Config = {
     BaseURL: {
         web: 'https://teambuy.co.in/',
         admin: 'https://admin.teambuy.co.in/',
-        fileServer: 'https://admin.teambuy.co.in/',
+        fileServer: 'https://teambuy.s3.ap-south-1.amazonaws.com/',
         api: 'https://api.teambuy.co.in/v1/',
     },
 

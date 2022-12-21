@@ -15,7 +15,8 @@ const nextConfig = {
     domains: [
       '*.teambuy.co.in',
       'admin.teambuy.co.in',
-      'teambuyadmin.csiworld.tech'
+      'teambuyadmin.csiworld.tech',
+      "teambuy.s3.ap-south-1.amazonaws.com"
     ]
   },
   experimental: {

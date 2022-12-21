@@ -36,33 +36,7 @@ export default function PromotionalOffers(props) {
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'left top',
-                }}>
-                    <div className="tb-content">
-                        <div className="md-heading" style={{ color: item.heading_color }}>{item.heading}</div>
-                        <div className="sm-subheading mt-10" style={{ color: item.sub_heading_color }}>{item.sub_heading}</div>
-                        {item.button_text ? <div className="mt-20">
-                            {(item.category_id && item.category_id != 0) ? <Link
-                                passHref
-                                href={{
-                                    pathname: '/category/[id]/[name]',
-                                    query: { id: item.id, name: 'cat' },
-                                }}
-                            >
-                                <a className="sm-green-btn">{item.button_text}</a></Link> : item.external_link && <Link passHref href={item.external_link}> <a className="sm-green-btn">{item.button_text}</a></Link>}
-
-                        </div> : null}
-                        <div className="tb-img">
-                            <Image
-                                alt={item.heading}
-                                layout="fixed"
-                                objectFit="contain"
-                                width={200}
-                                height={200}
-                                src={BASE_URL + item.icon}
-                            />
-                        </div>
-                    </div>
-                </div>
+                }} />
             </div>
         })
     }
