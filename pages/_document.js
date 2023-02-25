@@ -7,7 +7,7 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <Script id='google-tag-manager'>
+                    <Script id="common-google-tag-chat" strategy="lazyOnload" >
                         {`
                             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
