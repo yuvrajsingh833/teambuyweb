@@ -7,7 +7,7 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <Script id="common-google-tag-chat" strategy="lazyOnload" >
+                    {/* <Script id="common-google-tag-chat" strategy="lazyOnload" >
                         {`
                             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -15,7 +15,7 @@ export default class MyDocument extends Document {
                                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                                 })(window,document,'script','dataLayer','GTM-5MLWQT2');
                         `}
-                    </Script>
+                    </Script> */}
                 </Head>
                 <body>
                     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5MLWQT2"
