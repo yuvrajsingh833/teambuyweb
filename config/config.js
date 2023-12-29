@@ -3,7 +3,7 @@ export const Config = {
 		web: 'http://localhost:3002/',
 		admin: 'https://teambuyadmin.csiworld.tech/',
 		fileServer: 'https://teambuy.s3.ap-south-1.amazonaws.com/',
-		api: 'https://teambuyapi.csiworld.tech/v1/',
+		api: 'https://0.0.0.0:3001/v1/',
 	},
 
 	FilePath: {
